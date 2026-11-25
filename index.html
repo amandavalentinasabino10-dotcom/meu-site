@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Mídia Up - Agência de marketing digital, comunicação e engenharia web. Proposta acadêmica e soluções digitais." />
+  <meta name="description" content="Mídia Up - Agência de marketing digital, comunicação e engenharia web." />
   <title>Mídia Up — Sua marca em outro nível</title>
   <style>
     :root {
@@ -57,7 +57,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(5, 10, 24, 0.8);
+      background: rgba(5, 10, 24, 0.85);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-glass);
     }
@@ -268,24 +268,143 @@
       color: var(--text-secondary);
     }
 
-    /* Contato */
-    .cta-box {
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(0, 240, 255, 0.08));
+    /* Abas de Atendimento (Solicitar Proposta e Falar com a Equipe) */
+    .atendimento-box {
+      background: var(--bg-glass);
+      backdrop-filter: blur(14px);
       border: 1px solid var(--border-bright);
       border-radius: var(--radius-lg);
-      padding: 3rem 2rem;
-      text-align: center;
+      padding: 2.5rem 2rem;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
-    .cta-box h2 {
-      font-size: 1.9rem;
-      margin-bottom: 0.8rem;
+    .tabs-header {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-glass);
+      padding-bottom: 1.25rem;
     }
 
-    .cta-box p {
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-glass);
       color: var(--text-secondary);
-      max-width: 560px;
-      margin: 0 auto 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      border-color: var(--border-bright);
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--blue-electric), #0284c7);
+      color: #ffffff;
+      border-color: var(--cyan-neon);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .field-group {
+      margin-bottom: 1.35rem;
+      text-align: left;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--cyan-neon);
+      margin-bottom: 0.45rem;
+    }
+
+    .info-field,
+    .select-field {
+      width: 100%;
+      padding: 0.9rem 1.1rem;
+      border-radius: 12px;
+      background: rgba(5, 10, 24, 0.9);
+      border: 1px solid var(--border-bright);
+      color: var(--text-primary);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .info-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .info-field a {
+      color: var(--cyan-neon);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: var(--cyan-soft);
+      border: 1px solid var(--border-bright);
+    }
+
+    .info-field a:hover {
+      background: var(--cyan-neon);
+      color: #000;
+    }
+
+    .team-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.25rem;
+    }
+
+    .team-item {
+      background: rgba(5, 10, 24, 0.85);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 0.95rem 1.1rem;
+      transition: var(--transition);
+    }
+
+    .team-item:hover {
+      border-color: var(--border-bright);
+    }
+
+    .team-item strong {
+      display: block;
+      color: var(--cyan-neon);
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .team-item span {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
     }
 
     footer {
@@ -311,72 +430,5 @@
       <ul class="nav-links">
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#diferenciais">Diferenciais</a></li>
-        <li><a href="#contato">Contato</a></li>
+        <li><a href="#atendimento" onclick="abrirAba('proposta')">Solicitar Proposta</a></li>
       </ul>
-      <a href="#contato" class="btn btn-outline">Falar com a equipe</a>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container">
-        <span class="badge-pill">Marketing Digital • Comunicação • Engenharia Web</span>
-        <h1>Elevamos a sua marca para <span>outro nível digital</span></h1>
-        <p>Estratégias orientadas por dados, identidade visual de alto impacto e desenvolvimento web moderno para transformar presença online em resultados reais.</p>
-        <div class="hero-actions">
-          <a href="#contato" class="btn btn-primary">Solicitar proposta</a>
-          <a href="#servicos" class="btn btn-outline">Conhecer soluções</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="servicos">
-      <div class="container">
-        <div class="section-header">
-          <h2>Nossas Soluções</h2>
-          <p>Unimos criatividade e tecnologia para construir a presença digital completa do seu negócio.</p>
-        </div>
-        <div class="grid-3">
-          <div class="card">
-            <span class="card-tag">01 • Performance</span>
-            <h3>Marketing Digital & Tráfego</h3>
-            <p>Campanhas segmentadas no Google e redes sociais com foco em geração de leads qualificados e retorno sobre investimento.</p>
-          </div>
-          <div class="card">
-            <span class="card-tag">02 • Branding</span>
-            <h3>Comunicação & Social Media</h3>
-            <p>Gestão estratégica de conteúdo, posicionamento de marca e design criativo para engajar e fidelizar o seu público.</p>
-          </div>
-          <div class="card">
-            <span class="card-tag">03 • Tecnologia</span>
-            <h3>Engenharia Web & Landing Pages</h3>
-            <p>Sites rápidos, responsivos e otimizados para SEO, projetados com foco total na experiência do usuário e conversão.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="diferenciais">
-      <div class="container">
-        <div class="section-header">
-          <h2>Por que escolher a Mídia Up?</h2>
-          <p>Metodologia ágil com acompanhamento transparente em cada etapa do projeto.</p>
-        </div>
-        <div class="stats-grid">
-          <div class="badge-box">
-            <strong>+150%</strong>
-            <small>Crescimento médio em alcance digital</small>
-          </div>
-          <div class="badge-box">
-            <strong>100%</strong>
-            <small>Sites responsivos e otimizados</small>
-          </div>
-          <div class="badge-box">
-            <strong>24/7</strong>
-            <small>Monitoramento de campanhas ativas</small>
-          </div>
-          <div class="badge-box">
-            <strong>Foco ROI</strong>
-            <small>Decisões baseadas em métricas reais</small>
-          </div>
-        </div>
