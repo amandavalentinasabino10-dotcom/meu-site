@@ -431,4 +431,328 @@
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#diferenciais">Diferenciais</a></li>
         <li><a href="#atendimento" onclick="abrirAba('proposta')">Solicitar Proposta</a></li>
-      </ul>
+      </ul><a href="#atendimento" class="btn btn-primary" onclick="abrirAba('proposta')">
+        Vamos conversar
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Apresentação -->
+    <section class="hero">
+      <div class="container">
+        <span class="badge-pill">Agência de Marketing Digital</span>
+
+        <h1>
+          Sua marca merece estar em
+          <span>outro nível.</span>
+        </h1>
+
+        <p>
+          Estratégia, criatividade e tecnologia para transformar
+          a presença digital da sua empresa e gerar novas oportunidades.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#servicos" class="btn btn-primary">
+            Conheça nossos serviços
+          </a>
+
+          <a href="#atendimento" class="btn btn-outline"
+             onclick="abrirAba('proposta')">
+            Solicitar proposta
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge-pill">O que fazemos</span>
+          <h2>Nossos serviços</h2>
+          <p>
+            Soluções digitais desenvolvidas para fortalecer marcas,
+            melhorar resultados e conectar empresas ao seu público.
+          </p>
+        </div>
+
+        <div class="grid-3">
+
+          <article class="card">
+            <span class="card-tag">01 · Estratégia</span>
+            <h3>Marketing Digital</h3>
+            <p>
+              Planejamento de estratégias digitais, posicionamento
+              de marca e campanhas para ampliar a visibilidade
+              da sua empresa.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-tag">02 · Tecnologia</span>
+            <h3>Criação de Sites</h3>
+            <p>
+              Desenvolvimento e reformulação de sites modernos,
+              responsivos e funcionais, com foco na experiência
+              do usuário.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-tag">03 · Comunicação</span>
+            <h3>Gestão de Redes Sociais</h3>
+            <p>
+              Criação de conteúdo, planejamento de publicações
+              e fortalecimento da comunicação entre marcas
+              e clientes.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Diferenciais -->
+    <section id="diferenciais">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="badge-pill">Por que escolher a Mídia Up?</span>
+          <h2>Mais estratégia. Mais inovação.</h2>
+          <p>
+            Trabalhamos unindo criatividade, tecnologia e planejamento
+            para desenvolver soluções que fazem a diferença.
+          </p>
+        </div>
+
+        <div class="stats-grid">
+
+          <div class="badge-box">
+            <strong>Estratégia</strong>
+            <small>Planejamento alinhado aos objetivos da empresa.</small>
+          </div>
+
+          <div class="badge-box">
+            <strong>Inovação</strong>
+            <small>Uso da tecnologia para criar novas possibilidades.</small>
+          </div>
+
+          <div class="badge-box">
+            <strong>Criatividade</strong>
+            <small>Comunicação visual e digital diferenciada.</small>
+          </div>
+
+          <div class="badge-box">
+            <strong>Resultados</strong>
+            <small>Foco na evolução e no crescimento da marca.</small>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Atendimento -->
+    <section id="atendimento">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="badge-pill">Entre em contato</span>
+          <h2>Vamos tirar sua ideia do papel?</h2>
+          <p>
+            Escolha uma opção abaixo e conheça melhor
+            nossas possibilidades de atendimento.
+          </p>
+        </div>
+
+        <div class="atendimento-box">
+
+          <div class="tabs-header">
+            <button type="button"
+              class="tab-btn active"
+              onclick="abrirAba('proposta')">
+              Solicitar proposta
+            </button>
+
+            <button type="button"
+              class="tab-btn"
+              onclick="abrirAba('equipe')">
+              Falar com a equipe
+            </button>
+          </div>
+
+          <!-- Aba de proposta -->
+          <div id="proposta" class="tab-panel active">
+
+            <h3>Solicite uma proposta</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+              Conte um pouco sobre sua empresa e o serviço desejado.
+            </p>
+
+            <form id="formProposta">
+
+              <div class="field-group">
+                <label for="nome">Nome completo</label>
+                <input class="info-field" type="text"
+                  id="nome" name="nome"
+                  placeholder="Digite seu nome" required>
+              </div>
+
+              <div class="field-group">
+                <label for="email">E-mail</label>
+                <input class="info-field" type="email"
+                  id="email" name="email"
+                  placeholder="seuemail@exemplo.com" required>
+              </div>
+
+              <div class="field-group">
+                <label for="empresa">Nome da empresa</label>
+                <input class="info-field" type="text"
+                  id="empresa" name="empresa"
+                  placeholder="Digite o nome da empresa" required>
+              </div>
+
+              <div class="field-group">
+                <label for="servico">Serviço desejado</label>
+                <select class="select-field"
+                  id="servico" name="servico" required>
+                  <option value="">Selecione um serviço</option>
+                  <option value="Marketing Digital">Marketing Digital</option>
+                  <option value="Criação de Sites">Criação de Sites</option>
+                  <option value="Gestão de Redes Sociais">Gestão de Redes Sociais</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="mensagem">Conte um pouco sobre seu projeto</label>
+                <textarea class="info-field"
+                  id="mensagem" name="mensagem"
+                  rows="4"
+                  style="width: 100%; resize: vertical;"
+                  placeholder="Descreva suas necessidades..."
+                  required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                Enviar solicitação
+              </button>
+
+              <p id="mensagemSucesso"
+                style="display:none; color: var(--cyan-neon); margin-top: 1rem;"
+                role="status">
+                Solicitação registrada nesta demonstração!
+              </p>
+
+            </form>
+          </div>
+
+          <!-- Aba da equipe -->
+          <div id="equipe" class="tab-panel">
+
+            <h3>Conheça nossa equipe</h3>
+
+            <p style="color: var(--text-secondary); margin-top: 0.5rem;">
+              Profissionais preparados para desenvolver soluções
+              criativas e tecnológicas.
+            </p>
+
+            <div class="team-list">
+
+              <div class="team-item">
+                <strong>Marketing</strong>
+                <span>Estratégia e planejamento digital</span>
+              </div>
+
+              <div class="team-item">
+                <strong>Design</strong>
+                <span>Identidade visual e criação</span>
+              </div>
+
+              <div class="team-item">
+                <strong>Desenvolvimento</strong>
+                <span>Sites e soluções web</span>
+              </div>
+
+              <div class="team-item">
+                <strong>Comunicação</strong>
+                <span>Conteúdo e relacionamento</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container">
+      <a href="#" class="logo">Mídia<span>Up</span></a>
+
+      <p style="margin-top: 0.8rem;">
+        Estratégia, criatividade e tecnologia para sua marca.
+      </p>
+
+      <p style="margin-top: 0.8rem;">
+        © <span id="ano"></span> Mídia Up. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+
+    // Alternar entre as abas de atendimento
+    function abrirAba(aba) {
+
+      const paineis = document.querySelectorAll('.tab-panel');
+      const botoes = document.querySelectorAll('.tab-btn');
+
+      paineis.forEach(function(painel) {
+        painel.classList.remove('active');
+      });
+
+      botoes.forEach(function(botao) {
+        botao.classList.remove('active');
+      });
+
+      const painelSelecionado = document.getElementById(aba);
+
+      if (painelSelecionado) {
+        painelSelecionado.classList.add('active');
+      }
+
+      botoes.forEach(function(botao) {
+        if (botao.getAttribute('onclick') === `abrirAba('${aba}')`) {
+          botao.classList.add('active');
+        }
+      });
+    }
+
+    // Atualizar o ano automaticamente
+    document.getElementById('ano').textContent =
+      new Date().getFullYear();
+
+    // Validação e demonstração do formulário
+    document.getElementById('formProposta')
+      .addEventListener('submit', function(event) {
+
+        event.preventDefault();
+
+        const mensagem = document.getElementById('mensagemSucesso');
+
+        mensagem.style.display = 'block';
+
+        this.reset();
+      });
+
+  </script>
+
+</body>
+</html>
