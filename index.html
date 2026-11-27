@@ -1,758 +1,2117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Mídia Up - Agência de marketing digital, comunicação e engenharia web." />
-  <title>Mídia Up — Sua marca em outro nível</title>
-  <style>
-    :root {
-      --bg-void: #000000;
-      --bg-navy: #050a18;
-      --bg-glass: rgba(13, 21, 40, 0.65);
-      --bg-glass-hover: rgba(20, 32, 62, 0.85);
-      --blue-electric: #2563eb;
-      --cyan-neon: #00f0ff;
-      --cyan-soft: rgba(0, 240, 255, 0.14);
-      --border-glass: rgba(255, 255, 255, 0.12);
-      --border-bright: rgba(0, 240, 255, 0.45);
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --radius-lg: 18px;
-      --transition: all 0.3s ease;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FluxoInv | Gestão Logística</title>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+:root {
+  --navy: #0b1f3a;
+  --navy2: #102b50;
+  --blue: #1677e8;
+  --cyan: #36b8e8;
+  --bg: #f3f6fb;
+  --ink: #18263a;
+  --muted: #718096;
+  --line: #e4eaf2;
+  --white: #fff;
+  --green: #16845b;
+  --red: #d84a4a;
+  --amber: #b7791f;
+  --shadow: 0 12px 32px rgba(14,35,65,.08);
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-void);
-      background-image:
-        radial-gradient(circle at 12% 18%, rgba(37, 99, 235, 0.18) 0%, transparent 42%),
-        radial-gradient(circle at 88% 25%, rgba(0, 240, 255, 0.12) 0%, transparent 38%),
-        radial-gradient(circle at 50% 85%, rgba(37, 99, 235, 0.14) 0%, transparent 48%);
-      background-attachment: fixed;
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+body {
+  margin: 0;
+  font-family: Inter, Segoe UI, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
 
-    .container {
-      width: 100%;
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
+button, input, select {
+  font: inherit;
+}
 
-    /* Cabeçalho */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(5, 10, 24, 0.85);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-glass);
-    }
+button {
+  cursor: pointer;
+}
 
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 74px;
-    }
+.hidden {
+  display: none !important;
+}
 
-    .logo {
-      font-size: 1.45rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: var(--text-primary);
-      text-decoration: none;
-    }
+/* TELA DE LOGIN */
 
-    .logo span {
-      color: var(--cyan-neon);
-    }
+.login-wrap {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  background: #fff;
+}
 
-    .nav-links {
-      display: flex;
-      gap: 1.8rem;
-      list-style: none;
-    }
+.login-brand {
+  background: linear-gradient(145deg,#081a32,#123b69 70%,#1264b5);
+  color: #fff;
+  padding: 7vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
 
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: var(--transition);
-    }
+.login-brand:after {
+  content: "";
+  position: absolute;
+  width: 460px;
+  height: 460px;
+  border: 1px solid #ffffff20;
+  border-radius: 50%;
+  right: -130px;
+  bottom: -160px;
+  box-shadow: 0 0 0 55px #ffffff08, 0 0 0 110px #ffffff06;
+}
 
-    .nav-links a:hover {
-      color: var(--cyan-neon);
-    }
+.brand-logo {
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
 
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: var(--transition);
-      cursor: pointer;
-      border: none;
-    }
+.brand-logo span {
+  color: #50c4f2;
+}
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--blue-electric), #0284c7);
-      color: #fff;
-      box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
-    }
+.brand-copy {
+  max-width: 560px;
+  position: relative;
+  z-index: 1;
+}
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 28px rgba(0, 240, 255, 0.55);
-    }
+.brand-copy h1 {
+  font-size: clamp(32px,4vw,54px);
+  line-height: 1.08;
+  margin: 0 0 18px;
+}
 
-    .btn-outline {
-      background: var(--bg-glass);
-      color: var(--cyan-neon);
-      border: 1px solid var(--border-bright);
-    }
+.brand-copy p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #d3e4f7;
+}
 
-    .btn-outline:hover {
-      background: var(--cyan-soft);
-    }
+.login-foot {
+  font-size: 12px;
+  color: #c0d3e8;
+  position: relative;
+  z-index: 1;
+}
 
-    /* Hero */
-    .hero {
-      padding: 6rem 0 4.5rem;
-      text-align: center;
-    }
+.login-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
 
-    .badge-pill {
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      border-radius: 999px;
-      background: var(--cyan-soft);
-      border: 1px solid var(--border-bright);
-      color: var(--cyan-neon);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
+.login-card {
+  width: min(420px,100%);
+}
 
-    .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.75rem);
-      font-weight: 800;
-      line-height: 1.15;
-      max-width: 820px;
-      margin: 0 auto 1.25rem;
-    }
+.login-card h2 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
 
-    .hero h1 span {
-      background: linear-gradient(90deg, var(--cyan-neon), #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+.sub {
+  color: var(--muted);
+  margin: 0 0 28px;
+}
 
-    .hero p {
-      color: var(--text-secondary);
-      font-size: 1.12rem;
-      max-width: 640px;
-      margin: 0 auto 2.2rem;
-    }
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 15px 0;
+}
 
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #40516a;
+}
 
-    /* Seções e Grids */
-    section {
-      padding: 4.5rem 0;
-    }
+.field input,
+.field select,
+.toolbar input,
+.toolbar select {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 12px 13px;
+  background: #fff;
+  outline: none;
+  color: var(--ink);
+}
 
-    .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
+.field input:focus,
+.toolbar input:focus,
+.field select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px #1677e81a;
+}
 
-    .section-header h2 {
-      font-size: 2rem;
-      margin-bottom: 0.6rem;
-    }
+.primary {
+  border: 0;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 9px;
+  padding: 12px 17px;
+  font-weight: 700;
+}
 
-    .section-header p {
-      color: var(--text-secondary);
-      max-width: 580px;
-      margin: 0 auto;
-    }
+.primary:hover {
+  background: #0865d1;
+}
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 1.5rem;
-    }
+.login-btn {
+  width: 100%;
+  margin-top: 12px;
+}
 
-    .card {
-      background: var(--bg-glass);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 1.9rem;
-      transition: var(--transition);
-    }
+.hint {
+  font-size: 12px;
+  color: var(--muted);
+  background: #f3f7fc;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 18px;
+  line-height: 1.5;
+}
 
-    .card:hover {
-      background: var(--bg-glass-hover);
-      border-color: var(--border-bright);
-      transform: translateY(-5px);
-    }
+/* ESTRUTURA DO SISTEMA */
 
-    .card-tag {
-      display: inline-block;
-      color: var(--cyan-neon);
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+}
 
-    .card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.75rem;
-    }
+.sidebar {
+  background: var(--navy);
+  color: #dce8f6;
+  padding: 22px 15px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-    .card p {
-      color: var(--text-secondary);
-      font-size: 0.96rem;
-    }
+.side-logo {
+  font-size: 23px;
+  font-weight: 800;
+  padding: 6px 13px 28px;
+  color: #fff;
+}
 
-    /* Diferenciais */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.25rem;
-      margin-top: 2rem;
-    }
+.side-logo span {
+  color: #4dc3f0;
+}
 
-    .badge-box {
-      background: var(--bg-glass);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 1.3rem;
-      text-align: center;
-    }
+.side-label {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: #7893b2;
+  padding: 12px 13px 8px;
+  font-weight: 800;
+}
 
-    .badge-box strong {
-      display: block;
-      font-size: 1.4rem;
-      color: var(--cyan-neon);
-      margin-bottom: 0.25rem;
-    }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 13px;
+  border-radius: 9px;
+  color: #c5d4e7;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 2px 0;
+}
 
-    .badge-box small {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
+.nav:hover,
+.nav.active {
+  background: #ffffff16;
+  color: #fff;
+}
 
-    /* Abas de Atendimento (Solicitar Proposta e Falar com a Equipe) */
-    .atendimento-box {
-      background: var(--bg-glass);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--border-bright);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem 2rem;
-      max-width: 760px;
-      margin: 0 auto;
-    }
+.nav.active {
+  box-shadow: inset 3px 0 #39b7ee;
+}
 
-    .tabs-header {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--border-glass);
-      padding-bottom: 1.25rem;
-    }
+.nav .ico {
+  width: 19px;
+  text-align: center;
+  font-size: 16px;
+}
 
-    .tab-btn {
-      padding: 0.75rem 1.5rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-glass);
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
+.side-bottom {
+  margin-top: auto;
+  padding: 18px 13px 4px;
+  color: #829bb8;
+  font-size: 11px;
+  line-height: 1.6;
+}
 
-    .tab-btn:hover {
-      border-color: var(--border-bright);
-      color: var(--text-primary);
-    }
+.main {
+  min-width: 0;
+}
 
-    .tab-btn.active {
-      background: linear-gradient(135deg, var(--blue-electric), #0284c7);
-      color: #ffffff;
-      border-color: var(--cyan-neon);
-      box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
-    }
+.topbar {
+  height: 72px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
 
-    .tab-panel {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
+.crumb {
+  font-size: 14px;
+  color: var(--muted);
+}
 
-    .tab-panel.active {
-      display: block;
-    }
+.crumb strong {
+  color: var(--ink);
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.user {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 13px;
+  font-weight: 700;
+}
 
-    .field-group {
-      margin-bottom: 1.35rem;
-      text-align: left;
-    }
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e5f1ff;
+  color: #1265bd;
+  font-weight: 800;
+}
 
-    .field-group label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--cyan-neon);
-      margin-bottom: 0.45rem;
-    }
+.content {
+  padding: 30px 32px;
+  max-width: 1500px;
+  margin: auto;
+}
 
-    .info-field,
-    .select-field {
-      width: 100%;
-      padding: 0.9rem 1.1rem;
-      border-radius: 12px;
-      background: rgba(5, 10, 24, 0.9);
-      border: 1px solid var(--border-bright);
-      color: var(--text-primary);
-      font-size: 1rem;
-      outline: none;
-    }
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 25px;
+}
 
-    .info-field {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+.page-head h1 {
+  font-size: 25px;
+  margin: 0 0 7px;
+  letter-spacing: -.5px;
+}
 
-    .info-field a {
-      color: var(--cyan-neon);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 600;
-      padding: 0.35rem 0.85rem;
-      border-radius: 999px;
-      background: var(--cyan-soft);
-      border: 1px solid var(--border-bright);
-    }
+.page-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
 
-    .info-field a:hover {
-      background: var(--cyan-neon);
-      color: #000;
-    }
+/* INDICADORES */
 
-    .team-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 0.85rem;
-      margin-top: 1.25rem;
-    }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
 
-    .team-item {
-      background: rgba(5, 10, 24, 0.85);
-      border: 1px solid var(--border-glass);
-      border-radius: 12px;
-      padding: 0.95rem 1.1rem;
-      transition: var(--transition);
-    }
+.stat,
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  box-shadow: var(--shadow);
+}
 
-    .team-item:hover {
-      border-color: var(--border-bright);
-    }
+.stat {
+  padding: 19px;
+}
 
-    .team-item strong {
-      display: block;
-      color: var(--cyan-neon);
-      font-size: 1rem;
-      margin-bottom: 0.2rem;
-    }
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
 
-    .team-item span {
-      color: var(--text-secondary);
-      font-size: 0.92rem;
-    }
+.stat-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #edf5ff;
+  display: grid;
+  place-items: center;
+  color: var(--blue);
+  font-size: 17px;
+}
 
-    footer {
-      border-top: 1px solid var(--border-glass);
-      padding: 2rem 0;
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-    }
+.stat-num {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 14px 0 4px;
+}
 
-    @media (max-width: 720px) {
-      .nav-links {
-        display: none;
-      }
-    }
-  </style>
+.stat-note {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 18px;
+}
+
+.panel {
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 17px;
+}
+
+.panel-title h3 {
+  font-size: 15px;
+  margin: 0;
+}
+
+.panel-title span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* GRÁFICOS E ALERTAS */
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 35px;
+  gap: 10px;
+  align-items: center;
+  margin: 15px 0;
+  font-size: 12px;
+  color: #52637a;
+}
+
+.bar {
+  height: 8px;
+  background: #edf1f6;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg,var(--blue),var(--cyan));
+  border-radius: 20px;
+}
+
+.alert {
+  display: flex;
+  gap: 11px;
+  padding: 12px;
+  background: #fff9ed;
+  border: 1px solid #f5e5c5;
+  border-radius: 9px;
+  margin: 10px 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.alert b {
+  display: block;
+  color: #815510;
+}
+
+/* TABELAS */
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.toolbar input {
+  min-width: 220px;
+  flex: 1;
+}
+
+.toolbar select {
+  min-width: 145px;
+}
+
+.table-wrap {
+  overflow: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+.data-table th {
+  text-align: left;
+  font-size: 11px;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  background: #fbfcfe;
+}
+
+.data-table td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #edf1f6;
+  font-size: 13px;
+}
+
+.data-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ok {
+  background: #e7f7ef;
+  color: #14734e;
+}
+
+.low {
+  background: #fff4df;
+  color: #99620b;
+}
+
+.off {
+  background: #fdecec;
+  color: #b33131;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.small-btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 7px;
+  padding: 6px 9px;
+  font-size: 11px;
+  color: #40516a;
+}
+
+.small-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.empty {
+  padding: 35px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* JANELAS E FORMULÁRIOS */
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: #081a3266;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 20;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 14px;
+  width: min(520px,100%);
+  padding: 23px;
+  box-shadow: 0 20px 60px #06162d40;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.modal-head h2 {
+  font-size: 19px;
+  margin: 0;
+}
+
+.close {
+  border: 0;
+  background: #f0f3f8;
+  border-radius: 7px;
+  width: 30px;
+  height: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 13px;
+}
+
+.form-grid .full {
+  grid-column: 1/-1;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.secondary {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 9px;
+  padding: 11px 15px;
+  font-weight: 700;
+  color: #52637a;
+}
+
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: #102b50;
+  color: #fff;
+  padding: 13px 18px;
+  border-radius: 9px;
+  box-shadow: var(--shadow);
+  z-index: 30;
+  font-size: 13px;
+}
+
+.menu-toggle {
+  display: none;
+  border: 0;
+  background: #eef4fb;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+/* RESPONSIVIDADE */
+
+@media(max-width:1000px) {
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .app {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .content {
+    padding: 24px;
+  }
+
+  .topbar {
+    padding: 0 24px;
+  }
+}
+
+@media(max-width:720px) {
+  .login-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .login-brand {
+    display: none;
+  }
+
+  .login-panel {
+    min-height: 100vh;
+  }
+
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    z-index: 10;
+    left: -260px;
+    top: 0;
+    width: 250px;
+    transition: left .2s;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .topbar {
+    height: 62px;
+    padding: 0 15px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .content {
+    padding: 22px 15px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stats {
+    gap: 10px;
+  }
+
+  .stat {
+    padding: 14px;
+  }
+
+  .stat-num {
+    font-size: 24px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid .full {
+    grid-column: auto;
+  }
+
+  .user-name {
+    display: none;
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <header>
-    <div class="container nav">
-      <a href="#" class="logo">Mídia<span>Up</span></a>
-      <ul class="nav-links">
-        <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#diferenciais">Diferenciais</a></li>
-        <li><a href="#atendimento" onclick="abrirAba('proposta')">Solicitar Proposta</a></li>
-      </ul><a href="#atendimento" class="btn btn-primary" onclick="abrirAba('proposta')">
-        Vamos conversar
-      </a>
+<!-- TELA DE LOGIN -->
+
+<section id="loginScreen" class="login-wrap">
+
+  <div class="login-brand">
+    <div class="brand-logo">Fluxo<span>Inv</span></div>
+
+    <div class="brand-copy">
+      <h1>Controle inteligente para sua operação logística.</h1>
+
+      <p>
+        Rastreabilidade de materiais, movimentações de estoque
+        e acompanhamento de ordens de serviço e produção
+        em um só lugar.
+      </p>
     </div>
-  </header>
 
-  <main>
-    <!-- Apresentação -->
-    <section class="hero">
-      <div class="container">
-        <span class="badge-pill">Agência de Marketing Digital</span>
+    <div class="login-foot">
+      PLATAFORMA DE GESTÃO LOGÍSTICA · GRUPO CAPACLE
+    </div>
+  </div>
 
-        <h1>
-          Sua marca merece estar em
-          <span>outro nível.</span>
-        </h1>
+  <div class="login-panel">
+    <form class="login-card" id="loginForm">
 
-        <p>
-          Estratégia, criatividade e tecnologia para transformar
-          a presença digital da sua empresa e gerar novas oportunidades.
-        </p>
+      <h2>Bem-vindo ao FluxoInv</h2>
+      <p class="sub">Entre para acessar o painel de controle.</p>
 
-        <div class="hero-actions">
-          <a href="#servicos" class="btn btn-primary">
-            Conheça nossos serviços
-          </a>
-
-          <a href="#atendimento" class="btn btn-outline"
-             onclick="abrirAba('proposta')">
-            Solicitar proposta
-          </a>
-        </div>
+      <div class="field">
+        <label for="loginUser">Usuário</label>
+        <input id="loginUser" required
+        placeholder="Digite seu usuário"
+        autocomplete="username">
       </div>
-    </section>
 
-    <!-- Serviços -->
-    <section id="servicos">
-      <div class="container">
-        <div class="section-header">
-          <span class="badge-pill">O que fazemos</span>
-          <h2>Nossos serviços</h2>
-          <p>
-            Soluções digitais desenvolvidas para fortalecer marcas,
-            melhorar resultados e conectar empresas ao seu público.
-          </p>
-        </div>
-
-        <div class="grid-3">
-
-          <article class="card">
-            <span class="card-tag">01 · Estratégia</span>
-            <h3>Marketing Digital</h3>
-            <p>
-              Planejamento de estratégias digitais, posicionamento
-              de marca e campanhas para ampliar a visibilidade
-              da sua empresa.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="card-tag">02 · Tecnologia</span>
-            <h3>Criação de Sites</h3>
-            <p>
-              Desenvolvimento e reformulação de sites modernos,
-              responsivos e funcionais, com foco na experiência
-              do usuário.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="card-tag">03 · Comunicação</span>
-            <h3>Gestão de Redes Sociais</h3>
-            <p>
-              Criação de conteúdo, planejamento de publicações
-              e fortalecimento da comunicação entre marcas
-              e clientes.
-            </p>
-          </article>
-
-        </div>
+      <div class="field">
+        <label for="loginPass">Senha</label>
+        <input id="loginPass" type="password" required
+        placeholder="Digite sua senha"
+        autocomplete="current-password">
       </div>
-    </section>
 
-    <!-- Diferenciais -->
-    <section id="diferenciais">
-      <div class="container">
+      <button class="primary login-btn">
+        Acessar plataforma
+      </button>
 
-        <div class="section-header">
-          <span class="badge-pill">Por que escolher a Mídia Up?</span>
-          <h2>Mais estratégia. Mais inovação.</h2>
-          <p>
-            Trabalhamos unindo criatividade, tecnologia e planejamento
-            para desenvolver soluções que fazem a diferença.
-          </p>
-        </div>
-
-        <div class="stats-grid">
-
-          <div class="badge-box">
-            <strong>Estratégia</strong>
-            <small>Planejamento alinhado aos objetivos da empresa.</small>
-          </div>
-
-          <div class="badge-box">
-            <strong>Inovação</strong>
-            <small>Uso da tecnologia para criar novas possibilidades.</small>
-          </div>
-
-          <div class="badge-box">
-            <strong>Criatividade</strong>
-            <small>Comunicação visual e digital diferenciada.</small>
-          </div>
-
-          <div class="badge-box">
-            <strong>Resultados</strong>
-            <small>Foco na evolução e no crescimento da marca.</small>
-          </div>
-
-        </div>
+      <div class="hint">
+        <b>Acesso demonstrativo</b><br>
+        Usuário: <b>admin</b> · Senha: <b>fluxo123</b><br>
+        Protótipo acadêmico: os dados ficam salvos neste navegador.
       </div>
-    </section>
 
-    <!-- Atendimento -->
-    <section id="atendimento">
-      <div class="container">
+    </form>
+  </div>
 
-        <div class="section-header">
-          <span class="badge-pill">Entre em contato</span>
-          <h2>Vamos tirar sua ideia do papel?</h2>
-          <p>
-            Escolha uma opção abaixo e conheça melhor
-            nossas possibilidades de atendimento.
-          </p>
+</section>
+
+<!-- SISTEMA PRINCIPAL -->
+
+<section id="appScreen" class="app hidden">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="side-logo">Fluxo<span>Inv</span></div>
+
+    <div class="side-label">MENU PRINCIPAL</div>
+
+    <a href="#" class="nav active" data-page="dashboard">
+      <span class="ico">▦</span>Dashboard
+    </a>
+
+    <a href="#" class="nav" data-page="materials">
+      <span class="ico">▤</span>Materiais
+    </a>
+
+    <a href="#" class="nav" data-page="movements">
+      <span class="ico">⇄</span>Movimentações
+    </a>
+
+    <a href="#" class="nav" data-page="orders">
+      <span class="ico">▣</span>Ordens OS/OP
+    </a>
+
+    <a href="#" class="nav" data-page="inventory">
+      <span class="ico">✓</span>Inventário
+    </a>
+
+    <div class="side-label">SISTEMA</div>
+
+    <a href="#" class="nav" data-page="responsibles">
+      <span class="ico">♙</span>Responsáveis
+    </a>
+
+    <a href="#" class="nav" id="logout">
+      <span class="ico">↪</span>Sair
+    </a>
+
+    <div class="side-bottom">
+      FluxoInv · Integra SENAI<br>
+      Grupo Capacle · Protótipo acadêmico
+    </div>
+
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div style="display:flex;align-items:center;gap:12px">
+
+        <button class="menu-toggle" id="menuToggle">☰</button>
+
+        <div class="crumb">
+          FluxoInv / <strong id="crumb">Dashboard</strong>
         </div>
 
-        <div class="atendimento-box">
-
-          <div class="tabs-header">
-            <button type="button"
-              class="tab-btn active"
-              onclick="abrirAba('proposta')">
-              Solicitar proposta
-            </button>
-
-            <button type="button"
-              class="tab-btn"
-              onclick="abrirAba('equipe')">
-              Falar com a equipe
-            </button>
-          </div>
-
-          <!-- Aba de proposta -->
-          <div id="proposta" class="tab-panel active">
-
-            <h3>Solicite uma proposta</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-              Conte um pouco sobre sua empresa e o serviço desejado.
-            </p>
-
-            <form id="formProposta">
-
-              <div class="field-group">
-                <label for="nome">Nome completo</label>
-                <input class="info-field" type="text"
-                  id="nome" name="nome"
-                  placeholder="Digite seu nome" required>
-              </div>
-
-              <div class="field-group">
-                <label for="email">E-mail</label>
-                <input class="info-field" type="email"
-                  id="email" name="email"
-                  placeholder="seuemail@exemplo.com" required>
-              </div>
-
-              <div class="field-group">
-                <label for="empresa">Nome da empresa</label>
-                <input class="info-field" type="text"
-                  id="empresa" name="empresa"
-                  placeholder="Digite o nome da empresa" required>
-              </div>
-
-              <div class="field-group">
-                <label for="servico">Serviço desejado</label>
-                <select class="select-field"
-                  id="servico" name="servico" required>
-                  <option value="">Selecione um serviço</option>
-                  <option value="Marketing Digital">Marketing Digital</option>
-                  <option value="Criação de Sites">Criação de Sites</option>
-                  <option value="Gestão de Redes Sociais">Gestão de Redes Sociais</option>
-                  <option value="Outro">Outro</option>
-                </select>
-              </div>
-
-              <div class="field-group">
-                <label for="mensagem">Conte um pouco sobre seu projeto</label>
-                <textarea class="info-field"
-                  id="mensagem" name="mensagem"
-                  rows="4"
-                  style="width: 100%; resize: vertical;"
-                  placeholder="Descreva suas necessidades..."
-                  required></textarea>
-              </div>
-
-              <button type="submit" class="btn btn-primary">
-                Enviar solicitação
-              </button>
-
-              <p id="mensagemSucesso"
-                style="display:none; color: var(--cyan-neon); margin-top: 1rem;"
-                role="status">
-                Solicitação registrada nesta demonstração!
-              </p>
-
-            </form>
-          </div>
-
-          <!-- Aba da equipe -->
-          <div id="equipe" class="tab-panel">
-
-            <h3>Conheça nossa equipe</h3>
-
-            <p style="color: var(--text-secondary); margin-top: 0.5rem;">
-              Profissionais preparados para desenvolver soluções
-              criativas e tecnológicas.
-            </p>
-
-            <div class="team-list">
-
-              <div class="team-item">
-                <strong>Marketing</strong>
-                <span>Estratégia e planejamento digital</span>
-              </div>
-
-              <div class="team-item">
-                <strong>Design</strong>
-                <span>Identidade visual e criação</span>
-              </div>
-
-              <div class="team-item">
-                <strong>Desenvolvimento</strong>
-                <span>Sites e soluções web</span>
-              </div>
-
-              <div class="team-item">
-                <strong>Comunicação</strong>
-                <span>Conteúdo e relacionamento</span>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
       </div>
-    </section>
+
+      <div class="user">
+        <div class="avatar">A</div>
+        <span class="user-name">Administrador</span>
+      </div>
+
+    </header>
+
+    <div class="content" id="pageContent"></div>
 
   </main>
 
-  <!-- Rodapé -->
-  <footer>
-    <div class="container">
-      <a href="#" class="logo">Mídia<span>Up</span></a>
+</section>
 
-      <p style="margin-top: 0.8rem;">
-        Estratégia, criatividade e tecnologia para sua marca.
-      </p>
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+<script>
 
-      <p style="margin-top: 0.8rem;">
-        © <span id="ano"></span> Mídia Up. Todos os direitos reservados.
-      </p>
+// CONFIGURAÇÕES INICIAIS
+
+const $ = s => document.querySelector(s);
+
+const load = (k,f) => {
+  try {
+    return JSON.parse(localStorage.getItem('fi_'+k)) ?? f;
+  } catch {
+    return f;
+  }
+};
+
+const save = (k,v) =>
+  localStorage.setItem('fi_'+k,JSON.stringify(v));
+
+let materials = load('materials',[
+  {
+    id:1,
+    code:'MAT-001',
+    name:'Chapa de aço carbono',
+    category:'Matéria-prima',
+    unit:'kg',
+    qty:320,
+    min:100,
+    location:'Almoxarifado A'
+  },
+  {
+    id:2,
+    code:'MAT-002',
+    name:'Parafuso sextavado M12',
+    category:'Componente',
+    unit:'un',
+    qty:48,
+    min:80,
+    location:'Prateleira B-02'
+  },
+  {
+    id:3,
+    code:'MAT-003',
+    name:'Óleo lubrificante industrial',
+    category:'Insumo',
+    unit:'L',
+    qty:75,
+    min:20,
+    location:'Almoxarifado B'
+  },
+  {
+    id:4,
+    code:'MAT-004',
+    name:'Rolamento 6205',
+    category:'Componente',
+    unit:'un',
+    qty:12,
+    min:10,
+    location:'Prateleira C-01'
+  }
+]);
+
+let movements = load('movements',[]);
+let orders = load('orders',[]);
+let counts = load('counts',[]);
+
+let responsibles = load('responsibles',[
+  {
+    id:1,
+    name:'Administrador',
+    sector:'Almoxarifado',
+    contact:'admin@fluxoinv.local'
+  }
+]);
+
+let page = 'dashboard';
+
+// SALVAR DADOS
+
+function persist() {
+  save('materials',materials);
+  save('movements',movements);
+  save('orders',orders);
+  save('counts',counts);
+  save('responsibles',responsibles);
+}
+
+// NOTIFICAÇÕES
+
+function toast(msg) {
+  $('#toastRoot').innerHTML =
+    `<div class="toast">${msg}</div>`;
+
+  setTimeout(() => {
+    $('#toastRoot').innerHTML = '';
+  },2600);
+}
+
+// NAVEGAÇÃO
+
+function go(p) {
+  page = p;
+
+  document.querySelectorAll('.nav[data-page]')
+    .forEach(a =>
+      a.classList.toggle('active',a.dataset.page===p)
+    );
+
+  $('#crumb').textContent = ({
+    dashboard:'Dashboard',
+    materials:'Materiais',
+    movements:'Movimentações',
+    orders:'Ordens OS/OP',
+    inventory:'Inventário',
+    responsibles:'Responsáveis'
+  })[p];
+
+  $('#sidebar').classList.remove('open');
+
+  render();
+}
+
+// CABEÇALHO DAS PÁGINAS
+
+function header(title,desc,button='') {
+  return `
+    <div class="page-head">
+      <div>
+        <h1>${title}</h1>
+        <p>${desc}</p>
+      </div>
+      ${button}
     </div>
-  </footer>
+  `;
+}
 
-  <!-- JavaScript -->
-  <script>
+// INDICADORES
 
-    // Alternar entre as abas de atendimento
-    function abrirAba(aba) {
+function stat(label,num,note,ico) {
+  return `
+    <div class="stat">
+      <div class="stat-top">
+        <span>${label}</span>
+        <span class="stat-icon">${ico}</span>
+      </div>
 
-      const paineis = document.querySelectorAll('.tab-panel');
-      const botoes = document.querySelectorAll('.tab-btn');
+      <div class="stat-num">${num}</div>
+      <div class="stat-note">${note}</div>
+    </div>
+  `;
+}
 
-      paineis.forEach(function(painel) {
-        painel.classList.remove('active');
-      });
+// DASHBOARD
 
-      botoes.forEach(function(botao) {
-        botao.classList.remove('active');
-      });
+function dashboard() {
 
-      const painelSelecionado = document.getElementById(aba);
+  let low = materials.filter(m => m.qty <= m.min).length;
 
-      if (painelSelecionado) {
-        painelSelecionado.classList.add('active');
-      }
+  return `
 
-      botoes.forEach(function(botao) {
-        if (botao.getAttribute('onclick') === `abrirAba('${aba}')`) {
-          botao.classList.add('active');
+    ${header(
+      'Visão geral',
+      'Acompanhe os principais indicadores da operação logística.'
+    )}
+
+    <div class="stats">
+
+      ${stat(
+        'Materiais cadastrados',
+        materials.length,
+        'Itens registrados no sistema',
+        '▤'
+      )}
+
+      ${stat(
+        'Unidades em estoque',
+        materials.reduce((a,m)=>a+Number(m.qty),0)
+          .toLocaleString('pt-BR'),
+        'Quantidade total registrada',
+        '▦'
+      )}
+
+      ${stat(
+        'Itens abaixo do mínimo',
+        low,
+        low?'Necessitam de atenção':'Estoque dentro dos níveis',
+        '!'
+      )}
+
+      ${stat(
+        'Movimentações registradas',
+        movements.length,
+        'Entradas e saídas lançadas',
+        '⇄'
+      )}
+
+    </div>
+
+    <div class="dashboard-grid">
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <h3>Visão do estoque</h3>
+          <span>Por material</span>
+        </div>
+
+        ${
+          materials.slice(0,6).map(m=>`
+
+            <div class="bar-row">
+
+              <span title="${m.name}">
+                ${m.name.length>16
+                  ?m.name.slice(0,16)+'…'
+                  :m.name}
+              </span>
+
+              <div class="bar">
+                <i style="width:${
+                  Math.min(
+                    100,
+                    Math.max(5,m.qty/Math.max(m.min*2,1)*100)
+                  )
+                }%"></i>
+              </div>
+
+              <b>${m.qty}</b>
+
+            </div>
+
+          `).join('')
+          || '<div class="empty">Nenhum material cadastrado.</div>'
         }
-      });
-    }
 
-    // Atualizar o ano automaticamente
-    document.getElementById('ano').textContent =
-      new Date().getFullYear();
+      </div>
 
-    // Validação e demonstração do formulário
-    document.getElementById('formProposta')
-      .addEventListener('submit', function(event) {
+      <div>
 
-        event.preventDefault();
+        <div class="panel">
 
-        const mensagem = document.getElementById('mensagemSucesso');
+          <div class="panel-title">
+            <h3>Alertas de estoque</h3>
+            <span>${low} alerta(s)</span>
+          </div>
 
-        mensagem.style.display = 'block';
+          ${
+            materials.filter(m=>m.qty<=m.min).map(m=>`
 
-        this.reset();
-      });
+              <div class="alert">
+                ⚠️
 
-  </script>
+                <div>
+                  <b>${m.name}</b>
+
+                  Saldo atual: ${m.qty} ${m.unit}
+                  · Mínimo: ${m.min} ${m.unit}
+                </div>
+              </div>
+
+            `).join('')
+            || '<div class="empty">Nenhum alerta no momento.</div>'
+          }
+
+        </div>
+
+        <div class="panel">
+
+          <div class="panel-title">
+            <h3>Acesso rápido</h3>
+          </div>
+
+          <div class="toolbar">
+
+            <button class="primary" onclick="openMaterial()">
+              + Novo material
+            </button>
+
+            <button class="secondary" onclick="go('movements')">
+              Registrar movimentação
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+// CONSTRUÇÃO DAS TABELAS
+
+function table(headers,rows) {
+
+  return `
+
+    <div class="panel table-wrap">
+
+      <table class="data-table">
+
+        <thead>
+          <tr>
+            ${headers.map(h=>`<th>${h}</th>`).join('')}
+          </tr>
+        </thead>
+
+        <tbody>
+
+          ${rows || `
+            <tr>
+              <td colspan="${headers.length}" class="empty">
+                Nenhum registro encontrado.
+              </td>
+            </tr>
+          `}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+}
+
+// PÁGINA DE MATERIAIS
+
+function materialsPage() {
+
+  return `
+
+    ${header(
+      'Materiais',
+      'Cadastre e acompanhe os materiais armazenados.',
+      '<button class="primary" onclick="openMaterial()">+ Novo material</button>'
+    )}
+
+    <div class="toolbar">
+
+      <input
+        id="searchMaterials"
+        placeholder="Buscar por código ou descrição..."
+        oninput="filterMaterials()"
+      >
+
+      <select id="filterCategory" onchange="filterMaterials()">
+
+        <option value="">Todas as categorias</option>
+        <option>Matéria-prima</option>
+        <option>Componente</option>
+        <option>Insumo</option>
+
+      </select>
+
+    </div>
+
+    <div id="materialsTable">
+      ${materialsTable(materials)}
+    </div>
+
+  `;
+}
+
+// TABELA DE MATERIAIS
+
+function materialsTable(list) {
+
+  return table(
+    [
+      'Código',
+      'Material',
+      'Categoria',
+      'Quantidade',
+      'Localização',
+      'Status',
+      'Ações'
+    ],
+
+    list.map(m=>`
+
+      <tr>
+
+        <td><b>${m.code}</b></td>
+        <td>${m.name}</td>
+        <td>${m.category}</td>
+        <td>${m.qty} ${m.unit}</td>
+        <td>${m.location}</td>
+
+        <td>
+          <span class="badge ${m.qty<=m.min?'low':'ok'}">
+            ${m.qty<=m.min?'Estoque baixo':'Regular'}
+          </span>
+        </td>
+
+        <td>
+
+          <div class="actions">
+
+            <button class="small-btn"
+              onclick="openMaterial(${m.id})">
+              Editar
+            </button>
+
+            <button class="small-btn"
+              onclick="removeItem('materials',${m.id})">
+              Excluir
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `).join('')
+  );
+
+}
+
+// FILTRO DE MATERIAIS
+
+function filterMaterials() {
+
+  let q = $('#searchMaterials').value.toLowerCase();
+  let c = $('#filterCategory').value;
+
+  $('#materialsTable').innerHTML = materialsTable(
+    materials.filter(m =>
+      (m.code+' '+m.name).toLowerCase().includes(q)
+      && (!c || m.category===c)
+    )
+  );
+
+}
+
+// PÁGINA DE MOVIMENTAÇÕES
+
+function movementsPage() {
+
+  return `
+
+    ${header(
+      'Movimentações',
+      'Registre entradas e saídas para manter o saldo atualizado.',
+      '<button class="primary" onclick="openMovement()">+ Registrar movimentação</button>'
+    )}
+
+    ${table(
+      [
+        'Data',
+        'Material',
+        'Tipo',
+        'Quantidade',
+        'Documento',
+        'Responsável'
+      ],
+
+      movements.slice().reverse().map(x=>`
+
+        <tr>
+          <td>${x.date}</td>
+          <td>${x.material}</td>
+
+          <td>
+            <span class="badge ${x.type==='Entrada'?'ok':'low'}">
+              ${x.type}
+            </span>
+          </td>
+
+          <td>${x.qty} ${x.unit}</td>
+          <td>${x.doc||'—'}</td>
+          <td>${x.person}</td>
+        </tr>
+
+      `).join('')
+    )}
+
+  `;
+
+}
+
+// PÁGINA DE ORDENS OS/OP
+
+function ordersPage() {
+
+  return `
+
+    ${header(
+      'Ordens de serviço e produção',
+      'Vincule materiais às OS e OP para rastrear sua aplicação.',
+      '<button class="primary" onclick="openOrder()">+ Nova ordem</button>'
+    )}
+
+    ${table(
+      [
+        'Número',
+        'Tipo',
+        'Descrição',
+        'Material',
+        'Quantidade',
+        'Status'
+      ],
+
+      orders.map(o=>`
+
+        <tr>
+
+          <td><b>${o.number}</b></td>
+          <td>${o.type}</td>
+          <td>${o.desc}</td>
+          <td>${o.material}</td>
+          <td>${o.qty}</td>
+
+          <td>
+            <span class="badge ${o.status==='Concluída'?'ok':'low'}">
+              ${o.status}
+            </span>
+          </td>
+
+        </tr>
+
+      `).join('')
+    )}
+
+  `;
+
+}
+
+// PÁGINA DE INVENTÁRIO
+
+function inventoryPage() {
+
+  return `
+
+    ${header(
+      'Inventário',
+      'Registre contagens e compare o saldo físico com o saldo do sistema.',
+      '<button class="primary" onclick="openCount()">+ Nova contagem</button>'
+    )}
+
+    ${table(
+      [
+        'Data',
+        'Material',
+        'Saldo no sistema',
+        'Contagem física',
+        'Diferença',
+        'Responsável'
+      ],
+
+      counts.slice().reverse().map(c=>`
+
+        <tr>
+
+          <td>${c.date}</td>
+          <td>${c.material}</td>
+          <td>${c.system}</td>
+          <td>${c.actual}</td>
+
+          <td>
+            <span class="badge ${c.diff===0?'ok':'low'}">
+              ${c.diff>0?'+':''}${c.diff}
+            </span>
+          </td>
+
+          <td>${c.person}</td>
+
+        </tr>
+
+      `).join('')
+    )}
+
+  `;
+
+}
+
+// PÁGINA DE RESPONSÁVEIS
+
+function responsiblesPage() {
+
+  return `
+
+    ${header(
+      'Responsáveis',
+      'Identifique as pessoas responsáveis pelo acompanhamento do almoxarifado.',
+      '<button class="primary" onclick="openResponsible()">+ Novo responsável</button>'
+    )}
+
+    ${table(
+      ['Nome','Setor','Contato','Ações'],
+
+      responsibles.map(r=>`
+
+        <tr>
+
+          <td><b>${r.name}</b></td>
+          <td>${r.sector}</td>
+          <td>${r.contact}</td>
+
+          <td>
+            <button class="small-btn"
+              onclick="removeItem('responsibles',${r.id})">
+              Excluir
+            </button>
+          </td>
+
+        </tr>
+
+      `).join('')
+    )}
+
+  `;
+
+}
+
+// EXIBIR PÁGINAS
+
+function render() {
+
+  let views = {
+    dashboard,
+    materials:materialsPage,
+    movements:movementsPage,
+    orders:ordersPage,
+    inventory:inventoryPage,
+    responsibles:responsiblesPage
+  };
+
+  $('#pageContent').innerHTML = views[page]();
+
+}// JANELAS DE CADASTRO
+
+function openModal(title,body,submit) {
+
+  $('#modalRoot').innerHTML = `
+    <div class="modal-bg"
+      onclick="if(event.target===this)closeModal()">
+
+      <form class="modal" onsubmit="${submit}(event)">
+
+        <div class="modal-head">
+          <h2>${title}</h2>
+
+          <button type="button"
+            class="close"
+            onclick="closeModal()">×</button>
+        </div>
+
+        ${body}
+
+        <div class="modal-actions">
+
+          <button type="button"
+            class="secondary"
+            onclick="closeModal()">
+            Cancelar
+          </button>
+
+          <button class="primary">
+            Salvar registro
+          </button>
+
+        </div>
+
+      </form>
+    </div>
+  `;
+}
+
+function closeModal() {
+  $('#modalRoot').innerHTML = '';
+}
+
+// CADASTRAR OU EDITAR MATERIAL
+
+function openMaterial(id) {
+
+  let m = materials.find(x=>x.id===id)||{};
+
+  openModal(
+    id?'Editar material':'Cadastrar material',
+
+    `
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Código</label>
+          <input name="code" required
+            value="${m.code||''}"
+            placeholder="MAT-005">
+        </div>
+
+        <div class="field">
+          <label>Nome do material</label>
+          <input name="name" required
+            value="${m.name||''}">
+        </div>
+
+        <div class="field">
+          <label>Categoria</label>
+          <select name="category">
+            <option>Matéria-prima</option>
+            <option>Componente</option>
+            <option>Insumo</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Unidade</label>
+          <select name="unit">
+            <option>un</option>
+            <option>kg</option>
+            <option>L</option>
+            <option>m</option>
+            <option>cx</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Quantidade atual</label>
+          <input name="qty" type="number"
+            min="0" required value="${m.qty??0}">
+        </div>
+
+        <div class="field">
+          <label>Estoque mínimo</label>
+          <input name="min" type="number"
+            min="0" required value="${m.min??0}">
+        </div>
+
+        <div class="field full">
+          <label>Localização</label>
+          <input name="location" required
+            value="${m.location||''}"
+            placeholder="Ex.: Almoxarifado A">
+        </div>
+
+      </div>
+    `,
+
+    'saveMaterial'
+  );
+
+  let f = $('#modalRoot select[name=category]');
+  if(m.category) f.value=m.category;
+
+  let u = $('#modalRoot select[name=unit]');
+  if(m.unit) u.value=m.unit;
+
+  $('#modalRoot form').dataset.id=id||'';
+}
+
+// SALVAR MATERIAL
+
+function saveMaterial(e) {
+
+  e.preventDefault();
+
+  let f = new FormData(e.target);
+  let id = Number(e.target.dataset.id);
+  let obj = Object.fromEntries(f);
+
+  obj.qty = Number(obj.qty);
+  obj.min = Number(obj.min);
+
+  if(materials.some(m=>m.code===obj.code && m.id!==id)) {
+    toast('Já existe um material com esse código.');
+    return;
+  }
+
+  if(id) {
+    materials = materials.map(m=>
+      m.id===id?{...m,...obj}:m
+    );
+  } else {
+    materials.push({
+      id:Date.now(),
+      ...obj
+    });
+  }
+
+  persist();
+  closeModal();
+  render();
+
+  toast('Material salvo com sucesso.');
+}
+
+// REGISTRAR MOVIMENTAÇÃO
+
+function openMovement() {
+
+  if(!materials.length) {
+    toast('Cadastre um material primeiro.');
+    return;
+  }
+
+  openModal(
+    'Registrar movimentação',
+
+    `
+      <div class="form-grid">
+
+        <div class="field full">
+          <label>Material</label>
+
+          <select name="materialId">
+            ${materials.map(m=>`
+              <option value="${m.id}">
+                ${m.code} — ${m.name}
+                (saldo: ${m.qty})
+              </option>
+            `).join('')}
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Tipo</label>
+          <select name="type">
+            <option>Entrada</option>
+            <option>Saída</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Quantidade</label>
+          <input name="qty" type="number"
+            min="1" required>
+        </div>
+
+        <div class="field">
+          <label>Documento / OS / OP</label>
+          <input name="doc"
+            placeholder="Ex.: OS-2026-01">
+        </div>
+
+        <div class="field">
+          <label>Responsável</label>
+
+          <select name="person">
+            ${responsibles.map(r=>`
+              <option>${r.name}</option>
+            `).join('')}
+          </select>
+        </div>
+
+      </div>
+    `,
+
+    'saveMovement'
+  );
+}
+
+// SALVAR MOVIMENTAÇÃO
+
+function saveMovement(e) {
+
+  e.preventDefault();
+
+  let f = Object.fromEntries(new FormData(e.target));
+
+  let m = materials.find(
+    x=>x.id===Number(f.materialId)
+  );
+
+  let q = Number(f.qty);
+
+  if(f.type==='Saída' && q>m.qty) {
+    toast('Saldo insuficiente para essa saída.');
+    return;
+  }
+
+  m.qty += f.type==='Entrada'?q:-q;
+
+  movements.push({
+    id:Date.now(),
+    date:new Date().toLocaleDateString('pt-BR'),
+    material:m.name,
+    type:f.type,
+    qty:q,
+    unit:m.unit,
+    doc:f.doc,
+    person:f.person
+  });
+
+  persist();
+  closeModal();
+  render();
+
+  toast('Movimentação registrada e saldo atualizado.');
+}
+
+// CADASTRAR ORDEM OS/OP
+
+function openOrder() {
+
+  if(!materials.length) {
+    toast('Cadastre um material primeiro.');
+    return;
+  }
+
+  openModal(
+    'Nova ordem OS/OP',
+
+    `
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Número da ordem</label>
+          <input name="number" required
+            placeholder="OS-001">
+        </div>
+
+        <div class="field">
+          <label>Tipo</label>
+          <select name="type">
+            <option>OS</option>
+            <option>OP</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label>Descrição</label>
+          <input name="desc" required
+            placeholder="Descreva o serviço ou produção">
+        </div>
+
+        <div class="field full">
+          <label>Material vinculado</label>
+
+          <select name="materialId">
+            ${materials.map(m=>`
+              <option value="${m.id}">
+                ${m.name} (saldo: ${m.qty} ${m.unit})
+              </option>
+            `).join('')}
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Quantidade</label>
+          <input name="qty" type="number"
+            min="1" required>
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+          <select name="status">
+            <option>Aberta</option>
+            <option>Em andamento</option>
+            <option>Concluída</option>
+          </select>
+        </div>
+
+      </div>
+    `,
+
+    'saveOrder'
+  );
+}
+
+// SALVAR ORDEM
+
+function saveOrder(e) {
+
+  e.preventDefault();
+
+  let f = Object.fromEntries(new FormData(e.target));
+
+  let m = materials.find(
+    x=>x.id===Number(f.materialId)
+  );
+
+  if(Number(f.qty)>m.qty) {
+    toast('Quantidade maior que o saldo disponível.');
+    return;
+  }
+
+  orders.push({
+    id:Date.now(),
+    number:f.number,
+    type:f.type,
+    desc:f.desc,
+    material:m.name,
+    qty:Number(f.qty),
+    status:f.status
+  });
+
+  persist();
+  closeModal();
+  render();
+
+  toast('Ordem cadastrada. Registre a saída em Movimentações para dar baixa no estoque.');
+}
+
+// CADASTRAR CONTAGEM DE INVENTÁRIO
+
+function openCount() {
+
+  if(!materials.length) {
+    toast('Cadastre um material primeiro.');
+    return;
+  }
+
+  openModal(
+    'Nova contagem de inventário',
+
+    `
+      <div class="form-grid">
+
+        <div class="field full">
+          <label>Material</label>
+
+          <select name="materialId"
+            id="countMaterial"
+            onchange="setSystemQty()">
+
+            ${materials.map(m=>`
+              <option value="${m.id}">
+                ${m.name}
+              </option>
+            `).join('')}
+
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Saldo no sistema</label>
+
+          <input name="system"
+            id="systemQty"
+            readonly
+            value="${materials[0].qty}">
+        </div>
+
+        <div class="field">
+          <label>Contagem física</label>
+
+          <input name="actual"
+            type="number"
+            min="0"
+            required>
+        </div>
+
+        <div class="field full">
+          <label>Responsável</label>
+
+          <select name="person">
+            ${responsibles.map(r=>`
+              <option>${r.name}</option>
+            `).join('')}
+          </select>
+        </div>
+
+      </div>
+    `,
+
+    'saveCount'
+  );
+}
+
+// ATUALIZAR SALDO DO SISTEMA NA CONTAGEM
+
+function setSystemQty() {
+
+  let m = materials.find(
+    x=>x.id===Number($('#countMaterial').value)
+  );
+
+  $('#systemQty').value=m.qty;
+}
+
+// SALVAR CONTAGEM
+
+function saveCount(e) {
+
+  e.preventDefault();
+
+  let f = Object.fromEntries(new FormData(e.target));
+
+  let m = materials.find(
+    x=>x.id===Number(f.materialId)
+  );
+
+  let actual = Number(f.actual);
+
+  counts.push({
+    id:Date.now(),
+    date:new Date().toLocaleDateString('pt-BR'),
+    material:m.name,
+    system:Number(f.system),
+    actual,
+    diff:actual-Number(f.system),
+    person:f.person
+  });
+
+  persist();
+  closeModal();
+  render();
+
+  toast('Contagem registrada. Divergências foram identificadas.');
+}
+
+// CADASTRAR RESPONSÁVEL
+
+function openResponsible() {
+
+  openModal(
+    'Novo responsável',
+
+    `
+      <div class="field">
+        <label>Nome completo</label>
+        <input name="name" required>
+      </div>
+
+      <div class="field">
+        <label>Setor / função</label>
+        <input name="sector" required
+          placeholder="Ex.: Almoxarifado">
+      </div>
+
+      <div class="field">
+        <label>Contato</label>
+        <input name="contact"
+          placeholder="E-mail ou telefone">
+      </div>
+    `,
+
+    'saveResponsible'
+  );
+}
+
+// SALVAR RESPONSÁVEL
+
+function saveResponsible(e) {
+
+  e.preventDefault();
+
+  responsibles.push({
+    id:Date.now(),
+    ...Object.fromEntries(new FormData(e.target))
+  });
+
+  persist();
+  closeModal();
+  render();
+
+  toast('Responsável cadastrado.');
+}
+
+// EXCLUIR REGISTROS
+
+function removeItem(type,id) {
+
+  if(!confirm('Deseja realmente excluir este registro?')) {
+    return;
+  }
+
+  if(type==='materials') {
+    materials=materials.filter(x=>x.id!==id);
+  }
+
+  if(type==='responsibles') {
+    responsibles=responsibles.filter(x=>x.id!==id);
+  }
+
+  persist();
+  render();
+
+  toast('Registro excluído.');
+}
+
+// LOGIN
+
+$('#loginForm').addEventListener('submit',e=>{
+
+  e.preventDefault();
+
+  if(
+    $('#loginUser').value==='admin' &&
+    $('#loginPass').value==='fluxo123'
+  ) {
+
+    $('#loginScreen').classList.add('hidden');
+    $('#appScreen').classList.remove('hidden');
+
+    render();
+
+  } else {
+
+    toast('Usuário ou senha incorretos.');
+
+  }
+
+});
+
+// NAVEGAÇÃO DO MENU
+
+document.querySelectorAll('.nav[data-page]')
+.forEach(a=>{
+
+  a.addEventListener('click',e=>{
+
+    e.preventDefault();
+
+    go(a.dataset.page);
+
+  });
+
+});
+
+// SAIR DO SISTEMA
+
+$('#logout').addEventListener('click',e=>{
+
+  e.preventDefault();
+
+  $('#appScreen').classList.add('hidden');
+  $('#loginScreen').classList.remove('hidden');
+
+  $('#loginForm').reset();
+
+});
+
+// MENU PARA CELULAR
+
+$('#menuToggle').addEventListener('click',()=>{
+
+  $('#sidebar').classList.toggle('open');
+
+});
+
+</script>
 
 </body>
 </html>
+  
