@@ -3,2115 +3,421 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FluxoInv | Gestão Logística</title>
-
+<title>FluxoInv | Gestão de Estoque</title>
 <style>
 :root {
-  --navy: #0b1f3a;
-  --navy2: #102b50;
-  --blue: #1677e8;
-  --cyan: #36b8e8;
-  --bg: #f3f6fb;
-  --ink: #18263a;
-  --muted: #718096;
-  --line: #e4eaf2;
-  --white: #fff;
-  --green: #16845b;
-  --red: #d84a4a;
-  --amber: #b7791f;
-  --shadow: 0 12px 32px rgba(14,35,65,.08);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, Segoe UI, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-}
-
-button, input, select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* TELA DE LOGIN */
-
-.login-wrap {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  background: #fff;
-}
-
-.login-brand {
-  background: linear-gradient(145deg,#081a32,#123b69 70%,#1264b5);
-  color: #fff;
-  padding: 7vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-}
-
-.login-brand:after {
-  content: "";
-  position: absolute;
-  width: 460px;
-  height: 460px;
-  border: 1px solid #ffffff20;
-  border-radius: 50%;
-  right: -130px;
-  bottom: -160px;
-  box-shadow: 0 0 0 55px #ffffff08, 0 0 0 110px #ffffff06;
-}
-
-.brand-logo {
-  font-size: 27px;
-  font-weight: 800;
-  letter-spacing: -1px;
-}
-
-.brand-logo span {
-  color: #50c4f2;
-}
-
-.brand-copy {
-  max-width: 560px;
-  position: relative;
-  z-index: 1;
-}
-
-.brand-copy h1 {
-  font-size: clamp(32px,4vw,54px);
-  line-height: 1.08;
-  margin: 0 0 18px;
-}
-
-.brand-copy p {
-  font-size: 17px;
-  line-height: 1.7;
-  color: #d3e4f7;
-}
-
-.login-foot {
-  font-size: 12px;
-  color: #c0d3e8;
-  position: relative;
-  z-index: 1;
-}
-
-.login-panel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px;
-}
-
-.login-card {
-  width: min(420px,100%);
-}
-
-.login-card h2 {
-  font-size: 28px;
-  margin: 0 0 8px;
-}
-
-.sub {
-  color: var(--muted);
-  margin: 0 0 28px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin: 15px 0;
-}
-
-.field label {
-  font-size: 13px;
-  font-weight: 700;
-  color: #40516a;
-}
-
-.field input,
-.field select,
-.toolbar input,
-.toolbar select {
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  padding: 12px 13px;
-  background: #fff;
-  outline: none;
-  color: var(--ink);
-}
-
-.field input:focus,
-.toolbar input:focus,
-.field select:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px #1677e81a;
-}
-
-.primary {
-  border: 0;
-  background: var(--blue);
-  color: #fff;
-  border-radius: 9px;
-  padding: 12px 17px;
-  font-weight: 700;
-}
-
-.primary:hover {
-  background: #0865d1;
-}
-
-.login-btn {
-  width: 100%;
-  margin-top: 12px;
-}
-
-.hint {
-  font-size: 12px;
-  color: var(--muted);
-  background: #f3f7fc;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 18px;
-  line-height: 1.5;
-}
-
-/* ESTRUTURA DO SISTEMA */
-
-.app {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 250px 1fr;
-}
-
-.sidebar {
-  background: var(--navy);
-  color: #dce8f6;
-  padding: 22px 15px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.side-logo {
-  font-size: 23px;
-  font-weight: 800;
-  padding: 6px 13px 28px;
-  color: #fff;
-}
-
-.side-logo span {
-  color: #4dc3f0;
-}
-
-.side-label {
-  font-size: 10px;
-  letter-spacing: 1.4px;
-  color: #7893b2;
-  padding: 12px 13px 8px;
-  font-weight: 800;
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 13px;
-  border-radius: 9px;
-  color: #c5d4e7;
-  text-decoration: none;
-  font-size: 14px;
-  margin: 2px 0;
-}
-
-.nav:hover,
-.nav.active {
-  background: #ffffff16;
-  color: #fff;
-}
-
-.nav.active {
-  box-shadow: inset 3px 0 #39b7ee;
-}
-
-.nav .ico {
-  width: 19px;
-  text-align: center;
-  font-size: 16px;
-}
-
-.side-bottom {
-  margin-top: auto;
-  padding: 18px 13px 4px;
-  color: #829bb8;
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-.main {
-  min-width: 0;
-}
-
-.topbar {
-  height: 72px;
-  background: #fff;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 32px;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-
-.crumb {
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.crumb strong {
-  color: var(--ink);
-}
-
-.user {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: #e5f1ff;
-  color: #1265bd;
-  font-weight: 800;
-}
-
-.content {
-  padding: 30px 32px;
-  max-width: 1500px;
-  margin: auto;
-}
-
-.page-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 25px;
-}
-
-.page-head h1 {
-  font-size: 25px;
-  margin: 0 0 7px;
-  letter-spacing: -.5px;
-}
-
-.page-head p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-/* INDICADORES */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 16px;
-  margin-bottom: 22px;
-}
-
-.stat,
-.panel {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 13px;
-  box-shadow: var(--shadow);
-}
-
-.stat {
-  padding: 19px;
-}
-
-.stat-top {
-  display: flex;
-  justify-content: space-between;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.stat-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  background: #edf5ff;
-  display: grid;
-  place-items: center;
-  color: var(--blue);
-  font-size: 17px;
-}
-
-.stat-num {
-  font-size: 28px;
-  font-weight: 800;
-  margin: 14px 0 4px;
-}
-
-.stat-note {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 18px;
-}
-
-.panel {
-  padding: 20px;
-  margin-bottom: 18px;
-}
-
-.panel-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 17px;
-}
-
-.panel-title h3 {
-  font-size: 15px;
-  margin: 0;
-}
-
-.panel-title span {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-/* GRÁFICOS E ALERTAS */
-
-.bar-row {
-  display: grid;
-  grid-template-columns: 100px 1fr 35px;
-  gap: 10px;
-  align-items: center;
-  margin: 15px 0;
-  font-size: 12px;
-  color: #52637a;
-}
-
-.bar {
-  height: 8px;
-  background: #edf1f6;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.bar i {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg,var(--blue),var(--cyan));
-  border-radius: 20px;
-}
-
-.alert {
-  display: flex;
-  gap: 11px;
-  padding: 12px;
-  background: #fff9ed;
-  border: 1px solid #f5e5c5;
-  border-radius: 9px;
-  margin: 10px 0;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.alert b {
-  display: block;
-  color: #815510;
-}
-
-/* TABELAS */
-
-.toolbar {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-
-.toolbar input {
-  min-width: 220px;
-  flex: 1;
-}
-
-.toolbar select {
-  min-width: 145px;
-}
-
-.table-wrap {
-  overflow: auto;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 650px;
-}
-
-.data-table th {
-  text-align: left;
-  font-size: 11px;
-  color: #718096;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  padding: 12px;
-  border-bottom: 1px solid var(--line);
-  background: #fbfcfe;
-}
-
-.data-table td {
-  padding: 13px 12px;
-  border-bottom: 1px solid #edf1f6;
-  font-size: 13px;
-}
-
-.data-table tr:last-child td {
-  border-bottom: 0;
-}
-
-.badge {
-  display: inline-block;
-  padding: 5px 8px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.ok {
-  background: #e7f7ef;
-  color: #14734e;
-}
-
-.low {
-  background: #fff4df;
-  color: #99620b;
-}
-
-.off {
-  background: #fdecec;
-  color: #b33131;
-}
-
-.actions {
-  display: flex;
-  gap: 6px;
-}
-
-.small-btn {
-  border: 1px solid var(--line);
-  background: #fff;
-  border-radius: 7px;
-  padding: 6px 9px;
-  font-size: 11px;
-  color: #40516a;
-}
-
-.small-btn:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-}
-
-.empty {
-  padding: 35px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-/* JANELAS E FORMULÁRIOS */
-
-.modal-bg {
-  position: fixed;
-  inset: 0;
-  background: #081a3266;
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  z-index: 20;
-}
-
-.modal {
-  background: #fff;
-  border-radius: 14px;
-  width: min(520px,100%);
-  padding: 23px;
-  box-shadow: 0 20px 60px #06162d40;
-}
-
-.modal-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.modal-head h2 {
-  font-size: 19px;
-  margin: 0;
-}
-
-.close {
-  border: 0;
-  background: #f0f3f8;
-  border-radius: 7px;
-  width: 30px;
-  height: 30px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 13px;
-}
-
-.form-grid .full {
-  grid-column: 1/-1;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 9px;
-}
-
-.secondary {
-  border: 1px solid var(--line);
-  background: #fff;
-  border-radius: 9px;
-  padding: 11px 15px;
-  font-weight: 700;
-  color: #52637a;
-}
-
-.toast {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  background: #102b50;
-  color: #fff;
-  padding: 13px 18px;
-  border-radius: 9px;
-  box-shadow: var(--shadow);
-  z-index: 30;
-  font-size: 13px;
-}
-
-.menu-toggle {
-  display: none;
-  border: 0;
-  background: #eef4fb;
-  border-radius: 8px;
-  padding: 8px;
-}
-
-/* RESPONSIVIDADE */
-
-@media(max-width:1000px) {
-  .stats {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .app {
-    grid-template-columns: 220px 1fr;
-  }
-
-  .content {
-    padding: 24px;
-  }
-
-  .topbar {
-    padding: 0 24px;
-  }
-}
-
-@media(max-width:720px) {
-  .login-wrap {
-    grid-template-columns: 1fr;
-  }
-
-  .login-brand {
-    display: none;
-  }
-
-  .login-panel {
-    min-height: 100vh;
-  }
-
-  .app {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: fixed;
-    z-index: 10;
-    left: -260px;
-    top: 0;
-    width: 250px;
-    transition: left .2s;
-  }
-
-  .sidebar.open {
-    left: 0;
-  }
-
-  .topbar {
-    height: 62px;
-    padding: 0 15px;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .content {
-    padding: 22px 15px;
-  }
-
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .page-head {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .stats {
-    gap: 10px;
-  }
-
-  .stat {
-    padding: 14px;
-  }
-
-  .stat-num {
-    font-size: 24px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .form-grid .full {
-    grid-column: auto;
-  }
-
-  .user-name {
-    display: none;
-  }
-}
+  --navy:#10243e; --blue:#1769aa; --light:#edf4fa;
+  --white:#fff; --text:#243449; --muted:#718096;
+  --border:#dce5ee; --green:#16845b; --red:#d64b4b;
+  --orange:#d88a22; --shadow:0 5px 20px #10243e12;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f7fb;color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#10243e,#1769aa)}
+.login-card{background:white;padding:38px;border-radius:16px;width:100%;max-width:400px;box-shadow:var(--shadow)}
+.logo{font-size:27px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.logo span{color:var(--blue)}
+.login-card p{color:var(--muted);margin-bottom:25px}
+.login-card label{display:block;font-size:13px;font-weight:bold;margin:16px 0 7px}
+.login-card input,.field input,.field select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;outline:none;background:white}
+input:focus,select:focus{border-color:var(--blue)}
+.primary{background:var(--blue);color:white;padding:12px 17px;border-radius:8px;font-weight:bold}
+.primary:hover{background:#12558c}
+.login-card .primary{width:100%;margin-top:22px}
+.hint{font-size:12px;color:var(--muted);margin-top:18px}
+#app{min-height:100vh}
+.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:var(--navy);color:white;padding:25px 15px;z-index:5}
+.sidebar .logo{color:white;padding:0 12px 28px}
+.sidebar .logo span{color:#65b8ff}
+.nav-title{font-size:10px;color:#9aabc0;text-transform:uppercase;letter-spacing:1.5px;padding:16px 12px 8px}
+.nav button{width:100%;text-align:left;color:#dce7f4;background:transparent;padding:12px;border-radius:8px;margin:2px 0}
+.nav button:hover,.nav button.active{background:#ffffff19;color:white}
+.nav button span{display:inline-block;width:27px}
+.userbox{position:absolute;bottom:20px;left:20px;right:20px;border-top:1px solid #ffffff25;padding-top:17px;font-size:13px}
+.userbox small{display:block;color:#aabbd0;margin-top:4px}
+.userbox button{background:transparent;color:white;margin-top:12px}
+main{margin-left:245px;padding:30px;max-width:1600px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:15px}
+.topbar h1{font-size:25px;color:var(--navy)}
+.topbar p{color:var(--muted);font-size:13px;margin-top:6px}
+.date{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.card{background:white;border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+.metric-label{font-size:13px;color:var(--muted)}
+.metric{font-size:29px;font-weight:bold;color:var(--navy);margin-top:12px}
+.metric-note{font-size:12px;color:var(--muted);margin-top:7px}
+.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:var(--shadow)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.panel h2{font-size:17px;color:var(--navy)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.toolbar input,.toolbar select{padding:10px;border:1px solid var(--border);border-radius:8px;min-width:180px}
+table{width:100%;border-collapse:collapse;min-width:650px}
+.table-wrap{overflow-x:auto}
+th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:12px;border-bottom:1px solid var(--border)}
+td{padding:13px 12px;border-bottom:1px solid #edf1f5;font-size:13px}
+tr:last-child td{border-bottom:0}
+.status{display:inline-block;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:bold;background:#edf2f7;color:#526174}
+.status.green{background:#e4f5ed;color:#16845b}
+.status.red{background:#fdeaea;color:#c33e3e}
+.status.orange{background:#fff3df;color:#a86a12}
+.actions{display:flex;gap:7px}
+.small-btn{padding:7px 9px;border-radius:6px;background:var(--light);color:var(--blue);font-size:12px}
+.small-btn.delete{background:#fdeaea;color:#c33e3e}
+.page{display:none}
+.page.active{display:block}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.empty{text-align:center;color:var(--muted);padding:25px}
+.modal-bg{position:fixed;inset:0;background:#07182bb3;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.modal-bg.show{display:flex}
+.modal{background:white;border-radius:14px;padding:25px;width:100%;max-width:520px;max-height:90vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-head h2{font-size:19px;color:var(--navy)}
+.close{background:#edf2f7;padding:7px 10px;border-radius:7px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:7px}
+.field.full{grid-column:1/-1}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.secondary{padding:11px 15px;border-radius:8px;background:#edf2f7;color:var(--text)}
+.toast{position:fixed;bottom:25px;right:25px;background:var(--navy);color:white;padding:13px 18px;border-radius:9px;z-index:20;box-shadow:var(--shadow)}
+.menu-mobile{display:none;background:var(--navy);color:white;padding:10px 13px;border-radius:8px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){
+ .sidebar{transform:translateX(-100%);transition:.2s}
+ .sidebar.open{transform:translateX(0)}
+ main{margin-left:0;padding:20px 14px}
+ .menu-mobile{display:block}
+ .topbar{align-items:flex-start}
+ .date{display:none}
+ .two-col{grid-template-columns:1fr}
+}
+@media(max-width:450px){.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
 </style>
 </head>
-
 <body>
 
-<!-- TELA DE LOGIN -->
-
-<section id="loginScreen" class="login-wrap">
-
-  <div class="login-brand">
-    <div class="brand-logo">Fluxo<span>Inv</span></div>
-
-    <div class="brand-copy">
-      <h1>Controle inteligente para sua operação logística.</h1>
-
-      <p>
-        Rastreabilidade de materiais, movimentações de estoque
-        e acompanhamento de ordens de serviço e produção
-        em um só lugar.
-      </p>
-    </div>
-
-    <div class="login-foot">
-      PLATAFORMA DE GESTÃO LOGÍSTICA · GRUPO CAPACLE
-    </div>
-  </div>
-
-  <div class="login-panel">
-    <form class="login-card" id="loginForm">
-
-      <h2>Bem-vindo ao FluxoInv</h2>
-      <p class="sub">Entre para acessar o painel de controle.</p>
-
-      <div class="field">
-        <label for="loginUser">Usuário</label>
-        <input id="loginUser" required
-        placeholder="Digite seu usuário"
-        autocomplete="username">
-      </div>
-
-      <div class="field">
-        <label for="loginPass">Senha</label>
-        <input id="loginPass" type="password" required
-        placeholder="Digite sua senha"
-        autocomplete="current-password">
-      </div>
-
-      <button class="primary login-btn">
-        Acessar plataforma
-      </button>
-
-      <div class="hint">
-        <b>Acesso demonstrativo</b><br>
-        Usuário: <b>admin</b> · Senha: <b>fluxo123</b><br>
-        Protótipo acadêmico: os dados ficam salvos neste navegador.
-      </div>
-
-    </form>
-  </div>
-
+<section id="login">
+ <div class="login-card">
+  <div class="logo">Fluxo<span>Inv</span></div>
+  <p>Sistema de Gestão de Estoque e Logística</p>
+  <form id="loginForm">
+   <label for="username">Usuário</label>
+   <input id="username" required placeholder="Digite seu usuário">
+   <label for="password">Senha</label>
+   <input id="password" type="password" required placeholder="Digite sua senha">
+   <button class="primary" type="submit">Entrar no sistema</button>
+  </form>
+  <div class="hint">Acesso demonstrativo: admin / fluxo123</div>
+ </div>
 </section>
 
-<!-- SISTEMA PRINCIPAL -->
+<div id="app" class="hidden">
+ <aside class="sidebar" id="sidebar">
+  <div class="logo">Fluxo<span>Inv</span></div>
+  <div class="nav-title">Menu principal</div>
+  <nav class="nav">
+   <button class="active" data-page="dashboard"><span>▦</span>Dashboard</button>
+   <button data-page="materials"><span>▤</span>Materiais</button>
+   <button data-page="movements"><span>⇄</span>Movimentações</button>
+   <button data-page="orders"><span>▣</span>Ordens de serviço</button>
+   <button data-page="inventory"><span>☷</span>Inventário</button>
+   <div class="nav-title">Gestão</div>
+   <button data-page="employees"><span>♙</span>Funcionários</button>
+  </nav>
+  <div class="userbox">Administrador
+   <small>Gestor do sistema</small>
+   <button onclick="logout()">↪ Sair do sistema</button>
+  </div>
+ </aside>
 
-<section id="appScreen" class="app hidden">
+ <main>
+  <header class="topbar">
+   <div>
+    <button class="menu-mobile" onclick="toggleMenu()">☰ Menu</button>
+    <h1 id="pageTitle">Dashboard</h1>
+    <p id="pageSubtitle">Visão geral da gestão de estoque</p>
+   </div>
+   <div class="date" id="today"></div>
+  </header>
 
-  <aside class="sidebar" id="sidebar">
-
-    <div class="side-logo">Fluxo<span>Inv</span></div>
-
-    <div class="side-label">MENU PRINCIPAL</div>
-
-    <a href="#" class="nav active" data-page="dashboard">
-      <span class="ico">▦</span>Dashboard
-    </a>
-
-    <a href="#" class="nav" data-page="materials">
-      <span class="ico">▤</span>Materiais
-    </a>
-
-    <a href="#" class="nav" data-page="movements">
-      <span class="ico">⇄</span>Movimentações
-    </a>
-
-    <a href="#" class="nav" data-page="orders">
-      <span class="ico">▣</span>Ordens OS/OP
-    </a>
-
-    <a href="#" class="nav" data-page="inventory">
-      <span class="ico">✓</span>Inventário
-    </a>
-
-    <div class="side-label">SISTEMA</div>
-
-    <a href="#" class="nav" data-page="responsibles">
-      <span class="ico">♙</span>Responsáveis
-    </a>
-
-    <a href="#" class="nav" id="logout">
-      <span class="ico">↪</span>Sair
-    </a>
-
-    <div class="side-bottom">
-      FluxoInv · Integra SENAI<br>
-      Grupo Capacle · Protótipo acadêmico
+  <section class="page active" id="dashboard">
+   <div class="grid" id="metrics"></div>
+   <div class="two-col">
+    <div class="panel">
+     <div class="panel-head"><h2>Materiais com estoque baixo</h2></div>
+     <div class="table-wrap"><table><thead><tr><th>Material</th><th>Quantidade</th><th>Mínimo</th></tr></thead><tbody id="lowStock"></tbody></table></div>
     </div>
+    <div class="panel">
+     <div class="panel-head"><h2>Movimentações recentes</h2></div>
+     <div class="table-wrap"><table><thead><tr><th>Material</th><th>Tipo</th><th>Quantidade</th></tr></thead><tbody id="recentMoves"></tbody></table></div>
+    </div>
+   </div>
+   <div class="panel">
+    <div class="panel-head"><h2>Ordens em andamento</h2></div>
+    <div class="table-wrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Responsável</th><th>Status</th></tr></thead><tbody id="activeOrders"></tbody></table></div>
+   </div>
+  </section>
 
-  </aside>
+  <section class="page" id="materials">
+   <div class="panel">
+    <div class="panel-head"><h2>Cadastro de materiais</h2><button class="primary" onclick="openModal('material')">+ Novo material</button></div>
+    <div class="toolbar"><input id="materialSearch" placeholder="Buscar material..." oninput="renderMaterials()"></div>
+    <div class="table-wrap"><table><thead><tr><th>Código</th><th>Material</th><th>Categoria</th><th>Quantidade</th><th>Estoque mínimo</th><th>Situação</th><th>Ações</th></tr></thead><tbody id="materialsTable"></tbody></table></div>
+   </div>
+  </section>
 
-  <main class="main">
+  <section class="page" id="movements">
+   <div class="panel">
+    <div class="panel-head"><h2>Histórico de movimentações</h2><button class="primary" onclick="openModal('movement')">+ Nova movimentação</button></div>
+    <div class="table-wrap"><table><thead><tr><th>Data</th><th>Material</th><th>Tipo</th><th>Quantidade</th><th>Responsável</th><th>Observação</th></tr></thead><tbody id="movementsTable"></tbody></table></div>
+   </div>
+  </section>
 
-    <header class="topbar">
+  <section class="page" id="orders">
+   <div class="panel">
+    <div class="panel-head"><h2>Ordens de serviço e produção</h2><button class="primary" onclick="openModal('order')">+ Nova ordem</button></div>
+    <div class="table-wrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Material</th><th>Quantidade</th><th>Responsável</th><th>Status</th><th>Ações</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+   </div>
+  </section>
 
-      <div style="display:flex;align-items:center;gap:12px">
+  <section class="page" id="inventory">
+   <div class="panel">
+    <div class="panel-head"><h2>Inventário de estoque</h2><button class="primary" onclick="openModal('count')">+ Registrar contagem</button></div>
+    <div class="table-wrap"><table><thead><tr><th>Data</th><th>Material</th><th>Estoque no sistema</th><th>Contagem física</th><th>Diferença</th><th>Responsável</th></tr></thead><tbody id="inventoryTable"></tbody></table></div>
+   </div>
+  </section>
 
-        <button class="menu-toggle" id="menuToggle">☰</button>
+  <section class="page" id="employees">
+   <div class="panel">
+    <div class="panel-head"><h2>Equipe e funcionários</h2><button class="primary" onclick="openModal('employee')">+ Novo funcionário</button></div>
+    <div class="table-wrap"><table><thead><tr><th>Matrícula</th><th>Nome</th><th>Cargo</th><th>Setor</th><th>E-mail</th><th>Status</th><th>Ações</th></tr></thead><tbody id="employeesTable"></tbody></table></div>
+   </div>
+  </section>
+ </main>
+</div>
 
-        <div class="crumb">
-          FluxoInv / <strong id="crumb">Dashboard</strong>
-        </div>
+<div class="modal-bg" id="modalBg">
+ <div class="modal">
+  <div class="modal-head"><h2 id="modalTitle">Cadastro</h2><button class="close" onclick="closeModal()">✕</button></div>
+  <form id="modalForm"><div class="form-grid" id="modalFields"></div>
+   <div class="modal-actions"><button type="button" class="secondary" onclick="closeModal()">Cancelar</button><button class="primary" type="submit">Salvar</button></div>
+  </form>
+ </div>
+</div>
+<div id="toast" class="toast hidden"></div>
 
-      </div>
-
-      <div class="user">
-        <div class="avatar">A</div>
-        <span class="user-name">Administrador</span>
-      </div>
-
-    </header>
-
-    <div class="content" id="pageContent"></div>
-
-  </main>
-
-</section>
-
-<div id="modalRoot"></div>
-<div id="toastRoot"></div>
 <script>
-
-// CONFIGURAÇÕES INICIAIS
-
-const $ = s => document.querySelector(s);
-
-const load = (k,f) => {
-  try {
-    return JSON.parse(localStorage.getItem('fi_'+k)) ?? f;
-  } catch {
-    return f;
-  }
+const $ = id => document.getElementById(id);
+const load = (key, fallback) => {
+ try { const saved=localStorage.getItem('fluxoinv_'+key); return saved?JSON.parse(saved):fallback; }
+ catch { return fallback; }
 };
-
-const save = (k,v) =>
-  localStorage.setItem('fi_'+k,JSON.stringify(v));
-
-let materials = load('materials',[
-  {
-    id:1,
-    code:'MAT-001',
-    name:'Chapa de aço carbono',
-    category:'Matéria-prima',
-    unit:'kg',
-    qty:320,
-    min:100,
-    location:'Almoxarifado A'
-  },
-  {
-    id:2,
-    code:'MAT-002',
-    name:'Parafuso sextavado M12',
-    category:'Componente',
-    unit:'un',
-    qty:48,
-    min:80,
-    location:'Prateleira B-02'
-  },
-  {
-    id:3,
-    code:'MAT-003',
-    name:'Óleo lubrificante industrial',
-    category:'Insumo',
-    unit:'L',
-    qty:75,
-    min:20,
-    location:'Almoxarifado B'
-  },
-  {
-    id:4,
-    code:'MAT-004',
-    name:'Rolamento 6205',
-    category:'Componente',
-    unit:'un',
-    qty:12,
-    min:10,
-    location:'Prateleira C-01'
-  }
+let materials=load('materials',[
+ {id:1,code:'MAT-001',name:'Chapa de aço carbono',category:'Matéria-prima',unit:'kg',qty:320,min:100},
+ {id:2,code:'MAT-002',name:'Parafuso sextavado M12',category:'Componentes',unit:'un',qty:48,min:80},
+ {id:3,code:'MAT-003',name:'Óleo lubrificante industrial',category:'Manutenção',unit:'L',qty:75,min:20},
+ {id:4,code:'MAT-004',name:'Rolamento 6205',category:'Componentes',unit:'un',qty:12,min:10},
+ {id:5,code:'MAT-005',name:'Cabos elétricos',category:'Elétrica',unit:'m',qty:450,min:100},
+ {id:6,code:'MAT-006',name:'Luvas de proteção',category:'Segurança',unit:'un',qty:25,min:50},
+ {id:7,code:'MAT-007',name:'Disco de corte industrial',category:'Ferramentas',unit:'un',qty:90,min:30},
+ {id:8,code:'MAT-008',name:'Tinta anticorrosiva',category:'Químicos',unit:'L',qty:60,min:15},
+ {id:9,code:'MAT-009',name:'Barras de alumínio',category:'Matéria-prima',unit:'kg',qty:210,min:80},
+ {id:10,code:'MAT-010',name:'Máscara de proteção',category:'Segurança',unit:'un',qty:18,min:40}
 ]);
-
-let movements = load('movements',[]);
-let orders = load('orders',[]);
-let counts = load('counts',[]);
-
-let responsibles = load('responsibles',[
-  {
-    id:1,
-    name:'Administrador',
-    sector:'Almoxarifado',
-    contact:'admin@fluxoinv.local'
-  }
+let employees=load('employees',[
+ {id:1,registration:'FUNC-001',name:'Carlos Henrique',role:'Gerente de Logística',sector:'Logística',email:'carlos@fluxoinv.com.br',status:'Ativo'},
+ {id:2,registration:'FUNC-002',name:'Amanda Martins',role:'Analista de Estoque',sector:'Estoque',email:'amanda@fluxoinv.com.br',status:'Ativo'},
+ {id:3,registration:'FUNC-003',name:'Gabriel Oliveira',role:'Almoxarife',sector:'Almoxarifado',email:'gabriel@fluxoinv.com.br',status:'Ativo'},
+ {id:4,registration:'FUNC-004',name:'Beatriz Santos',role:'Assistente de Logística',sector:'Logística',email:'beatriz@fluxoinv.com.br',status:'Ativo'},
+ {id:5,registration:'FUNC-005',name:'Lucas Ferreira',role:'Operador de Produção',sector:'Produção',email:'lucas@fluxoinv.com.br',status:'Ativo'},
+ {id:6,registration:'FUNC-006',name:'Mariana Costa',role:'Supervisora de Produção',sector:'Produção',email:'mariana@fluxoinv.com.br',status:'Ativo'},
+ {id:7,registration:'FUNC-007',name:'Rafael Almeida',role:'Técnico de Manutenção',sector:'Manutenção',email:'rafael@fluxoinv.com.br',status:'Ativo'},
+ {id:8,registration:'FUNC-008',name:'Juliana Ribeiro',role:'Assistente Administrativa',sector:'Administrativo',email:'juliana@fluxoinv.com.br',status:'Ativo'}
 ]);
-
-let page = 'dashboard';
-
-// SALVAR DADOS
-
-function persist() {
-  save('materials',materials);
-  save('movements',movements);
-  save('orders',orders);
-  save('counts',counts);
-  save('responsibles',responsibles);
+let movements=load('movements',[
+ {id:1,date:'2026-11-25',materialId:1,type:'Entrada',qty:100,employeeId:3,note:'Recebimento de fornecedor'},
+ {id:2,date:'2026-11-25',materialId:2,type:'Saída',qty:20,employeeId:2,note:'Separação para produção'},
+ {id:3,date:'2026-11-26',materialId:5,type:'Entrada',qty:150,employeeId:3,note:'Reposição de estoque'},
+ {id:4,date:'2026-11-26',materialId:6,type:'Saída',qty:15,employeeId:4,note:'Entrega de EPIs'}
+]);
+let orders=load('orders',[
+ {id:1,code:'OS-2026-001',description:'Manutenção preventiva de máquinas',materialId:3,qty:10,employeeId:7,status:'Em andamento'},
+ {id:2,code:'OP-2026-001',description:'Produção de componentes metálicos',materialId:1,qty:50,employeeId:5,status:'Aberta'},
+ {id:3,code:'OS-2026-002',description:'Substituição de rolamentos',materialId:4,qty:2,employeeId:7,status:'Concluída'},
+ {id:4,code:'OP-2026-002',description:'Montagem de estrutura industrial',materialId:9,qty:30,employeeId:6,status:'Em andamento'}
+]);
+let counts=load('counts',[
+ {id:1,date:'2026-11-24',materialId:1,system:320,physical:318,employeeId:2},
+ {id:2,date:'2026-11-24',materialId:2,system:48,physical:48,employeeId:3}
+]);
+function save(){
+ localStorage.setItem('fluxoinv_materials',JSON.stringify(materials));
+ localStorage.setItem('fluxoinv_employees',JSON.stringify(employees));
+ localStorage.setItem('fluxoinv_movements',JSON.stringify(movements));
+ localStorage.setItem('fluxoinv_orders',JSON.stringify(orders));
+ localStorage.setItem('fluxoinv_counts',JSON.stringify(counts));
 }
-
-// NOTIFICAÇÕES
-
-function toast(msg) {
-  $('#toastRoot').innerHTML =
-    `<div class="toast">${msg}</div>`;
-
-  setTimeout(() => {
-    $('#toastRoot').innerHTML = '';
-  },2600);
-}
-
-// NAVEGAÇÃO
-
-function go(p) {
-  page = p;
-
-  document.querySelectorAll('.nav[data-page]')
-    .forEach(a =>
-      a.classList.toggle('active',a.dataset.page===p)
-    );
-
-  $('#crumb').textContent = ({
-    dashboard:'Dashboard',
-    materials:'Materiais',
-    movements:'Movimentações',
-    orders:'Ordens OS/OP',
-    inventory:'Inventário',
-    responsibles:'Responsáveis'
-  })[p];
-
-  $('#sidebar').classList.remove('open');
-
-  render();
-}
-
-// CABEÇALHO DAS PÁGINAS
-
-function header(title,desc,button='') {
-  return `
-    <div class="page-head">
-      <div>
-        <h1>${title}</h1>
-        <p>${desc}</p>
-      </div>
-      ${button}
-    </div>
-  `;
-}
-
-// INDICADORES
-
-function stat(label,num,note,ico) {
-  return `
-    <div class="stat">
-      <div class="stat-top">
-        <span>${label}</span>
-        <span class="stat-icon">${ico}</span>
-      </div>
-
-      <div class="stat-num">${num}</div>
-      <div class="stat-note">${note}</div>
-    </div>
-  `;
-}
-
-// DASHBOARD
-
-function dashboard() {
-
-  let low = materials.filter(m => m.qty <= m.min).length;
-
-  return `
-
-    ${header(
-      'Visão geral',
-      'Acompanhe os principais indicadores da operação logística.'
-    )}
-
-    <div class="stats">
-
-      ${stat(
-        'Materiais cadastrados',
-        materials.length,
-        'Itens registrados no sistema',
-        '▤'
-      )}
-
-      ${stat(
-        'Unidades em estoque',
-        materials.reduce((a,m)=>a+Number(m.qty),0)
-          .toLocaleString('pt-BR'),
-        'Quantidade total registrada',
-        '▦'
-      )}
-
-      ${stat(
-        'Itens abaixo do mínimo',
-        low,
-        low?'Necessitam de atenção':'Estoque dentro dos níveis',
-        '!'
-      )}
-
-      ${stat(
-        'Movimentações registradas',
-        movements.length,
-        'Entradas e saídas lançadas',
-        '⇄'
-      )}
-
-    </div>
-
-    <div class="dashboard-grid">
-
-      <div class="panel">
-
-        <div class="panel-title">
-          <h3>Visão do estoque</h3>
-          <span>Por material</span>
-        </div>
-
-        ${
-          materials.slice(0,6).map(m=>`
-
-            <div class="bar-row">
-
-              <span title="${m.name}">
-                ${m.name.length>16
-                  ?m.name.slice(0,16)+'…'
-                  :m.name}
-              </span>
-
-              <div class="bar">
-                <i style="width:${
-                  Math.min(
-                    100,
-                    Math.max(5,m.qty/Math.max(m.min*2,1)*100)
-                  )
-                }%"></i>
-              </div>
-
-              <b>${m.qty}</b>
-
-            </div>
-
-          `).join('')
-          || '<div class="empty">Nenhum material cadastrado.</div>'
-        }
-
-      </div>
-
-      <div>
-
-        <div class="panel">
-
-          <div class="panel-title">
-            <h3>Alertas de estoque</h3>
-            <span>${low} alerta(s)</span>
-          </div>
-
-          ${
-            materials.filter(m=>m.qty<=m.min).map(m=>`
-
-              <div class="alert">
-                ⚠️
-
-                <div>
-                  <b>${m.name}</b>
-
-                  Saldo atual: ${m.qty} ${m.unit}
-                  · Mínimo: ${m.min} ${m.unit}
-                </div>
-              </div>
-
-            `).join('')
-            || '<div class="empty">Nenhum alerta no momento.</div>'
-          }
-
-        </div>
-
-        <div class="panel">
-
-          <div class="panel-title">
-            <h3>Acesso rápido</h3>
-          </div>
-
-          <div class="toolbar">
-
-            <button class="primary" onclick="openMaterial()">
-              + Novo material
-            </button>
-
-            <button class="secondary" onclick="go('movements')">
-              Registrar movimentação
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-}
-
-// CONSTRUÇÃO DAS TABELAS
-
-function table(headers,rows) {
-
-  return `
-
-    <div class="panel table-wrap">
-
-      <table class="data-table">
-
-        <thead>
-          <tr>
-            ${headers.map(h=>`<th>${h}</th>`).join('')}
-          </tr>
-        </thead>
-
-        <tbody>
-
-          ${rows || `
-            <tr>
-              <td colspan="${headers.length}" class="empty">
-                Nenhum registro encontrado.
-              </td>
-            </tr>
-          `}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  `;
-}
-
-// PÁGINA DE MATERIAIS
-
-function materialsPage() {
-
-  return `
-
-    ${header(
-      'Materiais',
-      'Cadastre e acompanhe os materiais armazenados.',
-      '<button class="primary" onclick="openMaterial()">+ Novo material</button>'
-    )}
-
-    <div class="toolbar">
-
-      <input
-        id="searchMaterials"
-        placeholder="Buscar por código ou descrição..."
-        oninput="filterMaterials()"
-      >
-
-      <select id="filterCategory" onchange="filterMaterials()">
-
-        <option value="">Todas as categorias</option>
-        <option>Matéria-prima</option>
-        <option>Componente</option>
-        <option>Insumo</option>
-
-      </select>
-
-    </div>
-
-    <div id="materialsTable">
-      ${materialsTable(materials)}
-    </div>
-
-  `;
-}
-
-// TABELA DE MATERIAIS
-
-function materialsTable(list) {
-
-  return table(
-    [
-      'Código',
-      'Material',
-      'Categoria',
-      'Quantidade',
-      'Localização',
-      'Status',
-      'Ações'
-    ],
-
-    list.map(m=>`
-
-      <tr>
-
-        <td><b>${m.code}</b></td>
-        <td>${m.name}</td>
-        <td>${m.category}</td>
-        <td>${m.qty} ${m.unit}</td>
-        <td>${m.location}</td>
-
-        <td>
-          <span class="badge ${m.qty<=m.min?'low':'ok'}">
-            ${m.qty<=m.min?'Estoque baixo':'Regular'}
-          </span>
-        </td>
-
-        <td>
-
-          <div class="actions">
-
-            <button class="small-btn"
-              onclick="openMaterial(${m.id})">
-              Editar
-            </button>
-
-            <button class="small-btn"
-              onclick="removeItem('materials',${m.id})">
-              Excluir
-            </button>
-
-          </div>
-
-        </td>
-
-      </tr>
-
-    `).join('')
-  );
-
-}
-
-// FILTRO DE MATERIAIS
-
-function filterMaterials() {
-
-  let q = $('#searchMaterials').value.toLowerCase();
-  let c = $('#filterCategory').value;
-
-  $('#materialsTable').innerHTML = materialsTable(
-    materials.filter(m =>
-      (m.code+' '+m.name).toLowerCase().includes(q)
-      && (!c || m.category===c)
-    )
-  );
-
-}
-
-// PÁGINA DE MOVIMENTAÇÕES
-
-function movementsPage() {
-
-  return `
-
-    ${header(
-      'Movimentações',
-      'Registre entradas e saídas para manter o saldo atualizado.',
-      '<button class="primary" onclick="openMovement()">+ Registrar movimentação</button>'
-    )}
-
-    ${table(
-      [
-        'Data',
-        'Material',
-        'Tipo',
-        'Quantidade',
-        'Documento',
-        'Responsável'
-      ],
-
-      movements.slice().reverse().map(x=>`
-
-        <tr>
-          <td>${x.date}</td>
-          <td>${x.material}</td>
-
-          <td>
-            <span class="badge ${x.type==='Entrada'?'ok':'low'}">
-              ${x.type}
-            </span>
-          </td>
-
-          <td>${x.qty} ${x.unit}</td>
-          <td>${x.doc||'—'}</td>
-          <td>${x.person}</td>
-        </tr>
-
-      `).join('')
-    )}
-
-  `;
-
-}
-
-// PÁGINA DE ORDENS OS/OP
-
-function ordersPage() {
-
-  return `
-
-    ${header(
-      'Ordens de serviço e produção',
-      'Vincule materiais às OS e OP para rastrear sua aplicação.',
-      '<button class="primary" onclick="openOrder()">+ Nova ordem</button>'
-    )}
-
-    ${table(
-      [
-        'Número',
-        'Tipo',
-        'Descrição',
-        'Material',
-        'Quantidade',
-        'Status'
-      ],
-
-      orders.map(o=>`
-
-        <tr>
-
-          <td><b>${o.number}</b></td>
-          <td>${o.type}</td>
-          <td>${o.desc}</td>
-          <td>${o.material}</td>
-          <td>${o.qty}</td>
-
-          <td>
-            <span class="badge ${o.status==='Concluída'?'ok':'low'}">
-              ${o.status}
-            </span>
-          </td>
-
-        </tr>
-
-      `).join('')
-    )}
-
-  `;
-
-}
-
-// PÁGINA DE INVENTÁRIO
-
-function inventoryPage() {
-
-  return `
-
-    ${header(
-      'Inventário',
-      'Registre contagens e compare o saldo físico com o saldo do sistema.',
-      '<button class="primary" onclick="openCount()">+ Nova contagem</button>'
-    )}
-
-    ${table(
-      [
-        'Data',
-        'Material',
-        'Saldo no sistema',
-        'Contagem física',
-        'Diferença',
-        'Responsável'
-      ],
-
-      counts.slice().reverse().map(c=>`
-
-        <tr>
-
-          <td>${c.date}</td>
-          <td>${c.material}</td>
-          <td>${c.system}</td>
-          <td>${c.actual}</td>
-
-          <td>
-            <span class="badge ${c.diff===0?'ok':'low'}">
-              ${c.diff>0?'+':''}${c.diff}
-            </span>
-          </td>
-
-          <td>${c.person}</td>
-
-        </tr>
-
-      `).join('')
-    )}
-
-  `;
-
-}
-
-// PÁGINA DE RESPONSÁVEIS
-
-function responsiblesPage() {
-
-  return `
-
-    ${header(
-      'Responsáveis',
-      'Identifique as pessoas responsáveis pelo acompanhamento do almoxarifado.',
-      '<button class="primary" onclick="openResponsible()">+ Novo responsável</button>'
-    )}
-
-    ${table(
-      ['Nome','Setor','Contato','Ações'],
-
-      responsibles.map(r=>`
-
-        <tr>
-
-          <td><b>${r.name}</b></td>
-          <td>${r.sector}</td>
-          <td>${r.contact}</td>
-
-          <td>
-            <button class="small-btn"
-              onclick="removeItem('responsibles',${r.id})">
-              Excluir
-            </button>
-          </td>
-
-        </tr>
-
-      `).join('')
-    )}
-
-  `;
-
-}
-
-// EXIBIR PÁGINAS
-
-function render() {
-
-  let views = {
-    dashboard,
-    materials:materialsPage,
-    movements:movementsPage,
-    orders:ordersPage,
-    inventory:inventoryPage,
-    responsibles:responsiblesPage
-  };
-
-  $('#pageContent').innerHTML = views[page]();
-
-}// JANELAS DE CADASTRO
-
-function openModal(title,body,submit) {
-
-  $('#modalRoot').innerHTML = `
-    <div class="modal-bg"
-      onclick="if(event.target===this)closeModal()">
-
-      <form class="modal" onsubmit="${submit}(event)">
-
-        <div class="modal-head">
-          <h2>${title}</h2>
-
-          <button type="button"
-            class="close"
-            onclick="closeModal()">×</button>
-        </div>
-
-        ${body}
-
-        <div class="modal-actions">
-
-          <button type="button"
-            class="secondary"
-            onclick="closeModal()">
-            Cancelar
-          </button>
-
-          <button class="primary">
-            Salvar registro
-          </button>
-
-        </div>
-
-      </form>
-    </div>
-  `;
-}
-
-function closeModal() {
-  $('#modalRoot').innerHTML = '';
-}
-
-// CADASTRAR OU EDITAR MATERIAL
-
-function openMaterial(id) {
-
-  let m = materials.find(x=>x.id===id)||{};
-
-  openModal(
-    id?'Editar material':'Cadastrar material',
-
-    `
-      <div class="form-grid">
-
-        <div class="field">
-          <label>Código</label>
-          <input name="code" required
-            value="${m.code||''}"
-            placeholder="MAT-005">
-        </div>
-
-        <div class="field">
-          <label>Nome do material</label>
-          <input name="name" required
-            value="${m.name||''}">
-        </div>
-
-        <div class="field">
-          <label>Categoria</label>
-          <select name="category">
-            <option>Matéria-prima</option>
-            <option>Componente</option>
-            <option>Insumo</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Unidade</label>
-          <select name="unit">
-            <option>un</option>
-            <option>kg</option>
-            <option>L</option>
-            <option>m</option>
-            <option>cx</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantidade atual</label>
-          <input name="qty" type="number"
-            min="0" required value="${m.qty??0}">
-        </div>
-
-        <div class="field">
-          <label>Estoque mínimo</label>
-          <input name="min" type="number"
-            min="0" required value="${m.min??0}">
-        </div>
-
-        <div class="field full">
-          <label>Localização</label>
-          <input name="location" required
-            value="${m.location||''}"
-            placeholder="Ex.: Almoxarifado A">
-        </div>
-
-      </div>
-    `,
-
-    'saveMaterial'
-  );
-
-  let f = $('#modalRoot select[name=category]');
-  if(m.category) f.value=m.category;
-
-  let u = $('#modalRoot select[name=unit]');
-  if(m.unit) u.value=m.unit;
-
-  $('#modalRoot form').dataset.id=id||'';
-}
-
-// SALVAR MATERIAL
-
-function saveMaterial(e) {
-
-  e.preventDefault();
-
-  let f = new FormData(e.target);
-  let id = Number(e.target.dataset.id);
-  let obj = Object.fromEntries(f);
-
-  obj.qty = Number(obj.qty);
-  obj.min = Number(obj.min);
-
-  if(materials.some(m=>m.code===obj.code && m.id!==id)) {
-    toast('Já existe um material com esse código.');
-    return;
-  }
-
-  if(id) {
-    materials = materials.map(m=>
-      m.id===id?{...m,...obj}:m
-    );
-  } else {
-    materials.push({
-      id:Date.now(),
-      ...obj
-    });
-  }
-
-  persist();
-  closeModal();
-  render();
-
-  toast('Material salvo com sucesso.');
-}
-
-// REGISTRAR MOVIMENTAÇÃO
-
-function openMovement() {
-
-  if(!materials.length) {
-    toast('Cadastre um material primeiro.');
-    return;
-  }
-
-  openModal(
-    'Registrar movimentação',
-
-    `
-      <div class="form-grid">
-
-        <div class="field full">
-          <label>Material</label>
-
-          <select name="materialId">
-            ${materials.map(m=>`
-              <option value="${m.id}">
-                ${m.code} — ${m.name}
-                (saldo: ${m.qty})
-              </option>
-            `).join('')}
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Tipo</label>
-          <select name="type">
-            <option>Entrada</option>
-            <option>Saída</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantidade</label>
-          <input name="qty" type="number"
-            min="1" required>
-        </div>
-
-        <div class="field">
-          <label>Documento / OS / OP</label>
-          <input name="doc"
-            placeholder="Ex.: OS-2026-01">
-        </div>
-
-        <div class="field">
-          <label>Responsável</label>
-
-          <select name="person">
-            ${responsibles.map(r=>`
-              <option>${r.name}</option>
-            `).join('')}
-          </select>
-        </div>
-
-      </div>
-    `,
-
-    'saveMovement'
-  );
-}
-
-// SALVAR MOVIMENTAÇÃO
-
-function saveMovement(e) {
-
-  e.preventDefault();
-
-  let f = Object.fromEntries(new FormData(e.target));
-
-  let m = materials.find(
-    x=>x.id===Number(f.materialId)
-  );
-
-  let q = Number(f.qty);
-
-  if(f.type==='Saída' && q>m.qty) {
-    toast('Saldo insuficiente para essa saída.');
-    return;
-  }
-
-  m.qty += f.type==='Entrada'?q:-q;
-
-  movements.push({
-    id:Date.now(),
-    date:new Date().toLocaleDateString('pt-BR'),
-    material:m.name,
-    type:f.type,
-    qty:q,
-    unit:m.unit,
-    doc:f.doc,
-    person:f.person
-  });
-
-  persist();
-  closeModal();
-  render();
-
-  toast('Movimentação registrada e saldo atualizado.');
-}
-
-// CADASTRAR ORDEM OS/OP
-
-function openOrder() {
-
-  if(!materials.length) {
-    toast('Cadastre um material primeiro.');
-    return;
-  }
-
-  openModal(
-    'Nova ordem OS/OP',
-
-    `
-      <div class="form-grid">
-
-        <div class="field">
-          <label>Número da ordem</label>
-          <input name="number" required
-            placeholder="OS-001">
-        </div>
-
-        <div class="field">
-          <label>Tipo</label>
-          <select name="type">
-            <option>OS</option>
-            <option>OP</option>
-          </select>
-        </div>
-
-        <div class="field full">
-          <label>Descrição</label>
-          <input name="desc" required
-            placeholder="Descreva o serviço ou produção">
-        </div>
-
-        <div class="field full">
-          <label>Material vinculado</label>
-
-          <select name="materialId">
-            ${materials.map(m=>`
-              <option value="${m.id}">
-                ${m.name} (saldo: ${m.qty} ${m.unit})
-              </option>
-            `).join('')}
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantidade</label>
-          <input name="qty" type="number"
-            min="1" required>
-        </div>
-
-        <div class="field">
-          <label>Status</label>
-          <select name="status">
-            <option>Aberta</option>
-            <option>Em andamento</option>
-            <option>Concluída</option>
-          </select>
-        </div>
-
-      </div>
-    `,
-
-    'saveOrder'
-  );
-}
-
-// SALVAR ORDEM
-
-function saveOrder(e) {
-
-  e.preventDefault();
-
-  let f = Object.fromEntries(new FormData(e.target));
-
-  let m = materials.find(
-    x=>x.id===Number(f.materialId)
-  );
-
-  if(Number(f.qty)>m.qty) {
-    toast('Quantidade maior que o saldo disponível.');
-    return;
-  }
-
-  orders.push({
-    id:Date.now(),
-    number:f.number,
-    type:f.type,
-    desc:f.desc,
-    material:m.name,
-    qty:Number(f.qty),
-    status:f.status
-  });
-
-  persist();
-  closeModal();
-  render();
-
-  toast('Ordem cadastrada. Registre a saída em Movimentações para dar baixa no estoque.');
-}
-
-// CADASTRAR CONTAGEM DE INVENTÁRIO
-
-function openCount() {
-
-  if(!materials.length) {
-    toast('Cadastre um material primeiro.');
-    return;
-  }
-
-  openModal(
-    'Nova contagem de inventário',
-
-    `
-      <div class="form-grid">
-
-        <div class="field full">
-          <label>Material</label>
-
-          <select name="materialId"
-            id="countMaterial"
-            onchange="setSystemQty()">
-
-            ${materials.map(m=>`
-              <option value="${m.id}">
-                ${m.name}
-              </option>
-            `).join('')}
-
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Saldo no sistema</label>
-
-          <input name="system"
-            id="systemQty"
-            readonly
-            value="${materials[0].qty}">
-        </div>
-
-        <div class="field">
-          <label>Contagem física</label>
-
-          <input name="actual"
-            type="number"
-            min="0"
-            required>
-        </div>
-
-        <div class="field full">
-          <label>Responsável</label>
-
-          <select name="person">
-            ${responsibles.map(r=>`
-              <option>${r.name}</option>
-            `).join('')}
-          </select>
-        </div>
-
-      </div>
-    `,
-
-    'saveCount'
-  );
-}
-
-// ATUALIZAR SALDO DO SISTEMA NA CONTAGEM
-
-function setSystemQty() {
-
-  let m = materials.find(
-    x=>x.id===Number($('#countMaterial').value)
-  );
-
-  $('#systemQty').value=m.qty;
-}
-
-// SALVAR CONTAGEM
-
-function saveCount(e) {
-
-  e.preventDefault();
-
-  let f = Object.fromEntries(new FormData(e.target));
-
-  let m = materials.find(
-    x=>x.id===Number(f.materialId)
-  );
-
-  let actual = Number(f.actual);
-
-  counts.push({
-    id:Date.now(),
-    date:new Date().toLocaleDateString('pt-BR'),
-    material:m.name,
-    system:Number(f.system),
-    actual,
-    diff:actual-Number(f.system),
-    person:f.person
-  });
-
-  persist();
-  closeModal();
-  render();
-
-  toast('Contagem registrada. Divergências foram identificadas.');
-}
-
-// CADASTRAR RESPONSÁVEL
-
-function openResponsible() {
-
-  openModal(
-    'Novo responsável',
-
-    `
-      <div class="field">
-        <label>Nome completo</label>
-        <input name="name" required>
-      </div>
-
-      <div class="field">
-        <label>Setor / função</label>
-        <input name="sector" required
-          placeholder="Ex.: Almoxarifado">
-      </div>
-
-      <div class="field">
-        <label>Contato</label>
-        <input name="contact"
-          placeholder="E-mail ou telefone">
-      </div>
-    `,
-
-    'saveResponsible'
-  );
-}
-
-// SALVAR RESPONSÁVEL
-
-function saveResponsible(e) {
-
-  e.preventDefault();
-
-  responsibles.push({
-    id:Date.now(),
-    ...Object.fromEntries(new FormData(e.target))
-  });
-
-  persist();
-  closeModal();
-  render();
-
-  toast('Responsável cadastrado.');
-}
-
-// EXCLUIR REGISTROS
-
-function removeItem(type,id) {
-
-  if(!confirm('Deseja realmente excluir este registro?')) {
-    return;
-  }
-
-  if(type==='materials') {
-    materials=materials.filter(x=>x.id!==id);
-  }
-
-  if(type==='responsibles') {
-    responsibles=responsibles.filter(x=>x.id!==id);
-  }
-
-  persist();
-  render();
-
-  toast('Registro excluído.');
-}
-
-// LOGIN
-
-$('#loginForm').addEventListener('submit',e=>{
-
-  e.preventDefault();
-
-  if(
-    $('#loginUser').value==='admin' &&
-    $('#loginPass').value==='fluxo123'
-  ) {
-
-    $('#loginScreen').classList.add('hidden');
-    $('#appScreen').classList.remove('hidden');
-
-    render();
-
-  } else {
-
-    toast('Usuário ou senha incorretos.');
-
-  }
-
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function materialName(id){return materials.find(x=>x.id==id)?.name||'Material removido';}
+function employeeName(id){return employees.find(x=>x.id==id)?.name||'Não informado';}
+function dateBR(d){return d?new Date(d+'T12:00:00').toLocaleDateString('pt-BR'):'—';}
+function statusClass(s){return s==='Concluída'||s==='Ativo'?'green':s==='Cancelada'||s==='Inativo'?'red':s==='Em andamento'?'orange':'';}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2600);}
+$('loginForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ if($('username').value==='admin'&&$('password').value==='fluxo123'){
+  $('login').classList.add('hidden');$('app').classList.remove('hidden');renderAll();
+ }else toast('Usuário ou senha incorretos.');
 });
+function logout(){$('app').classList.add('hidden');$('login').classList.remove('hidden');$('password').value='';}
+function toggleMenu(){$('sidebar').classList.toggle('open');}
+const titles={
+ dashboard:['Dashboard','Visão geral da gestão de estoque'],
+ materials:['Materiais','Cadastro e controle dos materiais'],
+ movements:['Movimentações','Entradas e saídas do estoque'],
+ orders:['Ordens de serviço','Acompanhamento das atividades'],
+ inventory:['Inventário','Conferência física dos materiais'],
+ employees:['Funcionários','Gerenciamento da equipe']
+};
+document.querySelectorAll('.nav button[data-page]').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ $(btn.dataset.page).classList.add('active');
+ $('pageTitle').textContent=titles[btn.dataset.page][0];
+ $('pageSubtitle').textContent=titles[btn.dataset.page][1];
+ $('sidebar').classList.remove('open');
+}));
+function renderAll(){
+ $('today').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+ renderDashboard();renderMaterials();renderMovements();renderOrders();renderInventory();renderEmployees();
+}
+function renderDashboard(){
+ const low=materials.filter(m=>m.qty<=m.min);
+ const total=materials.reduce((a,m)=>a+Number(m.qty),0);
+ $('metrics').innerHTML=[
+  ['Materiais cadastrados',materials.length,'Itens registrados'],
+  ['Quantidade em estoque',total.toLocaleString('pt-BR'),'Unidades somadas'],
+  ['Estoque baixo',low.length,'Materiais que precisam de atenção'],
+  ['Ordens abertas',orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').length,'Ordens em andamento ou abertas']
+ ].map(x=>`<div class="card"><div class="metric-label">${x[0]}</div><div class="metric">${x[1]}</div><div class="metric-note">${x[2]}</div></div>`).join('');
+ $('lowStock').innerHTML=low.length?low.map(m=>`<tr><td>${esc(m.name)}</td><td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">Nenhum alerta de estoque.</td></tr>';
+ $('recentMoves').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(m=>`<tr><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td></tr>`).join('')||'<tr><td colspan="3" class="empty">Sem movimentações.</td></tr>';
+ $('activeOrders').innerHTML=orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhuma ordem ativa.</td></tr>';
+}
+function renderMaterials(){
+ const q=($('materialSearch')?.value||'').toLowerCase();
+ const list=materials.filter(m=>(m.name+' '+m.code+' '+m.category).toLowerCase().includes(q));
+ $('materialsTable').innerHTML=list.map(m=>`<tr>
+ <td>${esc(m.code)}</td><td><b>${esc(m.name)}</b></td><td>${esc(m.category)}</td>
+ <td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td>
+ <td><span class="status ${m.qty<=m.min?'red':'green'}">${m.qty<=m.min?'Estoque baixo':'Normal'}</span></td>
+ <td><div class="actions"><button class="small-btn" onclick="editItem('material',${m.id})">Editar</button><button class="small-btn delete" onclick="removeItem('material',${m.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum material encontrado.</td></tr>';
+}
+function renderMovements(){
+ $('movementsTable').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).map(m=>`<tr><td>${dateBR(m.date)}</td><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td><td>${esc(employeeName(m.employeeId))}</td><td>${esc(m.note||'—')}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma movimentação registrada.</td></tr>';
+}
+function renderOrders(){
+ $('ordersTable').innerHTML=orders.map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(materialName(o.materialId))}</td><td>${o.qty}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('order',${o.id})">Editar</button><button class="small-btn delete" onclick="removeItem('order',${o.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhuma ordem cadastrada.</td></tr>';
+}
+function renderInventory(){
+ $('inventoryTable').innerHTML=counts.slice().sort((a,b)=>b.id-a.id).map(c=>`<tr><td>${dateBR(c.date)}</td><td>${esc(materialName(c.materialId))}</td><td>${c.system}</td><td>${c.physical}</td><td><span class="status ${c.system===c.physical?'green':'orange'}">${c.physical-c.system>0?'+':''}${c.physical-c.system}</span></td><td>${esc(employeeName(c.employeeId))}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma contagem registrada.</td></tr>';
+}
+function renderEmployees(){
+ $('employeesTable').innerHTML=employees.map(e=>`<tr><td>${esc(e.registration)}</td><td><b>${esc(e.name)}</b></td><td>${esc(e.role)}</td><td>${esc(e.sector)}</td><td>${esc(e.email)}</td><td><span class="status ${statusClass(e.status)}">${esc(e.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('employee',${e.id})">Editar</button><button class="small-btn delete" onclick="removeItem('employee',${e.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum funcionário cadastrado.</td></tr>';
+}
 
-// NAVEGAÇÃO DO MENU
-
-document.querySelectorAll('.nav[data-page]')
-.forEach(a=>{
-
-  a.addEventListener('click',e=>{
-
-    e.preventDefault();
-
-    go(a.dataset.page);
-
-  });
-
+let currentType='',editingId=null;
+const fields={
+ material:[
+  ['code','Código','text'],['name','Nome do material','text'],['category','Categoria','text'],
+  ['unit','Unidade (un, kg, L...)','text'],['qty','Quantidade em estoque','number'],['min','Estoque mínimo','number']
+ ],
+ employee:[
+  ['registration','Matrícula','text'],['name','Nome completo','text'],['role','Cargo','text'],
+  ['sector','Setor','text'],['email','E-mail','email'],['status','Status','select',['Ativo','Inativo']]
+ ],
+ order:[
+  ['code','Código da ordem','text'],['description','Descrição','text'],['materialId','Material','material'],
+  ['qty','Quantidade','number'],['employeeId','Responsável','employee'],
+  ['status','Status','select',['Aberta','Em andamento','Concluída','Cancelada']]
+ ],
+ movement:[
+  ['materialId','Material','material'],['type','Tipo','select',['Entrada','Saída']],
+  ['qty','Quantidade','number'],['employeeId','Responsável','employee'],['note','Observação','text']
+ ],
+ count:[
+  ['materialId','Material','material'],['physical','Quantidade contada','number'],['employeeId','Responsável','employee']
+ ]
+};
+function makeField(f,value){
+ const [key,label,type,options]=f;let control='';
+ if(type==='select')control=`<select name="${key}" required>${options.map(x=>`<option ${x===value?'selected':''}>${x}</option>`).join('')}</select>`;
+ else if(type==='material')control=`<select name="${key}" required>${materials.map(m=>`<option value="${m.id}" ${m.id==value?'selected':''}>${esc(m.code)} — ${esc(m.name)}</option>`).join('')}</select>`;
+ else if(type==='employee')control=`<select name="${key}" required>${employees.map(e=>`<option value="${e.id}" ${e.id==value?'selected':''}>${esc(e.name)}</option>`).join('')}</select>`;
+ else control=`<input name="${key}" type="${type}" value="${esc(value??'')}" ${type==='number'?'min="0" step="any"':''} required>`;
+ return `<div class="field"><label>${label}</label>${control}</div>`;
+}
+function openModal(type,data=null){
+ currentType=type;editingId=data?.id??null;
+ const names={material:'Material',employee:'Funcionário',order:'Ordem de serviço',movement:'Movimentação',count:'Contagem de inventário'};
+ $('modalTitle').textContent=(data?'Editar ':'Cadastrar ')+names[type];
+ $('modalFields').innerHTML=fields[type].map(f=>makeField(f,data?.[f[0]]??(f[0]==='date'?new Date().toISOString().slice(0,10):''))).join('');
+ if(type==='movement')$('modalFields').insertAdjacentHTML('beforeend',`<div class="field"><label>Data</label><input name="date" type="date" value="${new Date().toISOString().slice(0,10)}" required></div>`);
+ $('modalBg').classList.add('show');
+}
+function closeModal(){$('modalBg').classList.remove('show');}
+function editItem(type,id){
+ const collection={material:materials,employee:employees,order:orders}[type];
+ const item=collection.find(x=>x.id===id);if(item)openModal(type,item);
+}
+function removeItem(type,id){
+ if(!confirm('Tem certeza de que deseja excluir este registro?'))return;
+ const map={material:'materials',employee:'employees',order:'orders'};
+ const collections={materials,employees,orders};
+ const arr=collections[map[type]];
+ const index=arr.findIndex(x=>x.id===id);
+ if(index>=0)arr.splice(index,1);
+ save();renderAll();toast('Registro excluído.');
+}
+$('modalForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const form=new FormData(e.target);const data=Object.fromEntries(form.entries());
+ const numberFields=['qty','min','materialId','employeeId','physical'];
+ numberFields.forEach(k=>{if(data[k]!==undefined)data[k]=Number(data[k]);});
+ if(currentType==='material'){
+  const duplicate=materials.some(m=>m.code.toLowerCase()===data.code.toLowerCase()&&m.id!==editingId);
+  if(duplicate){toast('Já existe um material com esse código.');return;}
+  if(editingId)Object.assign(materials.find(x=>x.id===editingId),data);
+  else materials.push({id:Date.now(),...data});
+ }
+ if(currentType==='employee'){
+  if(editingId)Object.assign(employees.find(x=>x.id===editingId),data);
+  else employees.push({id:Date.now(),...data});
+ }
+ if(currentType==='order'){
+  if(editingId)Object.assign(orders.find(x=>x.id===editingId),data);
+  else orders.push({id:Date.now(),...data});
+ }
+ if(currentType==='movement'){
+  const material=materials.find(m=>m.id===data.materialId);
+  if(!material){toast('Material não encontrado.');return;}
+  if(data.type==='Saída'&&data.qty>material.qty){toast('Estoque insuficiente para essa saída.');return;}
+  material.qty+=data.type==='Entrada'?data.qty:-data.qty;
+  movements.push({id:Date.now(),date:data.date,materialId:data.materialId,type:data.type,qty:data.qty,employeeId:data.employeeId,note:data.note});
+ }
+ if(currentType==='count'){
+  const material=materials.find(m=>m.id===data.materialId);
+  if(!material){toast('Material não encontrado.');return;}
+  counts.push({id:Date.now(),date:new Date().toISOString().slice(0,10),materialId:data.materialId,system:material.qty,physical:data.physical,employeeId:data.employeeId});
+  material.qty=data.physical;
+ }
+ save();closeModal();renderAll();toast('Informações salvas com sucesso!');
 });
-
-// SAIR DO SISTEMA
-
-$('#logout').addEventListener('click',e=>{
-
-  e.preventDefault();
-
-  $('#appScreen').classList.add('hidden');
-  $('#loginScreen').classList.remove('hidden');
-
-  $('#loginForm').reset();
-
-});
-
-// MENU PARA CELULAR
-
-$('#menuToggle').addEventListener('click',()=>{
-
-  $('#sidebar').classList.toggle('open');
-
-});
-
+$('modalBg').addEventListener('click',e=>{if(e.target===$('modalBg'))closeModal();});
+renderAll();
 </script>
-
 </body>
 </html>
-  
