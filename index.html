@@ -4,56 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FluxoInv | Gestão de Estoque</title>
+
 <style>
-:root {
-  --navy:#10243e; --blue:#1769aa; --light:#edf4fa;
-  --white:#fff; --text:#243449; --muted:#718096;
-  --border:#dce5ee; --green:#16845b; --red:#d64b4b;
-  --orange:#d88a22; --shadow:0 5px 20px #10243e12;
+:root{
+ --navy:#10243e;
+ --blue:#1769aa;
+ --light:#edf4fa;
+ --bg:#f4f7fb;
+ --white:#fff;
+ --text:#243449;
+ --muted:#718096;
+ --border:#dce5ee;
+ --green:#16845b;
+ --red:#d64b4b;
+ --orange:#d88a22;
+ --shadow:0 5px 20px #10243e12;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f4f7fb;color:var(--text)}
-button,input,select{font:inherit}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer;border:0}
 .hidden{display:none!important}
-#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#10243e,#1769aa)}
-.login-card{background:white;padding:38px;border-radius:16px;width:100%;max-width:400px;box-shadow:var(--shadow)}
-.logo{font-size:27px;font-weight:800;color:var(--navy);margin-bottom:8px}
+
+/* LOGIN */
+#login{
+ min-height:100vh;display:flex;align-items:center;
+ justify-content:center;padding:20px;
+ background:linear-gradient(135deg,#10243e,#1769aa)
+}
+.login-card{
+ background:white;padding:38px;border-radius:16px;
+ width:100%;max-width:410px;box-shadow:var(--shadow)
+}
+.logo{font-size:28px;font-weight:800;color:var(--navy)}
 .logo span{color:var(--blue)}
-.login-card p{color:var(--muted);margin-bottom:25px}
-.login-card label{display:block;font-size:13px;font-weight:bold;margin:16px 0 7px}
-.login-card input,.field input,.field select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;outline:none;background:white}
-input:focus,select:focus{border-color:var(--blue)}
-.primary{background:var(--blue);color:white;padding:12px 17px;border-radius:8px;font-weight:bold}
+.login-card p{color:var(--muted);margin:10px 0 25px}
+.login-card label{display:block;font-size:13px;font-weight:bold;margin:15px 0 7px}
+.login-card input,.field input,.field select,.field textarea{
+ width:100%;padding:12px;border:1px solid var(--border);
+ border-radius:8px;outline:none;background:white
+}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+.primary{background:var(--blue);color:white;padding:11px 16px;border-radius:8px;font-weight:bold}
 .primary:hover{background:#12558c}
 .login-card .primary{width:100%;margin-top:22px}
 .hint{font-size:12px;color:var(--muted);margin-top:18px}
-#app{min-height:100vh}
-.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:var(--navy);color:white;padding:25px 15px;z-index:5}
+
+/* MENU */
+.sidebar{
+ position:fixed;inset:0 auto 0 0;width:245px;
+ background:var(--navy);color:white;padding:25px 15px;z-index:5
+}
 .sidebar .logo{color:white;padding:0 12px 28px}
 .sidebar .logo span{color:#65b8ff}
 .nav-title{font-size:10px;color:#9aabc0;text-transform:uppercase;letter-spacing:1.5px;padding:16px 12px 8px}
-.nav button{width:100%;text-align:left;color:#dce7f4;background:transparent;padding:12px;border-radius:8px;margin:2px 0}
+.nav button{
+ width:100%;text-align:left;color:#dce7f4;
+ background:transparent;padding:12px;border-radius:8px;margin:2px 0
+}
 .nav button:hover,.nav button.active{background:#ffffff19;color:white}
 .nav button span{display:inline-block;width:27px}
-.userbox{position:absolute;bottom:20px;left:20px;right:20px;border-top:1px solid #ffffff25;padding-top:17px;font-size:13px}
+.userbox{
+ position:absolute;bottom:20px;left:20px;right:20px;
+ border-top:1px solid #ffffff25;padding-top:17px;font-size:13px
+}
 .userbox small{display:block;color:#aabbd0;margin-top:4px}
 .userbox button{background:transparent;color:white;margin-top:12px}
+
+/* CONTEÚDO */
 main{margin-left:245px;padding:30px;max-width:1600px}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:15px}
 .topbar h1{font-size:25px;color:var(--navy)}
 .topbar p{color:var(--muted);font-size:13px;margin-top:6px}
 .date{font-size:13px;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
-.card{background:white;border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+.card,.panel{
+ background:white;border:1px solid var(--border);
+ border-radius:12px;padding:20px;box-shadow:var(--shadow)
+}
 .metric-label{font-size:13px;color:var(--muted)}
 .metric{font-size:29px;font-weight:bold;color:var(--navy);margin-top:12px}
 .metric-note{font-size:12px;color:var(--muted);margin-top:7px}
-.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:var(--shadow)}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.panel{margin-bottom:20px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px;flex-wrap:wrap}
 .panel h2{font-size:17px;color:var(--navy)}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
-.toolbar input,.toolbar select{padding:10px;border:1px solid var(--border);border-radius:8px;min-width:180px}
+.toolbar input,.toolbar select{
+ padding:10px;border:1px solid var(--border);border-radius:8px;min-width:180px
+}
 table{width:100%;border-collapse:collapse;min-width:650px}
 .table-wrap{overflow-x:auto}
 th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:12px;border-bottom:1px solid var(--border)}
@@ -70,9 +108,15 @@ tr:last-child td{border-bottom:0}
 .page.active{display:block}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .empty{text-align:center;color:var(--muted);padding:25px}
-.modal-bg{position:fixed;inset:0;background:#07182bb3;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.info{font-size:12px;color:var(--muted);margin-top:10px}
+
+/* MODAL */
+.modal-bg{
+ position:fixed;inset:0;background:#07182bb3;display:none;
+ align-items:center;justify-content:center;padding:18px;z-index:10
+}
 .modal-bg.show{display:flex}
-.modal{background:white;border-radius:14px;padding:25px;width:100%;max-width:520px;max-height:90vh;overflow:auto}
+.modal{background:white;border-radius:14px;padding:25px;width:100%;max-width:540px;max-height:90vh;overflow:auto}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .modal-head h2{font-size:19px;color:var(--navy)}
 .close{background:#edf2f7;padding:7px 10px;border-radius:7px}
@@ -81,41 +125,260 @@ tr:last-child td{border-bottom:0}
 .field.full{grid-column:1/-1}
 .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
 .secondary{padding:11px 15px;border-radius:8px;background:#edf2f7;color:var(--text)}
-.toast{position:fixed;bottom:25px;right:25px;background:var(--navy);color:white;padding:13px 18px;border-radius:9px;z-index:20;box-shadow:var(--shadow)}
+.toast{
+ position:fixed;bottom:25px;right:25px;background:var(--navy);
+ color:white;padding:13px 18px;border-radius:9px;z-index:20;
+ box-shadow:var(--shadow);max-width:90%
+}
 .menu-mobile{display:none;background:var(--navy);color:white;padding:10px 13px;border-radius:8px}
-@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+@media(max-width:1000px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:700px){
  .sidebar{transform:translateX(-100%);transition:.2s}
  .sidebar.open{transform:translateX(0)}
  main{margin-left:0;padding:20px 14px}
  .menu-mobile{display:block}
-  <section class="page active" id="dashboard">...</section>
-  <section class="page" id="materials">...</section>
-  <section class="page" id="movements">...</section>
-  <section class="page" id="orders">...</section>
-  <section class="page" id="inventory">...</section>
-  <section class="page" id="employees">...</section>
- </main>
-</div>
-
-<div class="modal-bg" id="modalBg">...</div>
-<div id="toast" class="toast hidden"></div>
  .topbar{align-items:flex-start}
  .date{display:none}
  .two-col{grid-template-columns:1fr}
 }
-@media(max-width:450px){.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+@media(max-width:450px){
+ .grid{grid-template-columns:1fr}
+ .form-grid{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+}
 </style>
 </head>
+
 <body>
-<!-- Estrutura HTML completa contendo tela de login, barra lateral, dashboard, tabelas de materiais, movimentações, ordens de serviço, inventário e funcionários, conforme o código original. -->
-</body>
-</html>
-<script src="https://jsdelivr.net"></script>
+
+<!-- LOGIN -->
+<div id="login">
+ <div class="login-card">
+  <div class="logo">Fluxo<span>Inv</span></div>
+  <p>Sistema inteligente de gestão de estoque</p>
+
+  <form id="loginForm">
+   <label for="username">Usuário</label>
+   <input id="username" required placeholder="Digite seu usuário">
+
+   <label for="password">Senha</label>
+   <input id="password" type="password" required placeholder="Digite sua senha">
+
+   <button class="primary" type="submit">Entrar no sistema</button>
+  </form>
+
+  <div class="hint">
+   Acesso demonstrativo:<br>
+   Usuário: admin<br>
+   Senha: fluxo123
+  </div>
+ </div>
+</div>
+
+<!-- SISTEMA -->
+<div id="app" class="hidden">
+
+ <aside class="sidebar" id="sidebar">
+  <div class="logo">Fluxo<span>Inv</span></div>
+
+  <div class="nav">
+   <div class="nav-title">Principal</div>
+   <button class="active" data-page="dashboard"><span>▦</span> Dashboard</button>
+
+   <div class="nav-title">Estoque</div>
+   <button data-page="materials"><span>▤</span> Materiais</button>
+   <button data-page="movements"><span>↕</span> Movimentações</button>
+   <button data-page="inventory"><span>▣</span> Inventário</button>
+
+   <div class="nav-title">Operações</div>
+   <button data-page="orders"><span>▧</span> Ordens de serviço</button>
+   <button data-page="employees"><span>♙</span> Funcionários</button>
+  </div>
+
+  <div class="userbox">
+   <b>Administrador</b>
+   <small>Gestor do sistema</small>
+   <button onclick="logout()">↪ Sair do sistema</button>
+  </div>
+ </aside>
+
+ <main>
+  <header class="topbar">
+   <div>
+    <button class="menu-mobile" onclick="toggleMenu()">☰ Menu</button>
+    <h1 id="pageTitle">Dashboard</h1>
+    <p id="pageSubtitle">Visão geral da gestão de estoque</p>
+   </div>
+   <div class="date" id="today"></div>
+  </header>
+
+  <!-- DASHBOARD -->
+  <section class="page active" id="dashboard">
+   <div class="grid" id="metrics"></div>
+
+   <div class="two-col">
+    <div class="panel">
+     <div class="panel-head"><h2>⚠ Estoque baixo</h2></div>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Material</th><th>Estoque</th><th>Mínimo</th></tr></thead>
+       <tbody id="lowStock"></tbody>
+      </table>
+     </div>
+    </div>
+
+    <div class="panel">
+     <div class="panel-head"><h2>Movimentações recentes</h2></div>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Material</th><th>Tipo</th><th>Qtd.</th></tr></thead>
+       <tbody id="recentMoves"></tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+
+   <div class="panel">
+    <div class="panel-head"><h2>Ordens em andamento</h2></div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Código</th><th>Descrição</th><th>Responsável</th><th>Status</th></tr></thead>
+      <tbody id="activeOrders"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+
+  <!-- MATERIAIS -->
+  <section class="page" id="materials">
+   <div class="panel">
+    <div class="panel-head">
+     <h2>Cadastro de materiais</h2>
+     <button class="primary" onclick="openModal('material')">+ Novo material</button>
+    </div>
+    <div class="toolbar">
+     <input id="materialSearch" placeholder="Pesquisar material..." oninput="renderMaterials()">
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr><th>Código</th><th>Material</th><th>Categoria</th><th>Estoque</th><th>Mínimo</th><th>Situação</th><th>Ações</th></tr>
+      </thead>
+      <tbody id="materialsTable"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+
+  <!-- MOVIMENTAÇÕES -->
+  <section class="page" id="movements">
+   <div class="panel">
+    <div class="panel-head">
+     <h2>Histórico de movimentações</h2>
+     <button class="primary" onclick="openModal('movement')">+ Nova movimentação</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr><th>Data</th><th>Material</th><th>Tipo</th><th>Qtd.</th><th>Responsável</th><th>Observação</th></tr>
+      </thead>
+      <tbody id="movementsTable"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+
+  <!-- ORDENS -->
+  <section class="page" id="orders">
+   <div class="panel">
+    <div class="panel-head">
+     <h2>Ordens de serviço</h2>
+     <button class="primary" onclick="openModal('order')">+ Nova ordem</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr><th>Código</th><th>Descrição</th><th>Material</th><th>Qtd.</th><th>Responsável</th><th>Status</th><th>Ações</th></tr>
+      </thead>
+      <tbody id="ordersTable"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+
+  <!-- INVENTÁRIO -->
+  <section class="page" id="inventory">
+   <div class="panel">
+    <div class="panel-head">
+     <h2>Conferência de inventário</h2>
+     <button class="primary" onclick="openModal('count')">+ Nova contagem</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr><th>Data</th><th>Material</th><th>Sistema</th><th>Físico</th><th>Diferença</th><th>Responsável</th></tr>
+      </thead>
+      <tbody id="inventoryTable"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+
+  <!-- FUNCIONÁRIOS -->
+  <section class="page" id="employees">
+   <div class="panel">
+    <div class="panel-head">
+     <h2>Equipe de funcionários</h2>
+     <button class="primary" onclick="openModal('employee')">+ Novo funcionário</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead>
+       <tr><th>Matrícula</th><th>Nome</th><th>Cargo</th><th>Setor</th><th>E-mail</th><th>Status</th><th>Ações</th></tr>
+      </thead>
+      <tbody id="employeesTable"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+ </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+ <div class="modal">
+  <div class="modal-head">
+   <h2 id="modalTitle">Cadastro</h2>
+   <button class="close" onclick="closeModal()">✕</button>
+  </div>
+  <form id="dataForm">
+   <div class="form-grid" id="formFields"></div>
+   <div class="modal-actions">
+    <button type="button" class="secondary" onclick="closeModal()">Cancelar</button>
+    <button type="submit" class="primary">Salvar registro</button>
+   </div>
+  </form>
+ </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
 <script>
-const SUPABASE_URL = 'https://supabase.co';
-const SUPABASE_KEY = 'sb_publishable_2lz9uHJ72Mgj_BxJrEy2Ng_YKl3XHKN';
-const db = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+/* CONFIGURAÇÃO */
+const SUPABASE_URL = '';
+const SUPABASE_KEY = '';
+
+/*
+  Deixe os campos vazios para usar o armazenamento local.
+  Para conectar ao Supabase, coloque a URL do projeto e a
+  chave publishable (nunca use a service_role no navegador).
+*/
+
+let db = null;
+let cloudEnabled = false;
 
 const $ = id => document.getElementById(id);
 
@@ -125,156 +388,546 @@ let movements = [];
 let orders = [];
 let counts = [];
 
-function toast(msg) {
-  const t = $('toast');
-  if (!t) return;
-  t.textContent = msg;
-  t.classList.remove('hidden');
-  setTimeout(() => t.classList.add('hidden'), 3500);
-}
-
-async function loadAllData() {
-  if (!db) {
-    toast('Erro: Biblioteca do Supabase não carregou.');
-    return;
-  }
-  toast('Sincronizando com o banco de dados...');
-  try {
-    const [resMat, resEmp, resMov, resOrd, resCnt] = await Promise.all([
-      db.from('materials').select('*').order('id'),
-      db.from('employees').select('*').order('id'),
-      db.from('movements').select('*').order('id'),
-      db.from('orders').select('*').order('id'),
-      db.from('counts').select('*').order('id')
-    ]);
-
-    if (resMat.error) throw resMat.error;
-    if (resEmp.error) throw resEmp.error;
-
-    materials = resMat.data || [];
-    employees = resEmp.data || [];
-    movements = resMov.data || [];
-    orders = resOrd.data || [];
-    counts = resCnt.data || [];
-
-    renderAll();
-    toast('Banco de dados conectado!');
-  } catch (err) {
-    console.error('Erro Supabase:', err);
-    toast('Erro no banco: ' + (err.message || 'verifique a conexão'));
-  }
-}
-
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function materialName(id){return materials.find(x=>x.id==id)?.name||'Material removido';}
-function employeeName(id){return employees.find(x=>x.id==id)?.name||'Não informado';}
-function dateBR(d){return d?new Date(d+'T12:00:00').toLocaleDateString('pt-BR'):'—';}
-function statusClass(s){return s==='Concluída'||s==='Ativo'?'green':s==='Cancelada'||s==='Inativo'?'red':s==='Em andamento'?'orange':'';}
-
-$('loginForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const user = $('username').value.trim();
-  const pass = $('password').value.trim();
-  if (user === 'admin' && pass === 'fluxo123') {
-    $('login').classList.add('hidden');
-    $('app').classList.remove('hidden');
-    await loadAllData();
-  } else {
-    toast('Usuário ou senha incorretos.');
-  }
-});
-
-function logout(){$('app').classList.add('hidden');$('login').classList.remove('hidden');$('password').value='';}
-function toggleMenu(){$('sidebar').classList.toggle('open');}
-
-const titles={
-  dashboard:['Dashboard','Visão geral da gestão de estoque'],
-  materials:['Materiais','Cadastro e controle dos materiais'],
-  movements:['Movimentações','Entradas e saídas do estoque'],
-  orders:['Ordens de serviço','Acompanhamento das atividades'],
-  inventory:['Inventário','Conferência física dos materiais'],
-  employees:['Funcionários','Gerenciamento da equipe']
+const tableNames = {
+ materials:'materials',
+ employees:'employees',
+ movements:'movements',
+ orders:'orders',
+ counts:'counts'
 };
 
-document.querySelectorAll('.nav button[data-page]').forEach(btn=>btn.addEventListener('click',()=>{
+function uid(){
+ return crypto.randomUUID ? crypto.randomUUID() :
+  Date.now().toString(36)+Math.random().toString(36).slice(2);
+}
+
+function toast(message){
+ const t=$('toast');
+ t.textContent=message;
+ t.classList.remove('hidden');
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>t.classList.add('hidden'),3500);
+}
+
+function esc(value){
+ return String(value??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+
+function dateBR(d){
+ if(!d)return '—';
+ return new Date(d+'T12:00:00').toLocaleDateString('pt-BR');
+}
+
+function todayISO(){
+ return new Date().toISOString().slice(0,10);
+}
+
+function materialName(id){
+ return materials.find(x=>x.id===id)?.name||'Material removido';
+}
+
+function employeeName(id){
+ return employees.find(x=>x.id===id)?.name||'Não informado';
+}
+
+function statusClass(s){
+ if(s==='Concluída'||s==='Ativo')return 'green';
+ if(s==='Cancelada'||s==='Inativo')return 'red';
+ if(s==='Em andamento'||s==='Aberta')return 'orange';
+ return '';
+}
+
+/* ARMAZENAMENTO LOCAL */
+function saveLocal(){
+ const data={materials,employees,movements,orders,counts};
+ localStorage.setItem('fluxoinv_data',JSON.stringify(data));
+}
+
+function loadLocal(){
+ try{
+  const data=JSON.parse(localStorage.getItem('fluxoinv_data')||'{}');
+  materials=data.materials||[];
+  employees=data.employees||[];
+  movements=data.movements||[];
+  orders=data.orders||[];
+  counts=data.counts||[];
+ }catch(e){
+  console.error(e);
+ }
+}
+
+/* SUPABASE */
+async function cloudLoad(){
+ if(!db)return false;
+ try{
+  const results=await Promise.all(
+   Object.values(tableNames).map(name=>
+    db.from(name).select('id,data')
+   )
+  );
+
+  for(let i=0;i<results.length;i++){
+   if(results[i].error)throw results[i].error;
+  }
+
+  const values=results.map(r=>(r.data||[]).map(x=>x.data));
+  [materials,employees,movements,orders,counts]=values;
+  saveLocal();
+  return true;
+ }catch(e){
+  console.error('Supabase:',e);
+  toast('Falha na conexão com o banco. Dados locais preservados.');
+  return false;
+ }
+}
+
+async function cloudSave(table,item){
+ if(!db)return;
+ const {error}=await db.from(table).upsert({
+  id:String(item.id),data:item
+ });
+ if(error){
+  console.error(error);
+  toast('Erro ao sincronizar: '+error.message);
+ }
+}
+
+async function cloudDelete(table,id){
+ if(!db)return;
+ const {error}=await db.from(table).delete().eq('id',String(id));
+ if(error){
+  console.error(error);
+  toast('Erro ao excluir no banco: '+error.message);
+ }
+}
+
+async function loadAllData(){
+ if(cloudEnabled){
+  await cloudLoad();
+ }else{
+  loadLocal();
+ }
+ renderAll();
+}
+
+/* LOGIN */
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const user=$('username').value.trim();
+ const pass=$('password').value;
+
+ if(user==='admin'&&pass==='fluxo123'){
+  $('login').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  await loadAllData();
+  toast('Bem-vindo ao FluxoInv!');
+ }else{
+  toast('Usuário ou senha incorretos.');
+ }
+});
+
+function logout(){
+ $('app').classList.add('hidden');
+ $('login').classList.remove('hidden');
+ $('password').value='';
+}
+
+function toggleMenu(){
+ $('sidebar').classList.toggle('open');
+}
+
+/* NAVEGAÇÃO */
+const titles={
+ dashboard:['Dashboard','Visão geral da gestão de estoque'],
+ materials:['Materiais','Cadastro e controle dos materiais'],
+ movements:['Movimentações','Entradas e saídas do estoque'],
+ orders:['Ordens de serviço','Acompanhamento das atividades'],
+ inventory:['Inventário','Conferência física dos materiais'],
+ employees:['Funcionários','Gerenciamento da equipe']
+};
+
+document.querySelectorAll('.nav button[data-page]').forEach(btn=>{
+ btn.addEventListener('click',()=>{
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $(btn.dataset.page).classList.add('active');
+
   $('pageTitle').textContent=titles[btn.dataset.page][0];
   $('pageSubtitle').textContent=titles[btn.dataset.page][1];
   $('sidebar').classList.remove('open');
-}));
+ });
+});
 
+/* ATUALIZAÇÃO DO SISTEMA */
 function renderAll(){
-  $('today').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
-  renderDashboard();renderMaterials();renderMovements();renderOrders();renderInventory();renderEmployees();
+ $('today').textContent=new Date().toLocaleDateString('pt-BR',{
+  weekday:'long',day:'2-digit',month:'long',year:'numeric'
+ });
+ renderDashboard();
+ renderMaterials();
+ renderMovements();
+ renderOrders();
+ renderInventory();
+ renderEmployees();
 }
 
 function renderDashboard(){
-  const low=materials.filter(m=>Number(m.qty)<=Number(m.min));
-  const total=materials.reduce((a,m)=>a+Number(m.qty),0);
-  $('metrics').innerHTML=[
-    ['Materiais cadastrados',materials.length,'Itens registrados'],
-    ['Quantidade em estoque',total.toLocaleString('pt-BR'),'Unidades somadas'],
-    ['Estoque baixo',low.length,'Materiais que precisam de atenção'],
-    ['Ordens abertas',orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').length,'Ordens em andamento ou abertas']
-  ].map(x=>`<div class="card"><div class="metric-label">${x[0]}</div><div class="metric">${x[1]}</div><div class="metric-note">${x[2]}</div></div>`).join('');
-  $('lowStock').innerHTML=low.length?low.map(m=>`<tr><td>${esc(m.name)}</td><td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">Nenhum alerta de estoque.</td></tr>';
-  $('recentMoves').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(m=>`<tr><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td></tr>`).join('')||'<tr><td colspan="3" class="empty">Sem movimentações.</td></tr>';
-  $('activeOrders').innerHTML=orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhuma ordem ativa.</td></tr>';
+ const low=materials.filter(m=>Number(m.qty)<=Number(m.min));
+ const total=materials.reduce((a,m)=>a+Number(m.qty),0);
+
+ $('metrics').innerHTML=[
+  ['Materiais cadastrados',materials.length,'Itens registrados'],
+  ['Quantidade em estoque',total.toLocaleString('pt-BR'),'Unidades somadas'],
+  ['Estoque baixo',low.length,'Materiais que precisam de atenção'],
+  ['Ordens abertas',orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').length,'Ordens não finalizadas']
+ ].map(x=>`
+  <div class="card">
+   <div class="metric-label">${x[0]}</div>
+   <div class="metric">${x[1]}</div>
+   <div class="metric-note">${x[2]}</div>
+  </div>`).join('');
+
+ $('lowStock').innerHTML=low.map(m=>`
+  <tr><td>${esc(m.name)}</td>
+  <td>${m.qty} ${esc(m.unit)}</td>
+  <td>${m.min} ${esc(m.unit)}</td></tr>
+ `).join('')||'<tr><td colspan="3" class="empty">Nenhum alerta de estoque.</td></tr>';
+
+ $('recentMoves').innerHTML=movements.slice().sort((a,b)=>b.createdAt-a.createdAt).slice(0,5).map(m=>`
+  <tr><td>${esc(materialName(m.materialId))}</td>
+  <td><span class="status ${m.type==='Entrada'?'green':'orange'}">${esc(m.type)}</span></td>
+  <td>${m.qty}</td></tr>
+ `).join('')||'<tr><td colspan="3" class="empty">Sem movimentações.</td></tr>';
+
+ $('activeOrders').innerHTML=orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').map(o=>`
+  <tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td>
+  <td>${esc(employeeName(o.employeeId))}</td>
+  <td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td></tr>
+ `).join('')||'<tr><td colspan="4" class="empty">Nenhuma ordem ativa.</td></tr>';
 }
 
 function renderMaterials(){
-  const q=($('materialSearch')?.value||'').toLowerCase();
-  const list=materials.filter(m=>(m.name+' '+m.code+' '+m.category).toLowerCase().includes(q));
-  $('materialsTable').innerHTML=list.map(m=>`<tr>
-  <td>${esc(m.code)}</td><td><b>${esc(m.name)}</b></td><td>${esc(m.category)}</td>
-  <td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td>
-  <td><span class="status ${Number(m.qty)<=Number(m.min)?'red':'green'}">${Number(m.qty)<=Number(m.min)?'Estoque baixo':'Normal'}</span></td>
-  <td><div class="actions"><button class="small-btn" onclick="editItem('material',${m.id})">Editar</button><button class="small-btn delete" onclick="removeItem('material',${m.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum material encontrado.</td></tr>';
+ const q=($('materialSearch').value||'').toLowerCase();
+ const list=materials.filter(m=>
+  (m.name+' '+m.code+' '+m.category).toLowerCase().includes(q)
+ );
+
+ $('materialsTable').innerHTML=list.map(m=>`
+  <tr>
+   <td>${esc(m.code)}</td>
+   <td><b>${esc(m.name)}</b></td>
+   <td>${esc(m.category)}</td>
+   <td>${m.qty} ${esc(m.unit)}</td>
+   <td>${m.min} ${esc(m.unit)}</td>
+   <td><span class="status ${Number(m.qty)<=Number(m.min)?'red':'green'}">
+    ${Number(m.qty)<=Number(m.min)?'Estoque baixo':'Normal'}
+   </span></td>
+   <td><div class="actions">
+    <button class="small-btn" onclick="editItem('material','${m.id}')">Editar</button>
+    <button class="small-btn delete" onclick="removeItem('material','${m.id}')">Excluir</button>
+   </div></td>
+  </tr>
+ `).join('')||'<tr><td colspan="7" class="empty">Nenhum material encontrado.</td></tr>';
 }
 
 function renderMovements(){
-  $('movementsTable').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).map(m=>`<tr><td>${dateBR(m.date)}</td><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td><td>${esc(employeeName(m.employeeId))}</td><td>${esc(m.note||'—')}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma movimentação registrada.</td></tr>';
+ $('movementsTable').innerHTML=movements.slice().sort((a,b)=>b.createdAt-a.createdAt).map(m=>`
+  <tr><td>${dateBR(m.date)}</td>
+  <td>${esc(materialName(m.materialId))}</td>
+  <td><span class="status ${m.type==='Entrada'?'green':'orange'}">${esc(m.type)}</span></td>
+  <td>${m.qty}</td><td>${esc(employeeName(m.employeeId))}</td>
+  <td>${esc(m.note||'—')}</td></tr>
+ `).join('')||'<tr><td colspan="6" class="empty">Nenhuma movimentação registrada.</td></tr>';
 }
 
 function renderOrders(){
-  $('ordersTable').innerHTML=orders.map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(materialName(o.materialId))}</td><td>${o.qty}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('order',${o.id})">Editar</button><button class="small-btn delete" onclick="removeItem('order',${o.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhuma ordem cadastrada.</td></tr>';
+ $('ordersTable').innerHTML=orders.map(o=>`
+  <tr><td>${esc(o.code)}</td>
+  <td>${esc(o.description)}</td>
+  <td>${esc(materialName(o.materialId))}</td>
+  <td>${o.qty}</td>
+  <td>${esc(employeeName(o.employeeId))}</td>
+  <td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td>
+  <td><div class="actions">
+   <button class="small-btn" onclick="editItem('order','${o.id}')">Editar</button>
+   <button class="small-btn delete" onclick="removeItem('order','${o.id}')">Excluir</button>
+  </div></td></tr>
+ `).join('')||'<tr><td colspan="7" class="empty">Nenhuma ordem cadastrada.</td></tr>';
 }
 
 function renderInventory(){
-  $('inventoryTable').innerHTML=counts.slice().sort((a,b)=>b.id-a.id).map(c=>`<tr><td>${dateBR(c.date)}</td><td>${esc(materialName(c.materialId))}</td><td>${c.system}</td><td>${c.physical}</td><td><span class="status ${Number(c.system)===Number(c.physical)?'green':'orange'}">${c.physical-c.system>0?'+':''}${c.physical-c.system}</span></td><td>${esc(employeeName(c.employeeId))}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma contagem registrada.</td></tr>';
+ $('inventoryTable').innerHTML=counts.slice().sort((a,b)=>b.createdAt-a.createdAt).map(c=>`
+  <tr><td>${dateBR(c.date)}</td>
+  <td>${esc(materialName(c.materialId))}</td>
+  <td>${c.system}</td><td>${c.physical}</td>
+  <td><span class="status ${Number(c.system)===Number(c.physical)?'green':'orange'}">
+   ${Number(c.physical)-Number(c.system)>0?'+':''}${Number(c.physical)-Number(c.system)}
+  </span></td>
+  <td>${esc(employeeName(c.employeeId))}</td></tr>
+ `).join('')||'<tr><td colspan="6" class="empty">Nenhuma contagem registrada.</td></tr>';
 }
 
 function renderEmployees(){
-  $('employeesTable').innerHTML=employees.map(e=>`<tr><td>${esc(e.registration)}</td><td><b>${esc(e.name)}</b></td><td>${esc(e.role)}</td><td>${esc(e.sector)}</td><td>${esc(e.email)}</td><td><span class="status ${statusClass(e.status)}">${esc(e.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('employee',${e.id})">Editar</button><button class="small-btn delete" onclick="removeItem('employee',${e.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum funcionário cadastrado.</td></tr>';
+ $('employeesTable').innerHTML=employees.map(e=>`
+  <tr><td>${esc(e.registration)}</td>
+  <td><b>${esc(e.name)}</b></td>
+  <td>${esc(e.role)}</td><td>${esc(e.sector)}</td>
+  <td>${esc(e.email)}</td>
+  <td><span class="status ${statusClass(e.status)}">${esc(e.status)}</span></td>
+  <td><div class="actions">
+   <button class="small-btn" onclick="editItem('employee','${e.id}')">Editar</button>
+   <button class="small-btn delete" onclick="removeItem('employee','${e.id}')">Excluir</button>
+  </div></td></tr>
+ `).join('')||'<tr><td colspan="7" class="empty">Nenhum funcionário cadastrado.</td></tr>';
 }
 
-let currentType='',editingId=null;
+/* FORMULÁRIOS */
+let currentType='';
+let editingId=null;
+
 const fields={
-  material:[
-    ['code','Código','text'],['name','Nome do material','text'],['category','Categoria','text'],
-    ['unit','Unidade (un, kg, L...)','text'],['qty','Quantidade em estoque','number'],['min','Estoque mínimo','number']
-  ],
-  employee:[
-    ['registration','Matrícula','text'],['name','Nome completo','text'],['role','Cargo','text'],
-    ['sector','Setor','text'],['email','E-mail','email'],['status','Status','select',['Ativo','Inativo']]
-  ],
-  order:[
-    ['code','Código da ordem','text'],['description','Descrição','text'],['materialId','Material','material'],
-    ['qty','Quantidade','number'],['employeeId','Responsável','employee'],
-    ['status','Status','select',['Aberta','Em andamento','Concluída','Cancelada']]
-  ],
-  movement:[
-    ['materialId','Material','material'],['type','Tipo','select',['Entrada','Saída']],
-    ['qty','Quantidade','number'],['employeeId','Responsável','employee'],['note','Observação','text']
-  ],
-  count:[
-    ['materialId','Material','material'],['physical','Quantidade contada','number'],['employeeId','Responsável','employee']
-  ]
+ material:[
+  ['code','Código','text'],
+  ['name','Nome do material','text'],
+  ['category','Categoria','text'],
+  ['unit','Unidade (un, kg, L...)','text'],
+  ['qty','Quantidade em estoque','number'],
+  ['min','Estoque mínimo','number']
+ ],
+ employee:[
+  ['registration','Matrícula','text'],
+  ['name','Nome completo','text'],
+  ['role','Cargo','text'],
+  ['sector','Setor','text'],
+  ['email','E-mail','email'],
+  ['status','Status','select',['Ativo','Inativo']]
+ ],
+ order:[
+  ['code','Código da ordem','text'],
+  ['description','Descrição','text'],
+  ['materialId','Material','material'],
+  ['qty','Quantidade','number'],
+  ['employeeId','Responsável','employee'],
+  ['status','Status','select',['Aberta','Em andamento','Concluída','Cancelada']]
+ ],
+ movement:[
+  ['materialId','Material','material'],
+  ['type','Tipo','select',['Entrada','Saída']],
+  ['qty','Quantidade','number'],
+  ['employeeId','Responsável','employee'],
+  ['note','Observação','text']
+ ],
+ count:[
+  ['materialId','Material','material'],
+  ['physical','Quantidade contada','number'],
+  ['employeeId','Responsável','employee']
+ ]
 };
 
 function makeField(f,value){
-  const [key,label,type,options]=f;let control='';
-  if(type==='select')control=`<select name="${key}" required>${options.map(x=>`<option ${x===value?'selected':''}>${x}</option>`).join('')}</select>`;
+ const [key,label,type,options]=f;
+ let control='';
+
+ if(type==='select'){
+  control=`<select name="${key}" required>
+   ${options.map(x=>`<option value="${esc(x)}" ${x===value?'selected':''}>${esc(x)}</option>`).join('')}
+  </select>`;
+ }else if(type==='material'||type==='employee'){
+  const list=type==='material'?materials:employees;
+  const current=type==='material'?'materialId':'employeeId';
+  control=`<select name="${key}" required>
+   <option value="">Selecione...</option>
+   ${list.map(x=>`<option value="${esc(x.id)}" ${String(x.id)===String(value)?'selected':''}>${esc(x.name)}</option>`).join('')}
+  </select>`;
+ }else{
+  control=`<input name="${key}" type="${type}" value="${esc(value??'')}" ${type==='number'?'min="0" step="any"':''} required>`;
+ }
+
+ return `<div class="field ${key==='description'||key==='note'?'full':''}">
+  <label>${label}</label>${control}
+ </div>`;
+}
+
+function openModal(type,id=null){
+ currentType=type;
+ editingId=id;
+ const item=id?getList(type).find(x=>String(x.id)===String(id)):null;
+
+ if((type==='movement'||type==='count'||type==='order')&&!materials.length){
+  toast('Cadastre um material primeiro.');
+  return;
+ }
+ if((type==='movement'||type==='count'||type==='order')&&!employees.length){
+  toast('Cadastre um funcionário primeiro.');
+  return;
+ }
+
+ const names={
+  material:'Material',
+  employee:'Funcionário',
+  order:'Ordem de serviço',
+  movement:'Movimentação',
+  count:'Contagem de inventário'
+ };
+
+ $('modalTitle').textContent=(id?'Editar ':'Cadastrar ')+names[type];
+
+ $('formFields').innerHTML=fields[type].map(f=>{
+  let value=item?.[f[0]]??'';
+  if(!item){
+   if(f[0]==='unit')value='un';
+   if(f[0]==='status')value=type==='employee'?'Ativo':'Aberta';
+  }
+  return makeField(f,value);
+ }).join('');
+
+ $('modalBg').classList.add('show');
+}
+
+function closeModal(){
+ $('modalBg').classList.remove('show');
+ $('dataForm').reset();
+ editingId=null;
+ currentType='';
+}
+
+function getList(type){
+ return {
+  material:materials,
+  employee:employees,
+  order:orders,
+  movement:movements,
+  count:counts
+ }[type];
+}
+
+function getTable(type){
+ return {
+  material:'materials',
+  employee:'employees',
+  order:'orders',
+  movement:'movements',
+  count:'counts'
+ }[type];
+}
+
+/* SALVAR REGISTROS */
+$('dataForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+
+ const formData=new FormData(e.target);
+ const item={};
+
+ for(const [key,value] of formData.entries()){
+  item[key]=['qty','min','physical'].includes(key)?Number(value):value;
+ }
+
+ const list=getList(currentType);
+ const table=getTable(currentType);
+
+ if(currentType==='material'&&Number(item.qty)<0){
+  toast('Quantidade inválida.');
+  return;
+ }
+
+ if(currentType==='movement'){
+  item.qty=Number(item.qty);
+  if(item.qty<=0){toast('Informe uma quantidade maior que zero.');return;}
+
+  const material=materials.find(x=>x.id===item.materialId);
+  if(!material){toast('Material não encontrado.');return;}
+
+  const newQty=Number(material.qty)+(item.type==='Entrada'?item.qty:-item.qty);
+  if(newQty<0){toast('Estoque insuficiente para essa saída.');return;}
+
+  material.qty=newQty;
+  if(cloudEnabled)await cloudSave('materials',material);
+ }
+
+ if(currentType==='count'){
+  const material=materials.find(x=>x.id===item.materialId);
+  if(!material){toast('Material não encontrado.');return;}
+  item.system=Number(material.qty);
+  item.date=todayISO();
+ }
+
+ if(currentType==='movement')item.date=todayISO();
+
+ if(editingId){
+  const index=list.findIndex(x=>String(x.id)===String(editingId));
+  if(index>=0){
+   item.id=list[index].id;
+   item.createdAt=list[index].createdAt||Date.now();
+   list[index]=item;
+  }
+ }else{
+  item.id=uid();
+  item.createdAt=Date.now();
+  list.push(item);
+ }
+
+ saveLocal();
+
+ if(cloudEnabled){
+  await cloudSave(table,item);
+ }
+
+ closeModal();
+ renderAll();
+ toast('Registro salvo com sucesso!');
+});
+
+/* EDITAR */
+function editItem(type,id){
+ openModal(type,id);
+}
+
+/* EXCLUIR */
+async function removeItem(type,id){
+ if(!confirm('Deseja realmente excluir este registro?'))return;
+
+ const list=getList(type);
+ const index=list.findIndex(x=>String(x.id)===String(id));
+ if(index<0)return;
+
+ list.splice(index,1);
+ saveLocal();
+
+ if(cloudEnabled)await cloudDelete(getTable(type),id);
+
+ renderAll();
+ toast('Registro excluído.');
+}
+
+/* INICIALIZAÇÃO */
+async function initialize(){
+ loadLocal();
+
+ if(SUPABASE_URL&&SUPABASE_KEY){
+  try{
+   if(!window.supabase){
+    await new Promise((resolve,reject)=>{
+     const script=document.createElement('script');
+     script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+     script.onload=resolve;
+     script.onerror=reject;
+     document.head.appendChild(script);
+    });
+   }
+   db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+   cloudEnabled=true;
+  }catch(e){
+   console.error(e);
+   cloudEnabled=false;
+  }
+ }
+}
+
+initialize();
+</script>
+</body>
+</html>
