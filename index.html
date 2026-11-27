@@ -418,6 +418,157 @@ $('modalForm').addEventListener('submit',e=>{
 });
 $('modalBg').addEventListener('click',e=>{if(e.target===$('modalBg'))closeModal();});
 renderAll();
-</script>
-</body>
-</html>
+<script src="https://jsdelivr.net"></script>
+<script>
+const SUPABASE_URL = 'https://supabase.co';
+const SUPABASE_KEY = 'COLE_SUA_CHAVE_AQUI';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $ = id => document.getElementById(id);
+
+let materials = [];
+let employees = [];
+let movements = [];
+let orders = [];
+let counts = [];
+
+async function loadAllData() {
+  toast('Sincronizando com o banco de dados...');
+  try {
+    const [resMat, resEmp, resMov, resOrd, resCnt] = await Promise.all([
+      db.from('materials').select('*').order('id'),
+      db.from('employees').select('*').order('id'),
+      db.from('movements').select('*').order('id'),
+      db.from('orders').select('*').order('id'),
+      db.from('counts').select('*').order('id')
+    ]);
+
+    if (resMat.error) throw resMat.error;
+    if (resEmp.error) throw resEmp.error;
+
+    materials = resMat.data || [];
+    employees = resEmp.data || [];
+    movements = resMov.data || [];
+    orders = resOrd.data || [];
+    counts = resCnt.data || [];
+
+    renderAll();
+    toast('Banco de dados conectado!');
+  } catch (err) {
+    console.error('Erro Supabase:', err);
+    toast('Erro ao conectar no banco: ' + (err.message || 'verifique a chave API'));
+  }
+}
+
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function materialName(id){return materials.find(x=>x.id==id)?.name||'Material removido';}
+function employeeName(id){return employees.find(x=>x.id==id)?.name||'Não informado';}
+function dateBR(d){return d?new Date(d+'T12:00:00').toLocaleDateString('pt-BR'):'—';}
+function statusClass(s){return s==='Concluída'||s==='Ativo'?'green':s==='Cancelada'||s==='Inativo'?'red':s==='Em andamento'?'orange':'';}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),3200);}
+
+$('loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  if($('username').value==='admin'&&$('password').value==='fluxo123'){
+    $('login').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    await loadAllData();
+  } else toast('Usuário ou senha incorretos.');
+});
+
+function logout(){$('app').classList.add('hidden');$('login').classList.remove('hidden');$('password').value='';}
+function toggleMenu(){$('sidebar').classList.toggle('open');}
+
+const titles={
+  dashboard:['Dashboard','Visão geral da gestão de estoque'],
+  materials:['Materiais','Cadastro e controle dos materiais'],
+  movements:['Movimentações','Entradas e saídas do estoque'],
+  orders:['Ordens de serviço','Acompanhamento das atividades'],
+  inventory:['Inventário','Conferência física dos materiais'],
+  employees:['Funcionários','Gerenciamento da equipe']
+};
+
+document.querySelectorAll('.nav button[data-page]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  $(btn.dataset.page).classList.add('active');
+  $('pageTitle').textContent=titles[btn.dataset.page][0];
+  $('pageSubtitle').textContent=titles[btn.dataset.page][1];
+  $('sidebar').classList.remove('open');
+}));
+
+function renderAll(){
+  $('today').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+  renderDashboard();renderMaterials();renderMovements();renderOrders();renderInventory();renderEmployees();
+}
+
+function renderDashboard(){
+  const low=materials.filter(m=>Number(m.qty)<=Number(m.min));
+  const total=materials.reduce((a,m)=>a+Number(m.qty),0);
+  $('metrics').innerHTML=[
+    ['Materiais cadastrados',materials.length,'Itens registrados'],
+    ['Quantidade em estoque',total.toLocaleString('pt-BR'),'Unidades somadas'],
+    ['Estoque baixo',low.length,'Materiais que precisam de atenção'],
+    ['Ordens abertas',orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').length,'Ordens em andamento ou abertas']
+  ].map(x=>`<div class="card"><div class="metric-label">${x[0]}</div><div class="metric">${x[1]}</div><div class="metric-note">${x[2]}</div></div>`).join('');
+  $('lowStock').innerHTML=low.length?low.map(m=>`<tr><td>${esc(m.name)}</td><td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">Nenhum alerta de estoque.</td></tr>';
+  $('recentMoves').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(m=>`<tr><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td></tr>`).join('')||'<tr><td colspan="3" class="empty">Sem movimentações.</td></tr>';
+  $('activeOrders').innerHTML=orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhuma ordem ativa.</td></tr>';
+}
+
+function renderMaterials(){
+  const q=($('materialSearch')?.value||'').toLowerCase();
+  const list=materials.filter(m=>(m.name+' '+m.code+' '+m.category).toLowerCase().includes(q));
+  $('materialsTable').innerHTML=list.map(m=>`<tr>
+  <td>${esc(m.code)}</td><td><b>${esc(m.name)}</b></td><td>${esc(m.category)}</td>
+  <td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td>
+  <td><span class="status ${Number(m.qty)<=Number(m.min)?'red':'green'}">${Number(m.qty)<=Number(m.min)?'Estoque baixo':'Normal'}</span></td>
+  <td><div class="actions"><button class="small-btn" onclick="editItem('material',${m.id})">Editar</button><button class="small-btn delete" onclick="removeItem('material',${m.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum material encontrado.</td></tr>';
+}
+
+function renderMovements(){
+  $('movementsTable').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).map(m=>`<tr><td>${dateBR(m.date)}</td><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td><td>${esc(employeeName(m.employeeId))}</td><td>${esc(m.note||'—')}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma movimentação registrada.</td></tr>';
+}
+
+function renderOrders(){
+  $('ordersTable').innerHTML=orders.map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(materialName(o.materialId))}</td><td>${o.qty}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('order',${o.id})">Editar</button><button class="small-btn delete" onclick="removeItem('order',${o.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhuma ordem cadastrada.</td></tr>';
+}
+
+function renderInventory(){
+  $('inventoryTable').innerHTML=counts.slice().sort((a,b)=>b.id-a.id).map(c=>`<tr><td>${dateBR(c.date)}</td><td>${esc(materialName(c.materialId))}</td><td>${c.system}</td><td>${c.physical}</td><td><span class="status ${Number(c.system)===Number(c.physical)?'green':'orange'}">${c.physical-c.system>0?'+':''}${c.physical-c.system}</span></td><td>${esc(employeeName(c.employeeId))}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma contagem registrada.</td></tr>';
+}
+
+function renderEmployees(){
+  $('employeesTable').innerHTML=employees.map(e=>`<tr><td>${esc(e.registration)}</td><td><b>${esc(e.name)}</b></td><td>${esc(e.role)}</td><td>${esc(e.sector)}</td><td>${esc(e.email)}</td><td><span class="status ${statusClass(e.status)}">${esc(e.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('employee',${e.id})">Editar</button><button class="small-btn delete" onclick="removeItem('employee',${e.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum funcionário cadastrado.</td></tr>';
+}
+
+let currentType='',editingId=null;
+const fields={
+  material:[
+    ['code','Código','text'],['name','Nome do material','text'],['category','Categoria','text'],
+    ['unit','Unidade (un, kg, L...)','text'],['qty','Quantidade em estoque','number'],['min','Estoque mínimo','number']
+  ],
+  employee:[
+    ['registration','Matrícula','text'],['name','Nome completo','text'],['role','Cargo','text'],
+    ['sector','Setor','text'],['email','E-mail','email'],['status','Status','select',['Ativo','Inativo']]
+  ],
+  order:[
+    ['code','Código da ordem','text'],['description','Descrição','text'],['materialId','Material','material'],
+    ['qty','Quantidade','number'],['employeeId','Responsável','employee'],
+    ['status','Status','select',['Aberta','Em andamento','Concluída','Cancelada']]
+  ],
+  movement:[
+    ['materialId','Material','material'],['type','Tipo','select',['Entrada','Saída']],
+    ['qty','Quantidade','number'],['employeeId','Responsável','employee'],['note','Observação','text']
+  ],
+  count:[
+    ['materialId','Material','material'],['physical','Quantidade contada','number'],['employeeId','Responsável','employee']
+  ]
+};
+
+function makeField(f,value){
+  const [key,label,type,options]=f;let control='';
+  if(type==='select')control=`<select name="${key}" required>${options.map(x=>`<option ${x===value?'selected':''}>${x}</option>`).join('')}</select>`;
+  else if(type==='material')control=`<select name="${key}" required>${materials.map(m=>`<option value="${m.id}" ${m.id==value?'selected':''}>${esc(m.code)} — ${esc(m.name)}</option>`).join('')}</select>`;
+  else if(type==='employee')control=`<select name="${key}" required>${employees.map(e=>`<option value="${e.id}" ${e.id==value?'selected':''}>${esc(e.name)}</option>`).join('')}</select>`;
