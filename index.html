@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FluxoInv | Gestão de Estoque</title>
+<script src="https://jsdelivr.net"></script>
 <style>
 :root {
   --navy:#10243e; --blue:#1769aa; --light:#edf4fa;
@@ -142,6 +143,7 @@ tr:last-child td{border-bottom:0}
    <div class="date" id="today"></div>
   </header>
 
+  <!-- DASHBOARD -->
   <section class="page active" id="dashboard">
    <div class="grid" id="metrics"></div>
    <div class="two-col">
@@ -151,128 +153,228 @@ tr:last-child td{border-bottom:0}
     </div>
     <div class="panel">
      <div class="panel-head"><h2>Movimentações recentes</h2></div>
-     <div class="table-wrap"><table><thead><tr><th>Material</th><th>Tipo</th><th>Quantidade</th></tr></thead><tbody id="recentMoves"></tbody></table></div>
+     <div class="table-wrap"><table><thead><tr><th>Material</th><th>Tipo</th><th>Qtd</th></tr></thead><tbody id="recentMoves"></tbody></table></div>
     </div>
    </div>
    <div class="panel">
-    <div class="panel-head"><h2>Ordens em andamento</h2></div>
+    <div class="panel-head"><h2>Ordens de serviço ativas</h2></div>
     <div class="table-wrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Responsável</th><th>Status</th></tr></thead><tbody id="activeOrders"></tbody></table></div>
    </div>
   </section>
 
+  <!-- MATERIAIS -->
   <section class="page" id="materials">
    <div class="panel">
-    <div class="panel-head"><h2>Cadastro de materiais</h2><button class="primary" onclick="openModal('material')">+ Novo material</button></div>
-    <div class="toolbar"><input id="materialSearch" placeholder="Buscar material..." oninput="renderMaterials()"></div>
-    <div class="table-wrap"><table><thead><tr><th>Código</th><th>Material</th><th>Categoria</th><th>Quantidade</th><th>Estoque mínimo</th><th>Situação</th><th>Ações</th></tr></thead><tbody id="materialsTable"></tbody></table></div>
+    <div class="panel-head">
+     <h2>Catálogo de Materiais</h2>
+     <button class="primary" onclick="openMaterialModal()">+ Novo material</button>
+    </div>
+    <div class="toolbar">
+     <input id="materialSearch" placeholder="Buscar por código, nome ou categoria..." oninput="renderMaterials()">
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Código</th><th>Material</th><th>Categoria</th><th>Estoque</th><th>Mínimo</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody id="materialsTable"></tbody>
+     </table>
+    </div>
    </div>
   </section>
 
+  <!-- MOVIMENTAÇÕES -->
   <section class="page" id="movements">
    <div class="panel">
-    <div class="panel-head"><h2>Histórico de movimentações</h2><button class="primary" onclick="openModal('movement')">+ Nova movimentação</button></div>
-    <div class="table-wrap"><table><thead><tr><th>Data</th><th>Material</th><th>Tipo</th><th>Quantidade</th><th>Responsável</th><th>Observação</th></tr></thead><tbody id="movementsTable"></tbody></table></div>
+    <div class="panel-head">
+     <h2>Histórico de Movimentações</h2>
+     <button class="primary" onclick="openMovementModal()">+ Registrar movimentação</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Data</th><th>Material</th><th>Tipo</th><th>Quantidade</th><th>Responsável</th><th>Observação</th><th>Ações</th></tr></thead>
+      <tbody id="movementsTable"></tbody>
+     </table>
+    </div>
    </div>
   </section>
 
+  <!-- ORDENS DE SERVIÇO -->
+  <secti     <div class="table-wrap"><table><thead><tr><th>Material</th><th>Tipo</th><th>Qtd</th></tr></thead><tbody id="recentMoves"></tbody></table></div>
+    </div>
+   </div>
+   <div class="panel">
+    <div class="panel-head"><h2>Ordens de serviço ativas</h2></div>
+    <div class="table-wrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Responsável</th><th>Status</th></tr></thead><tbody id="activeOrders"></tbody></table></div>
+   </div>
+  </section>
+
+  <!-- MATERIAIS -->
+  <section class="page" id="materials">
+   <div class="panel">
+    <div class="panel-head">
+     <h2>Catálogo de Materiais</h2>
+     <button class="primary" onclick="openMaterialModal()">+ Novo material</button>
+    </div>
+    <div class="toolbar">
+     <input id="materialSearch" placeholder="Buscar por código, nome ou categoria..." oninput="renderMaterials()">
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Código</th><th>Material</th><th>Categoria</th><th>Estoque</th><th>Mínimo</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody id="materialsTable"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+
+  <!-- MOVIMENTAÇÕES -->
+  <section class="page" id="movements">
+   <div class="panel">
+    <div class="panel-head">
+     <h2>Histórico de Movimentações</h2>
+     <button class="primary" onclick="openMovementModal()">+ Registrar movimentação</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Data</th><th>Material</th><th>Tipo</th><th>Quantidade</th><th>Responsável</th><th>Observação</th><th>Ações</th></tr></thead>
+      <tbody id="movementsTable"></tbody>
+     </table>
+    </div>
+   </div>
+  </section>
+
+  <!-- ORDENS DE SERVIÇO -->
   <section class="page" id="orders">
    <div class="panel">
-    <div class="panel-head"><h2>Ordens de serviço e produção</h2><button class="primary" onclick="openModal('order')">+ Nova ordem</button></div>
-    <div class="table-wrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Material</th><th>Quantidade</th><th>Responsável</th><th>Status</th><th>Ações</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+    <div class="panel-head">
+     <h2>Ordens de Serviço e Produção</h2>
+     <button class="primary" onclick="openOrderModal()">+ Nova ordem</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Código</th><th>Descrição</th><th>Material</th><th>Qtd</th><th>Responsável</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody id="ordersTable"></tbody>
+     </table>
+    </div>
    </div>
   </section>
 
+  <!-- INVENTÁRIO -->
   <section class="page" id="inventory">
    <div class="panel">
-    <div class="panel-head"><h2>Inventário de estoque</h2><button class="primary" onclick="openModal('count')">+ Registrar contagem</button></div>
-    <div class="table-wrap"><table><thead><tr><th>Data</th><th>Material</th><th>Estoque no sistema</th><th>Contagem física</th><th>Diferença</th><th>Responsável</th></tr></thead><tbody id="inventoryTable"></tbody></table></div>
+    <div class="panel-head">
+     <h2>Conferência de Inventário</h2>
+     <button class="primary" onclick="openCountModal()">+ Nova contagem</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Data</th><th>Material</th><th>Sistema</th><th>Físico</th><th>Diferença</th><th>Conferente</th><th>Ações</th></tr></thead>
+      <tbody id="inventoryTable"></tbody>
+     </table>
+    </div>
    </div>
   </section>
 
+  <!-- FUNCIONÁRIOS -->
   <section class="page" id="employees">
    <div class="panel">
-    <div class="panel-head"><h2>Equipe e funcionários</h2><button class="primary" onclick="openModal('employee')">+ Novo funcionário</button></div>
-    <div class="table-wrap"><table><thead><tr><th>Matrícula</th><th>Nome</th><th>Cargo</th><th>Setor</th><th>E-mail</th><th>Status</th><th>Ações</th></tr></thead><tbody id="employeesTable"></tbody></table></div>
+    <div class="panel-head">
+     <h2>Equipe e Funcionários</h2>
+     <button class="primary" onclick="openEmployeeModal()">+ Novo funcionário</button>
+    </div>
+    <div class="table-wrap">
+     <table>
+      <thead><tr><th>Matrícula</th><th>Nome</th><th>Cargo</th><th>Setor</th><th>E-mail</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody id="employeesTable"></tbody>
+     </table>
+    </div>
    </div>
   </section>
  </main>
 </div>
 
+<!-- MODAL DE CADASTRO / EDIÇÃO -->
 <div class="modal-bg" id="modalBg">
  <div class="modal">
-  <div class="modal-head"><h2 id="modalTitle">Cadastro</h2><button class="close" onclick="closeModal()">✕</button></div>
-  <form id="modalForm"><div class="form-grid" id="modalFields"></div>
-   <div class="modal-actions"><button type="button" class="secondary" onclick="closeModal()">Cancelar</button><button class="primary" type="submit">Salvar</button></div>
-  </form>
+  <div class="modal-head">
+   <h2 id="modalTitle">Cadastro</h2>
+   <button class="close" onclick="closeModal()">✕</button>
+  </div>
+  <form id="modalForm"></form>
  </div>
 </div>
-<div id="toast" class="toast hidden"></div>
+
+<!-- AVISO FLUTUANTE -->
+<div class="toast hidden" id="toast"></div>
+
+<!-- BIBLIOTECA DO SUPABASE -->
+<script src="https://jsdelivr.net"></script>
 
 <script>
+// =========================================================================
+// 1. CONFIGURAÇÃO DO SUPABASE (COLE SEUS DADOS AQUI)
+// =========================================================================
+const SUPABASE_URL = 'COLE_SUA_PROJECT_URL_AQUI';
+const SUPABASE_KEY = 'COLE_SUA_CHAVE_ANON_PUBLIC_AQUI';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// =========================================================================
+// 2. ESTADO GLOBAL E CARREGAMENTO DO BANCO
+// =========================================================================
 const $ = id => document.getElementById(id);
-const load = (key, fallback) => {
- try { const saved=localStorage.getItem('fluxoinv_'+key); return saved?JSON.parse(saved):fallback; }
- catch { return fallback; }
-};
-let materials=load('materials',[
- {id:1,code:'MAT-001',name:'Chapa de aço carbono',category:'Matéria-prima',unit:'kg',qty:320,min:100},
- {id:2,code:'MAT-002',name:'Parafuso sextavado M12',category:'Componentes',unit:'un',qty:48,min:80},
- {id:3,code:'MAT-003',name:'Óleo lubrificante industrial',category:'Manutenção',unit:'L',qty:75,min:20},
- {id:4,code:'MAT-004',name:'Rolamento 6205',category:'Componentes',unit:'un',qty:12,min:10},
- {id:5,code:'MAT-005',name:'Cabos elétricos',category:'Elétrica',unit:'m',qty:450,min:100},
- {id:6,code:'MAT-006',name:'Luvas de proteção',category:'Segurança',unit:'un',qty:25,min:50},
- {id:7,code:'MAT-007',name:'Disco de corte industrial',category:'Ferramentas',unit:'un',qty:90,min:30},
- {id:8,code:'MAT-008',name:'Tinta anticorrosiva',category:'Químicos',unit:'L',qty:60,min:15},
- {id:9,code:'MAT-009',name:'Barras de alumínio',category:'Matéria-prima',unit:'kg',qty:210,min:80},
- {id:10,code:'MAT-010',name:'Máscara de proteção',category:'Segurança',unit:'un',qty:18,min:40}
-]);
-let employees=load('employees',[
- {id:1,registration:'FUNC-001',name:'Carlos Henrique',role:'Gerente de Logística',sector:'Logística',email:'carlos@fluxoinv.com.br',status:'Ativo'},
- {id:2,registration:'FUNC-002',name:'Amanda Martins',role:'Analista de Estoque',sector:'Estoque',email:'amanda@fluxoinv.com.br',status:'Ativo'},
- {id:3,registration:'FUNC-003',name:'Gabriel Oliveira',role:'Almoxarife',sector:'Almoxarifado',email:'gabriel@fluxoinv.com.br',status:'Ativo'},
- {id:4,registration:'FUNC-004',name:'Beatriz Santos',role:'Assistente de Logística',sector:'Logística',email:'beatriz@fluxoinv.com.br',status:'Ativo'},
- {id:5,registration:'FUNC-005',name:'Lucas Ferreira',role:'Operador de Produção',sector:'Produção',email:'lucas@fluxoinv.com.br',status:'Ativo'},
- {id:6,registration:'FUNC-006',name:'Mariana Costa',role:'Supervisora de Produção',sector:'Produção',email:'mariana@fluxoinv.com.br',status:'Ativo'},
- {id:7,registration:'FUNC-007',name:'Rafael Almeida',role:'Técnico de Manutenção',sector:'Manutenção',email:'rafael@fluxoinv.com.br',status:'Ativo'},
- {id:8,registration:'FUNC-008',name:'Juliana Ribeiro',role:'Assistente Administrativa',sector:'Administrativo',email:'juliana@fluxoinv.com.br',status:'Ativo'}
-]);
-let movements=load('movements',[
- {id:1,date:'2026-11-25',materialId:1,type:'Entrada',qty:100,employeeId:3,note:'Recebimento de fornecedor'},
- {id:2,date:'2026-11-25',materialId:2,type:'Saída',qty:20,employeeId:2,note:'Separação para produção'},
- {id:3,date:'2026-11-26',materialId:5,type:'Entrada',qty:150,employeeId:3,note:'Reposição de estoque'},
- {id:4,date:'2026-11-26',materialId:6,type:'Saída',qty:15,employeeId:4,note:'Entrega de EPIs'}
-]);
-let orders=load('orders',[
- {id:1,code:'OS-2026-001',description:'Manutenção preventiva de máquinas',materialId:3,qty:10,employeeId:7,status:'Em andamento'},
- {id:2,code:'OP-2026-001',description:'Produção de componentes metálicos',materialId:1,qty:50,employeeId:5,status:'Aberta'},
- {id:3,code:'OS-2026-002',description:'Substituição de rolamentos',materialId:4,qty:2,employeeId:7,status:'Concluída'},
- {id:4,code:'OP-2026-002',description:'Montagem de estrutura industrial',materialId:9,qty:30,employeeId:6,status:'Em andamento'}
-]);
-let counts=load('counts',[
- {id:1,date:'2026-11-24',materialId:1,system:320,physical:318,employeeId:2},
- {id:2,date:'2026-11-24',materialId:2,system:48,physical:48,employeeId:3}
-]);
-function save(){
- localStorage.setItem('fluxoinv_materials',JSON.stringify(materials));
- localStorage.setItem('fluxoinv_employees',JSON.stringify(employees));
- localStorage.setItem('fluxoinv_movements',JSON.stringify(movements));
- localStorage.setItem('fluxoinv_orders',JSON.stringify(orders));
- localStorage.setItem('fluxoinv_counts',JSON.stringify(counts));
+let materials = [];
+let employees = [];
+let movements = [];
+let orders = [];
+let counts = [];
+
+async function loadFromSupabase() {
+  toast('Sincronizando banco de dados...');
+  const [resMat, resEmp, resMov, resOrd, resCnt] = await Promise.all([
+    db.from('materials').select('*').order('id'),
+    db.from('employees').select('*').order('id'),
+    db.from('movements').select('*').order('id', { ascending: false }),
+    db.from('orders').select('*').order('id', { ascending: false }),
+    db.from('counts').select('*').order('id', { ascending: false })
+  ]);
+
+  if (resMat.error) {
+    console.error(resMat.error);
+    toast('Erro ao conectar no Supabase. Verifique URL e Key.');
+    return;
+  }
+
+  materials = resMat.data || [];
+  employees = resEmp.data || [];
+  movements = resMov.data || [];
+  orders = resOrd.data || [];
+  counts = resCnt.data || [];
+  renderAll();
 }
+
+// =========================================================================
+// 3. UTILITÁRIOS E NAVEGAÇÃO
+// =========================================================================
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function materialName(id){return materials.find(x=>x.id==id)?.name||'Material removido';}
 function employeeName(id){return employees.find(x=>x.id==id)?.name||'Não informado';}
 function dateBR(d){return d?new Date(d+'T12:00:00').toLocaleDateString('pt-BR'):'—';}
 function statusClass(s){return s==='Concluída'||s==='Ativo'?'green':s==='Cancelada'||s==='Inativo'?'red':s==='Em andamento'?'orange':'';}
-function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2600);}
-$('loginForm').addEventListener('submit',e=>{
+function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),2800);}
+
+$('loginForm').addEventListener('submit', async e => {
  e.preventDefault();
  if($('username').value==='admin'&&$('password').value==='fluxo123'){
-  $('login').classList.add('hidden');$('app').classList.remove('hidden');renderAll();
- }else toast('Usuário ou senha incorretos.');
+  $('login').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  await loadFromSupabase();
+ } else {
+  toast('Usuário ou senha incorretos.');
+ }
 });
+
 function logout(){$('app').classList.add('hidden');$('login').classList.remove('hidden');$('password').value='';}
 function toggleMenu(){$('sidebar').classList.toggle('open');}
+
 const titles={
  dashboard:['Dashboard','Visão geral da gestão de estoque'],
  materials:['Materiais','Cadastro e controle dos materiais'],
@@ -281,143 +383,51 @@ const titles={
  inventory:['Inventário','Conferência física dos materiais'],
  employees:['Funcionários','Gerenciamento da equipe']
 };
+
 document.querySelectorAll('.nav button[data-page]').forEach(btn=>btn.addEventListener('click',()=>{
  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
  btn.classList.add('active');
  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
  $(btn.dataset.page).classList.add('active');
- $('pageTitle').textContent=titles[btn.dataset.page][0];
- $('pageSubtitle').textContent=titles[btn.dataset.page][1];
+ const t = titles[btn.dataset.page];
+ $('pageTitle').textContent = t[0];
+ $('pageSubtitle').textContent = t[1];
  $('sidebar').classList.remove('open');
 }));
+
+function closeModal(){ $('modalBg').classList.remove('show'); }
+
+// =========================================================================
+// 4. RENDERIZAÇÃO DAS TELAS
+// =========================================================================
 function renderAll(){
  $('today').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
- renderDashboard();renderMaterials();renderMovements();renderOrders();renderInventory();renderEmployees();
+ renderDashboard(); renderMaterials(); renderMovements(); renderOrders(); renderInventory(); renderEmployees();
 }
+
 function renderDashboard(){
- const low=materials.filter(m=>m.qty<=m.min);
+ const low=materials.filter(m=>Number(m.qty)<=Number(m.min));
  const total=materials.reduce((a,m)=>a+Number(m.qty),0);
- $('metrics').innerHTML=[
+ const cards = [
   ['Materiais cadastrados',materials.length,'Itens registrados'],
   ['Quantidade em estoque',total.toLocaleString('pt-BR'),'Unidades somadas'],
   ['Estoque baixo',low.length,'Materiais que precisam de atenção'],
   ['Ordens abertas',orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').length,'Ordens em andamento ou abertas']
- ].map(x=>`<div class="card"><div class="metric-label">${x[0]}</div><div class="metric">${x[1]}</div><div class="metric-note">${x[2]}</div></div>`).join('');
+ ];
+ $('metrics').innerHTML = cards.map(x=>`<div class="card"><div class="metric-label">${x[0]}</div><div class="metric">${x[1]}</div><div class="metric-note">${x[2]}</div></div>`).join('');
+
  $('lowStock').innerHTML=low.length?low.map(m=>`<tr><td>${esc(m.name)}</td><td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">Nenhum alerta de estoque.</td></tr>';
- $('recentMoves').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).slice(0,5).map(m=>`<tr><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td></tr>`).join('')||'<tr><td colspan="3" class="empty">Sem movimentações.</td></tr>';
+ $('recentMoves').innerHTML=movements.slice(0,5).map(m=>`<tr><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td></tr>`).join('')||'<tr><td colspan="3" class="empty">Sem movimentações.</td></tr>';
  $('activeOrders').innerHTML=orders.filter(o=>o.status!=='Concluída'&&o.status!=='Cancelada').map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nenhuma ordem ativa.</td></tr>';
 }
+
 function renderMaterials(){
  const q=($('materialSearch')?.value||'').toLowerCase();
- const list=materials.filter(m=>(m.name+' '+m.code+' '+m.category).toLowerCase().includes(q));
- $('materialsTable').innerHTML=list.map(m=>`<tr>
- <td>${esc(m.code)}</td><td><b>${esc(m.name)}</b></td><td>${esc(m.category)}</td>
- <td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td>
- <td><span class="status ${m.qty<=m.min?'red':'green'}">${m.qty<=m.min?'Estoque baixo':'Normal'}</span></td>
- <td><div class="actions"><button class="small-btn" onclick="editItem('material',${m.id})">Editar</button><button class="small-btn delete" onclick="removeItem('material',${m.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum material encontrado.</td></tr>';
-}
-function renderMovements(){
- $('movementsTable').innerHTML=movements.slice().sort((a,b)=>b.id-a.id).map(m=>`<tr><td>${dateBR(m.date)}</td><td>${esc(materialName(m.materialId))}</td><td><span class="status ${m.type==='Entrada'?'green':'orange'}">${m.type}</span></td><td>${m.qty}</td><td>${esc(employeeName(m.employeeId))}</td><td>${esc(m.note||'—')}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma movimentação registrada.</td></tr>';
-}
-function renderOrders(){
- $('ordersTable').innerHTML=orders.map(o=>`<tr><td>${esc(o.code)}</td><td>${esc(o.description)}</td><td>${esc(materialName(o.materialId))}</td><td>${o.qty}</td><td>${esc(employeeName(o.employeeId))}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('order',${o.id})">Editar</button><button class="small-btn delete" onclick="removeItem('order',${o.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhuma ordem cadastrada.</td></tr>';
-}
-function renderInventory(){
- $('inventoryTable').innerHTML=counts.slice().sort((a,b)=>b.id-a.id).map(c=>`<tr><td>${dateBR(c.date)}</td><td>${esc(materialName(c.materialId))}</td><td>${c.system}</td><td>${c.physical}</td><td><span class="status ${c.system===c.physical?'green':'orange'}">${c.physical-c.system>0?'+':''}${c.physical-c.system}</span></td><td>${esc(employeeName(c.employeeId))}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Nenhuma contagem registrada.</td></tr>';
-}
-function renderEmployees(){
- $('employeesTable').innerHTML=employees.map(e=>`<tr><td>${esc(e.registration)}</td><td><b>${esc(e.name)}</b></td><td>${esc(e.role)}</td><td>${esc(e.sector)}</td><td>${esc(e.email)}</td><td><span class="status ${statusClass(e.status)}">${esc(e.status)}</span></td><td><div class="actions"><button class="small-btn" onclick="editItem('employee',${e.id})">Editar</button><button class="small-btn delete" onclick="removeItem('employee',${e.id})">Excluir</button></div></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Nenhum funcionário cadastrado.</td></tr>';
-}
-
-let currentType='',editingId=null;
-const fields={
- material:[
-  ['code','Código','text'],['name','Nome do material','text'],['category','Categoria','text'],
-  ['unit','Unidade (un, kg, L...)','text'],['qty','Quantidade em estoque','number'],['min','Estoque mínimo','number']
- ],
- employee:[
-  ['registration','Matrícula','text'],['name','Nome completo','text'],['role','Cargo','text'],
-  ['sector','Setor','text'],['email','E-mail','email'],['status','Status','select',['Ativo','Inativo']]
- ],
- order:[
-  ['code','Código da ordem','text'],['description','Descrição','text'],['materialId','Material','material'],
-  ['qty','Quantidade','number'],['employeeId','Responsável','employee'],
-  ['status','Status','select',['Aberta','Em andamento','Concluída','Cancelada']]
- ],
- movement:[
-  ['materialId','Material','material'],['type','Tipo','select',['Entrada','Saída']],
-  ['qty','Quantidade','number'],['employeeId','Responsável','employee'],['note','Observação','text']
- ],
- count:[
-  ['materialId','Material','material'],['physical','Quantidade contada','number'],['employeeId','Responsável','employee']
- ]
-};
-function makeField(f,value){
- const [key,label,type,options]=f;let control='';
- if(type==='select')control=`<select name="${key}" required>${options.map(x=>`<option ${x===value?'selected':''}>${x}</option>`).join('')}</select>`;
- else if(type==='material')control=`<select name="${key}" required>${materials.map(m=>`<option value="${m.id}" ${m.id==value?'selected':''}>${esc(m.code)} — ${esc(m.name)}</option>`).join('')}</select>`;
- else if(type==='employee')control=`<select name="${key}" required>${employees.map(e=>`<option value="${e.id}" ${e.id==value?'selected':''}>${esc(e.name)}</option>`).join('')}</select>`;
- else control=`<input name="${key}" type="${type}" value="${esc(value??'')}" ${type==='number'?'min="0" step="any"':''} required>`;
- return `<div class="field"><label>${label}</label>${control}</div>`;
-}
-function openModal(type,data=null){
- currentType=type;editingId=data?.id??null;
- const names={material:'Material',employee:'Funcionário',order:'Ordem de serviço',movement:'Movimentação',count:'Contagem de inventário'};
- $('modalTitle').textContent=(data?'Editar ':'Cadastrar ')+names[type];
- $('modalFields').innerHTML=fields[type].map(f=>makeField(f,data?.[f[0]]??(f[0]==='date'?new Date().toISOString().slice(0,10):''))).join('');
- if(type==='movement')$('modalFields').insertAdjacentHTML('beforeend',`<div class="field"><label>Data</label><input name="date" type="date" value="${new Date().toISOString().slice(0,10)}" required></div>`);
- $('modalBg').classList.add('show');
-}
-function closeModal(){$('modalBg').classList.remove('show');}
-function editItem(type,id){
- const collection={material:materials,employee:employees,order:orders}[type];
- const item=collection.find(x=>x.id===id);if(item)openModal(type,item);
-}
-function removeItem(type,id){
- if(!confirm('Tem certeza de que deseja excluir este registro?'))return;
- const map={material:'materials',employee:'employees',order:'orders'};
- const collections={materials,employees,orders};
- const arr=collections[map[type]];
- const index=arr.findIndex(x=>x.id===id);
- if(index>=0)arr.splice(index,1);
- save();renderAll();toast('Registro excluído.');
-}
-$('modalForm').addEventListener('submit',e=>{
- e.preventDefault();
- const form=new FormData(e.target);const data=Object.fromEntries(form.entries());
- const numberFields=['qty','min','materialId','employeeId','physical'];
- numberFields.forEach(k=>{if(data[k]!==undefined)data[k]=Number(data[k]);});
- if(currentType==='material'){
-  const duplicate=materials.some(m=>m.code.toLowerCase()===data.code.toLowerCase()&&m.id!==editingId);
-  if(duplicate){toast('Já existe um material com esse código.');return;}
-  if(editingId)Object.assign(materials.find(x=>x.id===editingId),data);
-  else materials.push({id:Date.now(),...data});
- }
- if(currentType==='employee'){
-  if(editingId)Object.assign(employees.find(x=>x.id===editingId),data);
-  else employees.push({id:Date.now(),...data});
- }
- if(currentType==='order'){
-  if(editingId)Object.assign(orders.find(x=>x.id===editingId),data);
-  else orders.push({id:Date.now(),...data});
- }
- if(currentType==='movement'){
-  const material=materials.find(m=>m.id===data.materialId);
-  if(!material){toast('Material não encontrado.');return;}
-  if(data.type==='Saída'&&data.qty>material.qty){toast('Estoque insuficiente para essa saída.');return;}
-  material.qty+=data.type==='Entrada'?data.qty:-data.qty;
-  movements.push({id:Date.now(),date:data.date,materialId:data.materialId,type:data.type,qty:data.qty,employeeId:data.employeeId,note:data.note});
- }
- if(currentType==='count'){
-  const material=materials.find(m=>m.id===data.materialId);
-  if(!material){toast('Material não encontrado.');return;}
-  counts.push({id:Date.now(),date:new Date().toISOString().slice(0,10),materialId:data.materialId,system:material.qty,physical:data.physical,employeeId:data.employeeId});
-  material.qty=data.physical;
- }
- save();closeModal();renderAll();toast('Informações salvas com sucesso!');
-});
-$('modalBg').addEventListener('click',e=>{if(e.target===$('modalBg'))closeModal();});
-renderAll();
-</script>
-</body>
-</html>
+ const list=materials.filter(m=>(m.name+' '+m.code+' '+(m.category||'')).toLowerCase().includes(q));
+ $('materialsTable').innerHTML=list.length?list.map(m=>{
+  const isLow = Number(m.qty) <= Number(m.min);
+  return `<tr>
+   <td>${esc(m.code)}</td><td><b>${esc(m.name)}</b></td><td>${esc(m.category)}</td>
+   <td>${m.qty} ${esc(m.unit)}</td><td>${m.min} ${esc(m.unit)}</td>
+on class="page" id="orders">
+    
